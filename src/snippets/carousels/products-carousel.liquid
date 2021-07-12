@@ -1,0 +1,33 @@
+{%- comment -%}
+  Products Carousel
+    Displays a collection of products in a carousel. Carousel scripts are
+    currently disabled and will always show a max of 4 prods.
+
+  Props
+  - products
+  - productId : if productId is provided, the script will call the recommended products endpoint for that product and return a list of products that will be added to the 
+
+  Version:
+    1.0.0 - 2021/04/14
+{%- endcomment -%}
+
+{%- if products.size > 0 or productId -%}
+  <section class="c-products-carousel" data-products-carousel 
+  {%- if productId %} data-product-id={{- productId -}} {% endif -%}>
+    {%- if title != blank -%}
+      <h2 class="c-products-carousel__title o-heading--4">
+        {{- title | escape -}}
+      </h2>
+    {%- endif -%}
+    <div class="c-products-carousel__carousel" data-products-carousel-carousel>
+      {%- for featuredProduct in products limit:4 -%}
+        {%- render 'object.product-thumbnail' with {
+          product: featuredProduct,
+          variant: featuredProduct.selected_or_first_available_variant,
+          class: 'c-products-carousel__tile',
+          carousel: true
+        }-%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}

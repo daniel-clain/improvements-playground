@@ -1,0 +1,322 @@
+/*
+ *  Home Collection Videos
+ *    Shows collection buttons with videos that load on click.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/13
+ */
+
+.c-collection-videos {
+  background: $s-color--background-tertiary;
+
+  //Contains video buttons, controls and title
+  &__content {
+    padding: 2rem 0 6rem $s-gutter--edge-mobile;
+    position: relative;
+  }
+
+  &__title {
+    margin: 0 0 1.5rem;
+  }
+
+  //Individual collection
+  &__collection {
+    width: 36.2%;
+    padding-right: 0.625rem;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    -webkit-scroll-snap-align: start;
+    -webkit-scroll-snap-coordinate: 0% 0%;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    &:hover { outline: none; }
+
+    &.is-collection-active + .c-collection-videos__collection-link {
+      display: inline-flex; 
+    }
+
+    //Individual collection inner container, used for the white background
+    &-inner {
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      align-items: stretch;
+      padding: 2rem 0.75rem;
+      background: $s-color--background;
+      border-radius: $s-image--border-radius-default;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      @include t-anim--transition(all);
+      box-shadow: 0px 4px 15px rgba(8, 79, 111, 0.05);
+
+      .is-collection-active & {
+        box-shadow: inset 0px 0px 0px 1px $s-color--quartenary;
+        transform: translateY(-0.375rem);
+      }
+    }
+
+    //Icon from theme customiser
+    svg {
+      width: 46.66%;
+      margin-bottom: 1.5rem;
+    }
+
+    &.is-collection-active svg path {
+      stroke: $s-color--quartenary;
+    }
+
+    &-title {
+      .is-collection-active & {
+        color: $s-color--quartenary;
+      }
+    }
+
+    &-group {
+      display: none;
+      &.is-active {
+        display: flex;
+        padding: 0.75rem 0;
+      }
+      overflow-y: hidden;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      -webkit-scroll-snap-points-x: repeat(100%);
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      //Container of buttons to display collection groups
+      &-controls {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        overflow-y: hidden;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        -webkit-scroll-snap-points-x: repeat(100%);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      //Btn that controls the display of collection groups
+      &-btn {
+        font-family: $s-font--heading-family;
+        padding: 0.125rem 1rem 0.125rem 0;
+        margin-right: 0.5rem;
+        scroll-snap-align: start;
+        -webkit-scroll-snap-align: start;
+        -webkit-scroll-snap-coordinate: 0% 0%;
+        opacity: 0.4;
+        &.is-active {
+          opacity: 1;
+        }
+        @include t-anim--transition(opacity);
+      }
+    }
+
+    //Link that only shows when collection active
+    &-link {
+      display: none;
+      color: $s-color--quartenary;
+      position: absolute;
+      right: $s-gutter--edge-mobile;
+      bottom: 3rem;
+    }
+  }
+
+  //Video container and video object trumps
+  &__video {
+    z-index: 2;
+    margin: 0 auto;
+    padding-bottom: #{'min(117.33%,36.625rem)'};
+    max-width: 31.25rem;
+
+    &-container {
+      position: relative;
+    }
+
+    &-icon {
+      position: absolute;
+      width: 1.5625rem;
+      right: 1.25rem;
+      top: 1.25rem;
+      z-index: 3;
+    }
+
+    //Loader, sits underneath video
+    &-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $s-color--background-primary-light;
+
+      &-icon {
+        width: 3rem;
+        opacity: 0.1;
+      }
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-up) {
+    &__content {
+      padding-left: $s-gutter--edge-small;
+    }
+
+    &__collection-link {
+      right: $s-gutter--edge-small;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+
+    &__inner {
+      display: flex;
+      align-items: center;
+      max-width: $s-page-wrap--xlarge;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    &__video {
+      padding-bottom: 125%;
+      max-width: none;
+
+      &-container {
+        width: 32%;
+      }
+
+      &-icon {
+        width: 1.875rem;
+        top: 2.5rem;
+        right: 2.5rem;
+      }
+
+      &-loader-icon {
+        width: 4rem;
+      }
+    }
+
+    &__content {
+      width: 68%;
+      padding: 3rem #{'min(5.8%,5rem)'} 3rem #{'min(8.8%,10rem)'};
+      position: static;
+    }
+
+    &__collections {
+      max-width: 60rem;
+      overflow: hidden;
+    }
+
+    &__collection {
+      width: 25%;
+
+      svg {
+        width: 4.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      &-group {
+        &.is-active {
+          padding-top: 1.25rem;
+        }
+
+        &-btn {
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+
+      &-inner {
+        padding: 3.25rem 0.75rem 2.5rem;
+        cursor: pointer;
+
+        .is-collection-active & {
+          box-shadow: inset 0px 0px 0px 2px $s-color--quartenary;
+          transform: translateY(-0.625rem);
+        }
+      }
+
+      &:hover {
+        .c-collection-videos__collection-inner { 
+        box-shadow: inset 0px 0px 0px 2px $s-color--quartenary;
+        transform: translateY(-0.625rem);
+        }
+
+        svg path{
+          stroke: $s-color--quartenary;
+        }
+
+        .c-collection-videos__collection-title {
+          color: $s-color--quartenary;
+        }
+      }
+
+      &-link {
+        bottom: 0;
+        margin-bottom: 2.5%;
+        right: #{'min(6.17%,5.25rem)'};
+      }
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__video {
+
+      &-icon {
+        width: 2.375rem;
+        top: 3.5rem;
+        right: 3.5rem;
+      }
+    }
+
+    &__title {
+      margin-bottom: 2.5rem;
+    }
+
+    &__content {
+      width: 68%;
+      padding-bottom: 6.25rem;
+    }
+
+    &__collection {
+      padding-right: 2.5rem;
+
+      svg {
+        width: 6rem;
+        margin-bottom: 3.75rem;
+      }
+
+      &-inner {
+        padding: 4rem 0.75rem 3rem;
+      }
+
+      &-link {
+        margin-bottom: 4%;
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{% comment %}
+  Process Creative Slate 1x
+
+  Version:
+    1.0.0 - 2019/03/01
+{% endcomment %}
+<!DOCTYPE HTML>
+<!--[if IE 9]> <html class="is-ie9 js-unavailable supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html class="js-unavailable supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+  <head>
+    {%- comment -%} Head Tags Snippet (Site and Layout wide) {%- endcomment -%}
+    {%- render 'tool.head-tags' -%}
+
+    {%- comment -%}
+      Extra injected data into the header by Shopify
+    {%- endcomment -%}
+    {{ content_for_header }}
+  </head>
+
+  <body id="{{ page_title | handle }}" class="c-page c-page--{{ template.name | handle }}">
+    {%- comment -%} Accessibility skip link {%- endcomment -%}
+    <a class="u-visually-hidden" href="#MainContent">
+      {{- 'general.accessibility.skip_to_content' | t -}}
+    </a>
+
+    {%- comment -%} Entire Page Wrapper {%- endcomment -%}
+    <div class="c-page__wrapper">
+
+      {%- comment -%} Main (Template) Content {%- endcomment -%}
+      <main role="main" class="o-main">
+        <div class="o-main__wrapper" id="MainContent">
+
+          {%- comment -%} Static (Site Wide) Sections {%- endcomment -%}
+          {{ content_for_layout }}
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

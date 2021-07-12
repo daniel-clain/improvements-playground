@@ -1,0 +1,59 @@
+{%- assign ss = section.settings -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="c-about-features c-about-values is-white">
+
+    {%- render 'feature-blocks', with {
+      title: ss.title,
+      blocks: section.blocks,
+      skipTags: true
+    } -%}
+
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "About Values",
+  "class": "c-section c-section__about-values",
+  "settings": [
+    {
+      "type": "header",
+      "content": "About Values"
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Values Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "productValues",
+      "name": "Product Values",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "text",
+          "type": "textarea",
+          "label": "Text"
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "link",
+          "type": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

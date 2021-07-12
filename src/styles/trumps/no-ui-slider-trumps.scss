@@ -1,0 +1,100 @@
+/*
+ *  noUiSlider trumps
+ *
+ *  Version:
+ *    1.0.0 - 2020/10/15
+ */
+
+ .noUi-target {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding-right: 0.625rem;
+  margin: 1em 1em 1em 0;
+}
+
+.noUi-horizontal {
+  height: 1px;
+  border-radius: 0;
+  width: 100%;
+
+  .noUi-handle {
+    height: 0.6875rem;
+    width: 0.6875rem;
+    top: -0.3125rem;
+    background: $s-color--primary;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+
+    &:hover, &:focus { outline: none; }
+  }
+}
+
+.noUi-handle-lower {
+  right: -11px !important;
+}
+
+.noUi-connect {
+  background: $s-color--primary;
+  border-radius: 1rem;
+  width: 100%;
+  width: calc(100% + 1rem); //Hides the gap on high DPI screens
+}
+
+.noUi-connects {
+  height: 0.1875rem;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.noUi-handle {
+
+  &:after,
+  &:before {
+    display: none;
+  }
+}
+
+.noUi-base {
+  cursor: pointer;
+}
+
+.noUi-results {
+  margin-top: 0.125rem;
+  width: 100%;
+  opacity: 0;
+}
+
+.noUi-touch-area {
+  &:hover, &:focus { outline: none; }
+}
+
+//Trumps
+.noUi-tooltip {
+  bottom: -1.875rem !important;
+  border: none !important;
+  padding: 0;
+  background: none;
+  color: $s-color--primary !important;
+  font-size: 0.6875rem;
+
+  .noUi-handle-upper & {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+
+  .noUi-handle-lower & {
+    left: 0;
+    transform: none;
+  }
+}
+
+
+@include t-media-query($s-xlarge-up) {
+  .noUi-tooltip {
+    font-size: 0.875rem;
+  }
+}

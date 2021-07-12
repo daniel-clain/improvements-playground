@@ -1,0 +1,111 @@
+{%- comment -%}
+  Home Trust Images
+    Section to display brand trust / proof images on the home page.
+
+  Version
+    1.0.0 - 2021/04/13
+{%- endcomment -%}
+
+{%- liquid
+  assign title = section.settings.title
+  assign description = section.settings.description
+  assign btnLink = section.settings.btnLink
+  assign btnLabel = section.settings.btnLabel
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section
+    class="c-trust-images
+     {% if title != blank or description != blank %}has-content{% endif %}"
+  >
+    <div class="c-trust-images__inner">
+      {%- if title != blank or description != blank -%}
+        <div class="c-trust-images__content">
+          {%- if title != blank -%}
+            <h2 class="c-trust-images__title o-heading--4">
+              {{- title | newline_to_br -}}
+            </h2>
+          {%- endif -%}
+          {%- if description != blank -%}
+            <p class="c-trust-images__description">
+              {{- description | newline_to_br -}}
+            </p>
+          {%- endif -%}
+          {%- if btnLink != blank and btnLabel != blank -%}
+            <a href="{{ btnLink }}" class="c-trust-images__btn o-btn is-wide">
+              {{- btnLabel | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+  
+      <div class="c-trust-images__images">
+        {%- for block in section.blocks -%}
+          {%- assign image = block.settings.image -%}
+          {%- if image == blank %}{% continue %}{% endif -%}
+          <div class="c-trust-images__image-container o-responsive-image-container">
+            {%- render 'tool.picture' with {
+              image: image,
+              class: 'c-image-grid__block-image o-responsive-image',
+              alt: title,
+              width: 360, 
+              sizes: '374,750,1350,1650',
+              imageSizes: '80,120,240,360'
+            } -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Trust Proofing Images",
+    "class": "c-section c-section__home-trust-images",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "id": "title",
+        "type": "textarea",
+        "label": "Section Title"
+      },
+      {
+        "id": "description",
+        "type": "textarea",
+        "label": "Section Description"
+      },
+      {
+        "id": "btnLink",
+        "type": "url",
+        "label": "Link"
+      },
+      {
+        "id": "btnLabel",
+        "type": "text",
+        "label": "Button Label",
+        "info": "Leave blank to hide the button."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image",
+            "info": "Please upload in .jpg format and with a ratio of 360 x 280px and with a white background."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Trust Proofing Images",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,24 @@
+@import '../base.scss';
+
+
+// Objects
+@import '../objects/swatches';
+@import '../objects/product/primary-feature-icon';
+@import '../objects/colour-expand-toggle.scss';
+
+
+@import '../vendor/lity';
+@import '../tools/content-headings.scss';
+
+
+@import '../components/product-page/product-gallery';
+@import '../components/product-page/product-details';
+@import '../components/product-page/product-reviews';
+@import '../components/image-and-text';
+@import '../components/feature-blocks';
+@import '../components/video-banner';
+@import '../components/accordion';
+@import '../components/carousels/_products-carousel.scss';
+@import '../components/product-page/back-in-stock.scss';
+@import '../components/product-page/size-guide.scss';
+@import '../components/product-page/product-feature-icon.scss';

@@ -1,0 +1,51 @@
+{%- comment -%}
+  Account Navigation
+    Basic menu for the account pages
+
+  Version
+    1.0.0 - 2020/03/25
+{%- endcomment -%}
+
+
+<nav class="c-account-navigation" data-account-navigation>
+  <ul class="c-account-navigation__list">
+    <li class="c-account-navigation__list-item">
+      <a
+        href="{{ routes.account_url }}"
+        class="c-account-navigation__link
+          {% if request.path == routes.account_url %}is-active{% endif %}"
+        data-account-navigation-toggle
+      >
+        {{- 'customer.account.profile' | t -}}
+      </a>
+    </li>
+    <li class="c-account-navigation__list-item">
+      <a
+        href="{{ routes.account_addresses_url }}"
+        class="c-account-navigation__link
+          {% if request.path == routes.account_addresses_url %}is-active{% endif %}"
+        data-address-menu-item
+      >
+        {{- 'customer.account.addresses' | t -}}
+      </a>
+    </li>
+    <li class="c-account-navigation__list-item">
+      <a
+        href="{{ routes.account_url }}#account-orders"
+        class="c-account-navigation__link
+          {% if request.path contains 'orders' %}is-active{% endif %}"
+        data-orders-navigation-toggle
+      >
+        {{- 'customer.account.orders' | t -}}
+      </a>
+    </li>
+    <li class="c-account-navigation__list-item">
+      <a
+        href="{{ routes.account_logout_url }}"
+        class="c-account-navigation__link"
+      >
+        {{- 'customer.account.logout' | t -}}
+      </a>
+    </li>
+  </ul>
+</nav>

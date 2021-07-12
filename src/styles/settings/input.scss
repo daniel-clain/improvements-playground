@@ -1,0 +1,28 @@
+/*
+ *  Input settings
+ *    Provides common settings for inputs and other widgets
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/09
+ */
+
+$s-input--radius: 0.25rem;
+
+$s-input--padding: 0.5em 0.75em;
+$s-input--padding-large: 0.75em 2em;
+$s-input--padding-wide: 0.75em 3em;
+$s-input--padding-large-wide: 0.75em 5em;
+
+$s-input--padding-square: 0.5em;
+$s-input--padding-large-square: 0.75em;
+
+$s-input--border: 1px solid;
+
+//Button Padding
+$s-button--padding-small: 1.125rem 1.75rem 1rem;
+$s-button--padding-medium: 1.25rem 1.75rem 1.125rem;
+$s-button--padding-xlarge: 1.375rem 1.75rem 1.25rem;
+
+$s-button--padding-wide-small: 1.125rem 2rem 1rem;
+$s-button--padding-wide-medium: 1.25rem 1.0625rem 1.125rem 1.125rem;
+$s-button--padding-wide-xlarge: 1.375rem 1.875rem 1.25rem;

@@ -1,0 +1,25 @@
+{%- comment -%}
+  Customer JSON
+    Customer JSON Object.
+
+  Version:
+    1.0.0 - 2019/02/04
+{%- endcomment -%}
+{%- if customer -%}
+  {%- capture keys -%}
+    accepts_marketing,addresses,addresses_count,default_address,email,
+    {{- '' -}}
+    first_name,has_account,id,last_name,last_order,name,orders_count,phone,
+    {{- '' -}}
+    tags,total_spent
+  {%- endcapture -%}
+  {%- assign keysArr = keys | split: ',' -%}
+  {
+    {%- for key in keysArr -%}
+      {{- key | json -}}: {{- customer[key] | json -}}
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  }
+{%- else -%}
+  null
+{%- endif -%}

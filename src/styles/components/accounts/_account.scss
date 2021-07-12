@@ -1,0 +1,159 @@
+/*
+ *  Account
+ */
+
+.c-account {
+  background-color: $s-color--background;
+  padding: .5rem $s-gutter--edge-mobile;
+  padding-bottom: 3rem;
+
+  p {
+    font-size: 1rem;
+  }
+
+  &__input {
+    border-radius: 1.5625rem;
+    padding-right: 5.625rem;
+  }
+
+  &__container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+
+    h1 {
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  &__main {
+    background-color: $s-color--background;
+    padding: 1.2rem 0.7rem;
+  }
+
+  &__detail {
+    margin-bottom: 1.25rem;
+
+    p {
+      border: 1px solid red;
+      margin: .5rem 0;
+    }
+
+    &-title {
+      display: block;
+      font-weight: bold;
+      margin-bottom: .5rem;
+    }
+  }
+
+  &__details {
+    &-title {
+      margin-top: 0;
+    }
+  }
+
+  &__orders {
+    margin-top: 2rem;
+
+    &-container {
+      overflow: auto;
+
+      table {
+        border-spacing: 0 0;
+      }
+
+      th, td {
+        white-space: nowrap;
+        vertical-align: baseline;
+        text-align: left;
+        padding-right: 1.5rem;
+        padding-bottom: .5rem;
+      }
+    }
+  }
+
+  &__sidebar {
+    border-bottom: 1px solid $s-color--border-light;
+    margin-bottom: 1rem;
+  }
+
+  @include t-media-query($s-small-up) {
+    padding: 2em 3rem 3rem;
+
+    &__content {
+      display: flex;
+    }
+
+    &__sidebar {
+      width: 25%;
+      margin-right: 2rem;
+      border-bottom: none;
+      border-right: 1px solid $s-color--border-light;
+      padding-top: 2rem;
+    }
+
+    &__main {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    &__detail {
+      flex-basis: 50%;
+    }
+
+    &__details {
+      &-inner {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: 2rem $s-gutter--edge-medium;
+    padding-bottom: 3rem;
+
+    &__sidebar {
+      width: 30%;
+      max-width: 25rem;
+      margin-right: 3rem;
+      padding-top: 1rem;
+    }
+
+    &__content {
+      padding-top: 1rem;
+    }
+
+    &__orders {
+      margin-top: 3rem;
+    }
+
+    &__orders {
+      &-table {
+        width: 100%;
+      }
+    }
+
+    &__input {
+      padding: 0.5rem 4.375rem 0.5rem 1.25rem;
+      font-size: 0.625rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+    padding: 2rem $s-gutter--edge-medium-alt 5rem;
+
+    &__sidebar {
+      margin-right: 5rem;
+    }
+
+    &__input {
+      font-size: 0.875rem;
+      line-height: 1.45;
+      letter-spacing: 0.04357rem;
+      padding: 0.9rem 1.25rem;
+    }
+  }
+}

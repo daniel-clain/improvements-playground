@@ -1,0 +1,24 @@
+/*
+ *  Z-Index Settings
+ *    Provides a manageable Z Index order list so that elements don't overflow
+ *    when they shouldn't.
+ *
+ *  Version:
+ *    2.0.0 - 2020/10/19
+ */
+
+$s-z--reset: 0;
+$s-z--text-overlay: 5;
+$s-z--filters: 10;
+$s-z--overlay-header: 30;
+$s-z--header: 40;
+$s-z--modal: 50;
+$s-z--header-logo: 51;
+$s-z--menu-overlay: 52;
+$s-z--menu: 53;
+
+$s-z--overlay-cart: 65;
+$s-z--cart-drawer: 70;
+
+//Third Party Apps
+$s-z--yo-noticications: 45;

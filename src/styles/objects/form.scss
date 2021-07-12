@@ -1,0 +1,51 @@
+.o-form {
+  &__input-group {
+
+    // Dropdown style
+    &.is-dropdown {
+      position: relative;
+      &::after {
+        content: "";
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        background: url('./../../assets/svg/icon-chevron-down.svg') no-repeat center center;
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+    }
+
+    &.is-inline {
+      display: flex;
+
+      .o-input {
+        flex: 1;
+      }
+    }
+  }
+
+  .errors {
+    @extend %s-font--type-1;
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      // text-decoration: underline;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__input-group {
+      &.is-dropdown {
+        &::after {
+          right: 1.3125rem;
+        }
+      }
+    }
+  }
+}

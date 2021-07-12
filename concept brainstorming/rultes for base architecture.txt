@@ -1,0 +1,6 @@
+template
+=================
+- must render without javascript because of robots
+- must have conditionals around things that may not be there
+- must be semantic
+- must favor performance and not be taxing or resources and tus cause unnessary delays

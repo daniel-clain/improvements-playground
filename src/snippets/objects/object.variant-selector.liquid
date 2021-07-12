@@ -1,0 +1,73 @@
+{%- comment -%}
+  Variant Selector
+    Variant selector widget, makes use of the available JavaScript events etc.
+
+  Params:
+    printJson - If true the JSON for the product will also be attached
+    product - Product to print variant selector for
+    variant - Currently selected variant
+    class - Extra classes to append to selector
+
+  Version:
+    1.0.0 - 2020/11/18
+{%- endcomment -%}
+
+{% comment %}
+  Semi Future proof, assume that maybe in the future there will be more than 3
+  variant options... ensure your JS is compensating!
+{% endcomment %}
+{%- assign optionCount = 3 -%}
+
+
+{%- liquid
+  unless variant
+    assign variant = product.first_available_variant
+  endunless
+
+  if printJson
+    capture productJson
+      render 'json.product' with { product: product }
+    endcapture
+  endif
+-%}
+
+{%- capture attrCommon -%}
+  data-variant-selector
+  name="id"
+  {% if printJson %}data-product="{{ productJson | escape }}"{% endif %}
+{%- endcapture -%}
+
+{%- if product.has_only_default_variant -%}
+  <input
+    type="hidden"
+    {{ attrCommon }}
+    value="{{ variant.id }}"
+    data-option-count="{{ optionCount }}"
+  />
+{%- else -%}
+
+  <select
+    {{ attrCommon }}
+    data-option-count="{{ optionCount }}"
+    class="o-variant-selector {{ class }}"
+  >
+    {%- for v in product.variants -%}
+      <option
+        {% if v.id == product.selected_or_first_available_variant.id -%}
+          selected="selected"
+        {%- endif %}
+        data-variant-option
+        value="{{ v.id }}"
+        {%- for i in (1..optionCount) -%}
+          {% assign vName = 'option' | append: i -%}
+          {%- assign vValue = v[vName] -%}
+          {%- if vValue == blank -%}{%- continue -%}{%- endif -%}
+          data-option{{ i }}="{{- vValue | handleize -}}"
+        {%- endfor -%}
+      >
+        {{- v.title | replace: '/', '-' -}}
+      </option>
+    {%- endfor -%}
+  </select>
+
+{%- endif -%}

@@ -1,0 +1,50 @@
+/*
+ *  Region Selector
+ *    Styles for the Region Selector modal.
+ *
+ *  Version:
+ *    1.0.0 - 2021/05/31
+ */
+
+.c-region-selector {
+  max-width: 20rem;
+  padding: 2rem 1.5rem;
+
+  &__heading {
+    margin: 0 0 0.875rem;
+  }
+
+  &__separator {
+    height: 1px;
+    background: $s-color--border-light;
+    margin: 1.5rem 0;
+  }
+
+  .o-select, &__store-selector {
+    width: 100%;
+    display: block;
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+
+  @include t-media-query($s-medium-up) {
+    transform: scale(0.9);
+    .is-visible & { transform: scale(1); }
+    top: 8.5rem;
+    right: 4rem;
+    left: auto;
+    overflow: visible;
+    box-shadow: 0 1rem 1.25rem -0.625rem rgba($s-color--secondary, 0.18);
+
+
+    + .c-modal__overlay {
+
+      .is-visible & {
+        background-color: transparent;
+      }
+    }
+  }
+}

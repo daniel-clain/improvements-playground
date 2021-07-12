@@ -1,0 +1,114 @@
+/*
+ *  Image Grid
+ *    Grid of images with carousel to control groups of 4 images on mobile.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/13
+ */
+
+.c-image-grid {
+  padding: 0 calc(#{$s-gutter--edge-mobile} - 0.3125rem);
+  margin: 3.125rem 0;
+  position: relative;
+  padding-bottom: 2rem;
+
+  &__carousel {
+    display: flex;
+    overflow: hidden;
+
+    //Group of blocks
+    &-group {
+      padding: 0 0.3125rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      flex-shrink: 0;
+      width: 100%;
+    }
+  }
+
+  //Individual block
+  &__block {
+    width: calc(50% - 0.3125rem);
+    margin-bottom: 0.625rem;
+    position: relative;
+    border-radius: $s-image--border-radius-default;
+    overflow: hidden;
+
+    &:nth-child(n+3) {
+      margin-bottom: 0;
+    }
+
+    //Image overlay mask
+    &:after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(50% 50% at 50% 50%, $s-color--orange 38.54%, $s-color--orange 100%);
+      opacity: 0.05;
+      z-index: 1;
+    }
+
+    &-image-container {
+      padding-bottom: 134.1%;
+    }
+
+    &-title {
+      padding: 0.5rem 0;
+      text-align: center;
+      color: $s-color--font-invert;
+      position: absolute;
+      width: 100%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      z-index: 2;
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-up) {
+    padding: 0 calc(#{$s-gutter--edge-small} - 0.3125rem) 2.5rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: 0 $s-gutter--edge-medium-alt;
+    margin: $s-gutter--section-v-medium auto;
+    max-width: $s-page-wrap--xlarge;
+
+    &__carousel {
+      display: block;
+
+      &-group {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &__block {
+      width: calc(25% - 1.125rem);
+      margin-bottom: 0;
+      border-radius: $s-image--border-radius-medium;
+
+      &-image-container {
+        padding-bottom: 135.8%;
+      }
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__carousel-group {
+      margin-bottom: 2.5rem;
+    }
+
+    &__block {
+      width: calc(25% - 1.875rem);
+    }
+  }
+}

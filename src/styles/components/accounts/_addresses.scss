@@ -1,0 +1,42 @@
+/*
+ *  Addresses
+ *
+ *  Version:
+ *    1.0.0 - 2020/11/04
+ */
+
+.c-addresses {
+  &__form {
+    max-height: 0;
+    overflow: hidden;
+    transition: $s-anim--time-med $s-anim--ease-in-out;
+
+    &.is-visible {
+      display: block;
+      max-height: 200vh;
+    }
+  }
+
+  &__btn {
+    margin: 1rem 0;
+    margin-right: 0.5rem;
+
+    &.is-left {
+      margin-right: .25rem;
+    }
+
+    &.is-right {
+      margin-left: .25rem;
+    }
+  }
+
+  &__addresses {
+    margin-top: 1rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__addresses {
+      margin-top: 2rem;
+    }
+  }
+}

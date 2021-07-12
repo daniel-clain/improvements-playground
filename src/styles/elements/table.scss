@@ -1,0 +1,38 @@
+/*
+ *  Table Styles
+ *    Basic HTML Table element styling
+ *
+ *  Version:
+ *    1.0.0 - 2020/05/26
+ */
+ table {
+  border: none;
+  border-collapse: collapse;
+
+  tr{
+    border-bottom: 1px solid $s-color--border-light;
+    &:first-child{
+      border-top: 1px solid $s-color--border-light;
+    }
+  }
+  td strong, th{
+    font-weight: $s-font--weight-bold;
+    text-transform: uppercase;
+  }
+  td,th{
+    border-right: 1px solid $s-color--border-light;
+    font-size: t-to-rem(10);
+    padding: t-to-rem(7) t-to-rem(5) t-to-rem(3);
+    &:first-child{
+      border-left: 1px solid $s-color--border-light;
+    }
+    @include t-media-query($s-small-up) {
+      font-size: t-to-rem(12);
+    }
+    @include t-media-query($s-medium-up) {
+      font-size: t-to-rem(14);
+      padding: t-to-rem(10) t-to-rem(7) t-to-rem(5);
+    }
+  }
+}
+

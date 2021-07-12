@@ -1,0 +1,50 @@
+{%- comment -%}
+  Featured Collections
+    Section with collection images, title and CTAs as section blocks or
+    products from a chosen collection.
+
+  Version:
+    1.0.0 - 2020/11/06
+{%- endcomment -%}
+
+{%- liquid
+  assign ss = section.settings
+  assign featuredCollection = collections[ss.collectionHandle]
+  assign title = ss.title | default: featuredCollection.title
+-%}
+
+{%- render 'products-carousel' with {
+  products: featuredCollection.products,
+  title: title
+} -%}
+
+{% schema %} 
+  {
+    "name": "Products Carousel",
+    "class": "c-section c-section__featured-collections",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Section to promote featured products by selecting a collection."
+      },
+      {
+        "id": "title",
+        "type": "textarea",
+        "label": "Section Title",
+        "info": "If blank the section's title will be used."
+      },
+      {
+        "id": "collectionHandle",
+        "type": "collection",
+        "label": "Collection",
+        "info": "Select the title for this featured collection."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Products Carousel",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

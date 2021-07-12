@@ -1,0 +1,31 @@
+
+.o-colour-expand-toggle{
+  display: none;
+  transform: translateY(-1px) rotate(0deg);
+  width: t-to-rem(16);
+  height: t-to-rem(16);
+  transition: transform $s-anim--time-short;
+  background: url('./../../assets/svg/icon-arrow--right--black.svg') center no-repeat;
+  background-size: 100%;
+  margin-left: t-to-rem(6);
+  margin-top: t-to-rem(2);
+  flex-shrink: 0;
+
+  &.is-visible{
+    display: block;
+  }
+
+  .is-expanded & {
+    transform: translateY(-1px) rotate(90deg);
+  }
+
+  
+  @include t-media-query($s-small-up) {
+
+    width: t-to-rem(20);
+    height: t-to-rem(20);
+    margin-left: t-to-rem(8);
+    margin-top: t-to-rem(3);
+
+  }
+}

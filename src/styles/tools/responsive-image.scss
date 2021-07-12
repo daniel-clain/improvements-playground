@@ -1,0 +1,16 @@
+@mixin t-responsive-image($padding-bottom, $full: true,  $object-fit: cover){
+  position: relative;
+  padding-bottom: $padding-bottom;
+  width: 100%;
+
+  img{
+    position: absolute;
+    object-fit: $object-fit;
+
+    @if $full{
+      width: 100%;
+      height: 100%;
+    }
+
+  }
+}

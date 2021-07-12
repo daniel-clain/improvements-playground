@@ -1,0 +1,124 @@
+{%- comment -%}
+  Account Template
+    Template section for the account page.
+
+  Version:
+    1.0.0 - 2020/03/25
+{%- endcomment -%}
+
+
+
+<div class="p-customer c-account" data-account-page>
+
+  <div class="c-account__container">
+
+    {%- comment -%} Title {%- endcomment -%}
+    <h1>
+      <span class="o-heading__inner o-heading--3">{{- 'customer.account.title' | t -}}</span>
+    </h1>
+
+    <div class="c-account__content">
+
+      <aside class="p-customer__sidebar c-account__sidebar">
+
+        {%- comment -%} Account Page Navigation {%- endcomment -%}
+        {%- render 'account-navigation' -%}
+
+      </aside>
+
+      <div class="p-customer__main c-account__main">
+        {%- comment -%} Account Details {%- endcomment -%}
+        <section class="c-account__details" data-detail-section>
+
+          {%- comment -%} Title {%- endcomment -%}
+          <h5 class="c-account__details-title">
+            <span class="o-heading__inner">{{- 'customer.account.details' | t -}}</span>
+          </h5>
+
+          <div class="c-account__details-inner">
+            <div class="c-account__detail">
+              <span class="c-account__detail-title">
+                {{- 'customer.account.name' | t -}}
+              </span>
+              <span>{{- customer.name -}}</span>
+            </div>
+            <div class="c-account__detail">
+              <span class="c-account__detail-title">
+                {{- 'customer.account.email' | t -}}
+              </span>
+              <span>{{- customer.email -}}</span>
+            </div>
+            {%- if customer.phone -%}
+              <div class="c-account__detail">
+                <span class="c-account__detail-title">
+                  {{- 'customer.account.phone' | t -}}
+                </span>
+                <span>{{- customer.phone -}}</span>
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if customer.default_address != blank -%}
+            <div class="c-account__default-address">
+              <div class="c-account__detail is-address">
+                <span class="c-account__detail-title">
+                  {{- 'customer.addresses.default' | t }}
+                </span>
+              </div>
+              <span>{{- customer.default_address | format_address -}}</span>
+            </div>
+          {%- endif -%}
+        </section>
+
+        {%- comment -%} Orders {%- endcomment -%}
+        <section id="account-orders" class="c-account__orders">
+
+          {%- comment -%} Title {%- endcomment -%}
+          <h5>
+            <span class="o-heading__inner">{{ 'customer.orders.title' | t }}</span>
+          </h5>
+
+          {%- paginate customer.orders by 20 -%}
+            {%- if customer.orders.size > 0 -%}
+              <div class="c-account__orders-container">
+                <table class="c-account__orders-table">
+                  <thead>
+                    <tr>
+                      <th>{{ 'customer.orders.order_number' | t }}</th>
+                      <th>{{ 'customer.orders.date' | t }}</th>
+                      <th>{{ 'customer.orders.payment_status' | t }}</th>
+                      <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                      <th>{{ 'customer.orders.total' | t }}</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {%- for order in customer.orders -%}
+                      <tr>
+                        <td>{{ order.name | link_to: order.customer_url }}</td>
+                        <td>{{ order.created_at | date: "%B %d, %Y %I:%M%p" }}</td>
+                        <td>{{ order.financial_status_label }}</td>
+                        <td>{{ order.fulfillment_status_label }}</td>
+                        <td>{{ order.total_price | money_with_currency }}</td>
+                      </tr>
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+
+                {%- if paginate.pages > 1 -%}
+                  {%- render 'object.pagination' -%}
+                {%- endif -%}
+
+              </div>
+            {%- else -%}
+              <p>{{ 'customer.orders.none' | t }}</p>
+            {%- endif -%}
+
+          {%- endpaginate -%}
+        </section>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

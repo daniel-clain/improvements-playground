@@ -1,0 +1,73 @@
+{% comment %}
+  Product Pricing
+    Generates a simple set of pricing elements for displaying a price, including
+    all the required data-attributes to listen to most events.
+
+    Params:
+      - price: Variant price to display
+      - comparePrice: Variant compare at price to display
+      - class: A string to be used as an additional class
+
+  Version:
+    1.0.0 - 2020/09/17
+{% endcomment %}
+
+{%- assign hasCompare = false -%}
+
+{% comment %}
+  Please note that this pricing logic also exists in the variant-selector.js
+  file, ensure that all logic changes here are mimiced there.
+{% endcomment %}
+{%- capture compareClasses -%}
+  o-product-pricing__money o-product-pricing__compare {{ class }}-money {{ class }}-compare
+{%- endcapture -%}
+
+{%- comment -%}
+  We need to show comparison regardless so js can update on swatch
+  change. Instead we'll hide elements with css using the has-compare class
+{%- endcomment -%}
+{%- capture comparePriceHtml -%}
+  <span
+    class="{{- compareClasses -}}"
+    data-currency
+    data-money="{{- comparePrice -}}"
+    data-product-compare-money
+  >
+    {{- comparePrice | money_with_currency | remove: '.00' -}}
+  </span>
+{%- endcapture -%}
+
+{%- liquid
+  if comparePrice != blank and comparePrice > price
+    assign hasCompare = true
+  endif
+-%}
+
+<p
+  class="o-product-pricing {{ class }} {% if hasCompare %}has-compare{% endif %} o-type--2"
+  data-product-pricing
+>
+  {{- comparePriceHtml -}}
+  
+
+  {% comment %} Regular Price Display {% endcomment %}
+  {%- if price == 0 -%}
+    <span
+      class="o-product-pricing__money o-product-pricing__price {{ class }}-money {{ class }}-price"
+      data-currency
+      data-product-money
+    >
+      FREE
+    </span>
+  {%- else -%}
+    <span
+      class="o-product-pricing__money o-product-pricing__price {{ class }}-money
+        {{ class }}-price {% if hasCompare %}has-compare{% endif %}"
+      data-currency
+      data-money="{{- price -}}"
+      data-product-money
+    >
+      {{- price | money_with_currency | remove: '.00' -}}
+    </span>
+  {%- endif -%}
+</p>

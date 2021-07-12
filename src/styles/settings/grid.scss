@@ -1,0 +1,25 @@
+//Max width (that the grid internals can possibly be)
+$s-grid--max-width: 100rem;
+$s-grid--max-width--outer: 125rem;
+
+
+//Counts
+$s-grid--column-count: 12;
+$s-grid--gutter-count: $s-grid--column-count - 1;
+
+
+$s-grid--edges: (
+  'xsmall': 0.9375rem,
+  'small': 1.25rem,
+  'medium': 1.5625rem,
+  'large': 1.875rem,
+  'xlarge': calc((100vw - #{$s-grid--max-width}) / 2)
+);
+
+$s-grid--gutter-base: 0.3125rem;
+$s-grid--gutters: (
+  'xsmall': $s-grid--gutter-base,
+  'small': $s-grid--gutter-base * 2,
+  'medium': $s-grid--gutter-base * 4,
+  'large': 1.25rem
+);

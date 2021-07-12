@@ -1,0 +1,24 @@
+/*
+ *  Crop Position
+ *    Use with options from the theme customiser to position the
+ *    focal point of an image
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/09
+ */
+
+
+//Focal position from the theme customiser
+@mixin t-crop-position() {
+  @supports(object-fit: cover) {
+    &.is-crop-top-left { object-position: left top; }
+    &.is-crop-top-center { object-position: center top; }
+    &.is-crop-top-right { object-position: right top; }
+    &.is-crop-middle-left { object-position: left center; }
+    &.is-crop-middle-center { object-position: center center; }
+    &.is-crop-middle-right { object-position: right center; }
+    &.is-crop-bottom-left { object-position: left bottom; }
+    &.is-crop-bottom-center { object-position: center bottom; }
+    &.is-crop-bottom-right { object-position: right bottom; }
+  }
+}

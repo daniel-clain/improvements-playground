@@ -1,0 +1,40 @@
+{%- comment -%}
+  Main Menu -- Featured Image
+    Featured image snippet for the main menu.
+
+  Version
+    1.0.0 - 2021/05/21
+{%- endcomment -%}
+
+{%- if image != blank -%}
+  <li class="c-main-menu__item is-featured-image {% if isFirst %}is-first{% endif %}">
+    {%- if btnLink != blank -%}
+      <a href="{{ btnLink }}" class="c-main-menu__featured-image-container o-responsive-image-container">
+    {%- else -%}
+      <div class="c-main-menu__featured-image-container o-responsive-image-container">
+    {%- endif -%}
+        {%- render 'tool.picture' with {
+          image: image,
+          class: 'c-main-menu__featured-image o-responsive-image',
+          alt: title,
+          width: 424,
+          sizes: '1100,1600,2000',
+          imageSizes: '1,300,424'
+        } -%}
+    
+        {%- if title != blank -%}
+          <h6
+            class="c-main-menu__featured-image-title
+              {% if color != blank %}is-{{ color }}{% endif %}"
+          >
+            {{- title | escape -}}
+          </h6>
+        {%- endif -%}
+
+    {%- if btnLink != blank -%}
+      </a>
+    {%- else -%}
+      </div>
+    {%- endif -%}
+  </li>
+{%- endif -%}

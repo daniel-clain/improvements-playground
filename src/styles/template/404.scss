@@ -1,0 +1,32 @@
+// Settings, Tools, Utilities
+@import '../base';
+
+.c-404 {
+  padding: 5rem $s-gutter--edge-mobile;
+  height: 59vh;
+  text-align: center;
+
+  &__pretitle {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__btn {
+    margin-top: 2rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__pretitle {
+      margin-bottom: 1rem;
+    }
+
+    &__btn {
+      margin-top: 2rem;
+    }
+  }
+}

@@ -1,0 +1,228 @@
+/*
+ *  Article Thumbnail
+ *    Styles for the article thumbnail object
+ *    is-alternate - state for the rectangular thumbnail with a white background
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/20
+ */
+
+.o-article-thumbnail {
+  position: relative;
+  padding-bottom: 4.1875rem;
+
+  .is-alternate & {
+    padding: 0;
+
+    &:after {
+      content: '';
+      position: absolute;
+      transform: translateX(-50%);
+      bottom: -0.5rem;
+      left: 50%;
+      width: 81.5%;
+      height: 39%;
+      background: $s-color--secondary;
+      filter: blur(1.5rem);
+      opacity: 0.1;
+    }
+  }
+
+  &__image {
+    overflow: hidden;
+    border-radius: 0.5rem;
+
+    .is-featured & {
+      border-radius: 0;
+    }
+
+    .is-alternate & {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &-container {
+      display: block;
+      // padding-bottom: 100.53%; Changed at client's request
+      padding-bottom: 55.5%;
+      margin: 0 2.5rem;
+      overflow: visible;
+      position: relative;
+
+      .is-featured & {
+        padding-bottom: 64%;
+        margin: 0;
+      }
+
+      .is-alternate & {
+        margin: 0;
+        padding-bottom: 46.65%;
+      }
+
+      &:after {
+        .is-featured &, .is-alternate & { 
+          display: none; 
+        }
+
+        content: '';
+        width: 90%;
+        position: absolute;
+        bottom: t-to-rem(-8);
+        height: 10%;
+        background: rgba($s-color--dark-blue, 0.1);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+        filter: blur(40px);
+        border-radius: t-to-rem(16);
+      }
+    }
+  }
+
+  &__content {
+    display: block;
+    padding: 1.6rem $s-gutter--edge-mobile 0 $s-gutter--edge-mobile;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    .is-alternate & {
+      background: $s-color--background;
+      border-bottom-left-radius: $s-image--border-radius-default;
+      border-bottom-right-radius: $s-image--border-radius-default;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  &__tag {
+    margin: 0 0 0.5rem;
+    color: $s-color--quartenary;
+  }
+
+  &__title {
+    margin: 0 0 1rem;
+  }
+
+  &__description {
+    margin: 0 0 1.6rem;
+  }
+
+  &__read-time {
+    .is-alternate & { opacity: 0.6; }
+  }
+
+  @include t-media-query($s-small-up) {
+
+    &__content {
+      .is-featured & {
+        margin: 0 $s-gutter--edge-small;
+      }
+    }
+  }
+
+  /*** Media Queries ***/
+  @include t-media-query($s-medium-up) {
+    display: inline-flex;
+    width: #{'calc((100% - 10px)/3)'};
+    flex-direction: column;
+    padding: 0 2.5rem;
+
+    &.is-featured {
+      flex-direction: row;
+      width: 100%;
+      padding: 6.25% 2.5rem;
+    }
+
+    &__image {
+      .is-featured & {
+        border-radius: 1rem;
+      }
+
+      .is-alternate & {
+        border-top-left-radius: $s-image--border-radius-medium;
+        border-top-right-radius: $s-image--border-radius-medium;
+      }
+
+      &-container {
+        // padding-bottom: 114.28%;
+        margin: 0;
+
+        .is-featured & {
+          order: 2;
+          flex-shrink: 0;
+          width: 65.21%;
+          padding-bottom: 34.78%;
+        }
+      }
+    }
+
+    &__content {
+      padding: 2.25rem 1rem 0 1rem;
+      height: 100%;
+
+      &-wrapper {
+        flex: 1;
+      }
+
+      .is-featured & {
+        text-align: left;
+        padding: 0;
+        margin: 0;
+
+        &-wrapper {
+          order: 1;
+          padding: 0 6% 0 2.2%;
+          align-self: center;
+        }
+      }
+
+      .is-image-left & {
+        &-wrapper {
+          padding: 0 0 0 6.5%;
+          order: 2;
+        }
+      }
+
+      .is-alternate & {
+        padding-bottom: 2.25rem;
+        border-bottom-left-radius: $s-image--border-radius-medium;
+        border-bottom-right-radius: $s-image--border-radius-medium;
+      }
+    }
+
+    &__tag {
+      .is-featured & {
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    &__title {
+      font-size: 1.5rem;
+      max-width: 20rem;
+      margin: 0 auto 1rem auto;
+
+      .is-featured & {
+        max-width: none;
+        font-size: 2.5rem;
+        margin-bottom: 1.25rem;
+      }
+    }
+
+    &__description {
+      .is-featured & {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__content {
+      padding: 3rem 1rem 0 1rem;
+
+      .is-alternate & {
+        padding-bottom: 3.5rem;
+      }
+    }
+  }
+}

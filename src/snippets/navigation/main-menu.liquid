@@ -1,0 +1,127 @@
+{%- comment -%}
+  Main Menu
+    Snippet for use as the desktop and mobile menus.
+
+  Version:
+    1.0.0 2021/04/08
+{%- endcomment -%}
+
+{%- liquid 
+  assign additionalLinks = section.blocks | where: 'type', 'additionalLink'
+  assign logoAlt = 'general.header.logo_title' | t
+-%}
+
+<nav class="c-main-menu" data-main-menu>
+
+  {%- comment -%} Mobile only close & Logo {%- endcomment -%}
+  <div class="c-main-menu__header">
+    <button class="c-main-menu__close" data-menu-toggle>
+      {%- render 'object.icon' with {
+        icon: 'close',
+        class: 'c-main-menu__close-icon'
+      } -%}
+    </button>
+  
+    <a
+      href="{{ routes.root_url }}" 
+      title="{{ 'general.header.logo_title' | t }}"
+      class="c-main-menu__logo-container"
+    >
+      {%- render 'object.icon' with {
+        icon: 'logo',
+        class: 'c-main-menu__logo',
+        alt: logoAlt
+      } -%}
+    </a>
+  </div>
+
+  <div class="c-main-menu__list-container">
+
+    {%- comment -%} Top Level Links Iteration {%- endcomment -%}
+    <ul class="c-main-menu__list is-level-1 is-submenu-open" data-menu-submenu="1">
+
+      {%- comment -%} Mobile search bar {%- endcomment -%}
+      <li>
+        {%- render 'search-bar', class: 'c-main-menu__search' -%}
+      </li>
+
+      {%- for link in menu.links -%}
+        {%- liquid
+          assign hasSubmenu = false
+          if link.links.size > 0
+            assign hasSubmenu = true
+          endif
+          assign linkActive = false
+          assign linkLower = link.title | downcase
+          if linkLower contains 'shop' and template contains 'product' or template contains 'collection'
+            assign linkActive = true
+          elsif linkLower contains 'explore' and template contains 'blog' or template contains 'article'
+            assign linkActive = true
+          endif
+        -%}
+        <li class="c-main-menu__item">
+          <a
+            href="{{ link.url }}"
+            title="{{ link.title | escape }}"
+            class="c-main-menu__link
+              {% if hasSubmenu %}is-menu-trigger{% endif %}
+              {% if linkActive %}is-active{% endif %}
+              {% if forloop.last %}is-last-link{% endif %}"
+            data-submenu-handle="{{ link.title | handle }}"
+            {% if hasSubmenu %}data-submenu-toggle{% endif %}
+          >
+            <span class="c-main-menu__link-inner">
+              {{- link.title | escape -}}
+            </span>
+
+            {%- if hasSubmenu -%}
+              {%- render 'object.icon' with {
+                icon: 'arrow--right--black',
+                class: 'c-main-menu__link-icon'
+              } -%}
+            {%- endif -%}
+          </a>
+
+          {%- comment -%} Submenu for this link {%- endcomment -%}
+          {%- if hasSubmenu -%}
+            {%- render 'main-menu--submenu' with { link: link } -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      {%- comment -%} Additional Links from section blocks {%- endcomment -%}
+      {%- for link in additionalLinks -%}
+        {%- if link.settings.url == blank or link.settings.title == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign additionalCount = additionalCount | plus: 1 -%}
+
+        <li class="c-main-menu__item is-additional {% if additionalCount == 1 %}is-first{% endif %}">
+          <a
+            href="{{ link.settings.url }}"
+            title="{{ link.settings.title | escape }}"
+            class="c-main-menu__link is-additional"
+            {% if link.settings.url == '#regionSelector' -%}
+              data-region-toggle
+            {%- endif -%}
+          >
+            {%- if link.settings.icon != blank -%}
+              {{- link.settings.icon -}}
+            {%- endif -%}
+            {{- link.settings.title | escape -}}
+
+            {%- if link.settings.url == '#regionSelector' -%}
+              {%- render 'object.icon' with {
+                icon: 'arrow--right--black',
+                class: 'c-main-menu__link-icon'
+              } -%}
+            {%- endif -%}
+          </a>
+        </li>
+      {%- endfor -%}
+
+    </ul>
+  </div>
+
+</nav>
+<div class="o-drawer__background c-main-menu__background" data-menu-toggle></div>

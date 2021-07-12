@@ -1,0 +1,156 @@
+{%- comment -%}
+
+  Contact Details and Form
+
+  Version:
+  1.0.0 - 2021/04/20
+
+{%- endcomment -%}
+
+{%- liquid 
+  assign description = section.settings.description | default: page.title
+  assign detailsTitle = section.settings.details-title
+  assign detailsDescription = section.settings.details-text
+  assign faqTitle = section.settings.faq-title
+  assign faqDescription = section.settings.faq-description
+-%}
+
+{%- comment -%} Contact Heading {%- endcomment -%}
+<div class="c-contact" data-contact>
+
+  <p class="c-contact__description o-paragraph">
+    {{- description -}}
+  </p>
+
+  {%- if section.settings.title != blank -%}
+    <h1 class="c-contact__title o-heading--4">
+      {{- section.settings.title -}}
+    </h1>
+  {%- endif -%}
+
+  {%- comment -%} Contact Form Section {%- endcomment -%}
+  <section class="c-contact__section c-contact__section--form">
+    <h5 class="c-contact__section-heading c-contact__heading--form o-heading--6">
+      {{- 'contact.form.title' | t -}}
+    </h5>
+    <p class="c-contact__section-subheading">
+      {{- section.settings.subheading -}}
+    </p>
+
+    {%- comment -%} Contact Form {%- endcomment -%}
+    {%- render 'form.contact' with {
+      selectBlocks: section.blocks
+    } -%}
+
+  </section>
+
+  {%- comment -%} Contact Info Section {%- endcomment -%}
+
+  {%- if detailsTitle != blank or detailsDescription != blank -%}
+    <section class="c-contact__section c-contact__section--info">
+      <h5 class="c-contact__section-heading o-heading--6">
+        {{- detailsTitle -}}
+      </h5>
+      <div class="c-contact__section-text">
+        {{- detailsDescription -}}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- render 'faq-accordion', with {
+    title: faqTitle,
+    description: faqDescription,
+    blocks: section.blocks,
+    class: "c-contact__faq"
+  } -%}
+</div>
+
+{% schema %}
+{
+  "name": "Contact Section",
+  "class": "c-section c-section__contact-template",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Contact Page Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Contact Page Subheading",
+      "info": "Leave blank for default page name."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Contact Form Subheading",
+      "default": "You can contact us 24/7"
+    },
+    {
+      "type": "text",
+      "id": "details-title",
+      "label": "Contact Details Title"
+    },
+    {
+      "type": "richtext",
+      "id": "details-text",
+      "label": "Contact Details Text"
+    },
+    {
+      "type": "text",
+      "id": "faq-title",
+      "label": "FAQ Title",
+      "default": "Get your answer fast..."
+    },
+    {
+      "type": "text",
+      "id": "faq-description",
+      "label": "FAQ Description",
+      "default": "FAQ"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Contact FAQ Category",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Category Title",
+          "info": "This is the category for questions, i.e. Delivery."
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Contact FAQ Answer",
+      "settings": [
+        {
+          "id": "category",
+          "type": "text",
+          "label": "Category Title",
+          "info": "Category name for this question. Must match exactly what is entered for the Category Title, i.e. Delivery."
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Question",
+          "info": "The question, i.e. Can I pay with PayPal?"
+        },
+        {
+          "id": "answer",
+          "type": "richtext",
+          "label": "Answer/Content",
+          "info": "The answer content."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

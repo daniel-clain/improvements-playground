@@ -1,0 +1,103 @@
+/*
+ * Styling for Blog Listing Header snippet
+ *
+ * v1.0.0 - 2021/04/26
+ */
+ 
+.c-blog-header {
+  &__headings {
+    background-color: $s-color--background-tertiary;
+    padding: 3rem 0.5rem 3.2rem 0.5rem;
+  }
+
+  &__title {
+    text-align: center;
+    margin: 0;
+  }
+
+  &__description {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  &__tags {
+    display: block;
+    padding: 1rem 1.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 1.5rem;
+    -webkit-scroll-snap-type: mandatory;
+    -webkit-scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-points-x: repeat(100%);
+    background-color: $s-color--background;
+    scrollbar-width: none;
+  }
+
+  &__tag {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: $s-font--weight-bold;
+    font-size: 0.75rem;
+    line-height: 2;
+    scroll-snap-align: start;
+    -webkit-scroll-snap-align: start;
+    -webkit-scroll-snap-coordinate: 0 0;
+
+    &:not(:last-child) {
+      margin-right: 3.5rem
+    }
+
+    &.is-active:after {
+      content: "";
+      display: block;
+      position: relative;
+      width: 100%;
+      bottom: 0.3rem;
+      border-bottom: 1px solid $s-color--background-quartenary;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__headings {
+      padding: 4.3rem 0 5rem 0;
+    }
+
+    &__description {
+      margin-bottom: 1rem;
+    }
+
+    &__tags {
+      text-align: center;
+      padding: 2rem 2rem 1.5rem;
+      scrollbar-width: 0.5rem;
+      scrollbar-color: $s-color--scrollbar-thumb $s-color--scrollbar-track;
+
+      &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        height: 0.5rem;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $s-color--scrollbar-track;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 0.125rem;
+        background-color: $s-color--scrollbar-thumb;
+      }
+    }
+
+    &__tag {
+      font-size: 0.875rem;
+      line-height: 1.7;
+
+      &.is-active:after {
+        bottom: 0.2rem;
+      }
+    }
+  }
+}

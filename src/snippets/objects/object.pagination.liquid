@@ -1,0 +1,13 @@
+{%- comment -%}
+  Pagination
+    Standard pagination controls
+
+    For compatibility we're going to use the standard Shopfiy Pagination, use
+    CSS to do any advanced customization.
+
+  Version:
+    2.0.0 - 2018/01/16
+{%- endcomment -%}
+<div class="o-pagination">
+  {{ paginate | default_pagination }}
+</div>

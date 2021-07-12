@@ -1,0 +1,24 @@
+{%- comment -%} Generate default JSON {%- endcomment -%}
+{%- assign cartJson = cart | json -%}
+
+{%- comment -%} Extra JSON to extend onto default JSON {%- endcomment -%}
+{%- capture extend -%}
+  "items_with_product": [
+    {%- liquid
+      for item in cart.items
+        render 'json.cart-item' with { cart: cart, item: item }
+
+        unless forloop.last
+          echo ','
+        endunless
+      endfor
+    -%}
+  ]
+{%- endcapture -%}
+
+{%- comment -%} Perform Ammend {%- endcomment -%}
+{%- render 'tool.append-json' with {
+  jsonData: cartJson,
+  extra: extend,
+  dump: true
+} -%}

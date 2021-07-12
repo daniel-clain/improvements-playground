@@ -1,0 +1,44 @@
+{%- comment -%}
+  Topbar Snippet
+    Top bar to sit inside the header.
+
+  Version:
+    1.0.0 2021/04/08
+{%- endcomment -%}
+
+{% if blocks.size > 0 %}
+  <div
+    class="c-topbar o-carousel"
+    data-topbar
+    data-autoplay="{{ autoplay }}"
+    data-autoplay-speed="{{ speed }}"
+  >
+    <div class="c-topbar__messages"
+      {% if blocks.size > 1 %}data-carousel{% endif -%}
+    >
+      {%- comment -%} Topbar Messages {%- endcomment -%}
+      {%- for block in blocks -%}
+        {%- if block.settings.title == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign url = block.settings.url -%}
+
+        {%- if url != blank -%}
+          <a href="{{ url }}" class="c-topbar__message">
+        {%- else -%}
+          <div class="c-topbar__message o-link">
+        {%- endif -%}
+          {{- block.settings.title | escape -}}
+        {%- if url != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+
+      {%- endfor -%}
+    </div>
+
+    {%- if blocks.size > 1 -%}
+      {%- render 'object.carousel-controls' with { arrows: true } -%}
+    {%- endif -%}
+
+  </div>
+{%- endif -%}

@@ -1,0 +1,82 @@
+{%- comment -%}
+  Home Message
+    Simple section to display a message, title and button for the home page.
+
+  Version
+    1.0.0 - 2020/09/07
+{%- endcomment -%}
+
+{%- liquid
+  assign title = section.settings.title
+  assign sectionStyle = section.settings.sectionStyle
+  assign btnLink = section.settings.btnLink
+  assign btnLabel = section.settings.btnLabel
+  assign isAlternate = false
+  if sectionStyle == 'is-alternate' or sectionStyle == 'is-beige'
+    assign isAlternate = true
+  endif
+-%}
+
+{%- if title != blank -%}
+  <section class="c-home-message {{ sectionStyle }}">
+
+    <h2
+      class="c-home-message__title
+        {% unless isAlternate %}o-heading--4{% endunless %}"
+    >
+      {{- title | remove: '<p>' | remove: '</p>' -}}
+    </h2>
+
+    {%- if btnLink != blank and btnLabel != blank -%}
+      <a
+        href="{{ btnLink }}" title="{{ btnLabel | escape }}"
+        class="o-btn is-wide c-home-message__btn"
+      >
+        {{- btnLabel | escape -}}
+      </a>
+    {%- endif -%}
+
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Home Message",
+    "class": "c-section c-section__home-message",
+    "settings": [
+      {
+        "id": "title",
+        "type": "richtext",
+        "label": "Message",
+        "info": "Use the bold 'B' button of this text box to make certain characters bold."
+      },
+      {
+        "id": "sectionStyle",
+        "type": "select",
+        "label": "Section Style",
+        "options": [
+          {"value": "is-default", "label": "Black on white, smaller title"},
+          {"value": "is-alternate", "label": "White on blue, larger title"},
+          {"value": "is-beige", "label": "Black on beige, larger title"}
+        ],
+        "default": "is-default"
+      },
+      {
+        "id": "btnLink",
+        "type": "url",
+        "label": "Button Link"
+      },
+      {
+        "id": "btnLabel",
+        "type": "text",
+        "label": "Button Label"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Message",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,211 @@
+/*
+ *  Footer Styles
+ *    Styles for the Footer component.
+ *
+ *  Version:
+ *    1.0.0 - 2020/02/22
+ */
+
+.c-footer {
+  background: $s-color--background-senary;
+
+  &__inner {
+    padding-top: 2.5rem;
+  }
+
+  //Logo container and SVG from the customiser
+  &__logo {
+    display: block;
+    width: 12rem;
+    margin: 0 auto;
+  }
+
+  &__social {
+    justify-content: space-evenly;
+    opacity: 0.6;
+    padding-top: 1rem;
+    border-top: 1.5px solid $s-color--border-light;
+
+    &.is-desktop {
+      display: none;
+    }
+  }
+
+  //Lower Row
+  &__lower {
+    background: $s-color--background;
+
+    &-inner {
+      padding: 1.25rem $s-gutter--edge-mobile;
+    }
+
+    &-links {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    &-link {
+      margin-right: 1.5rem;
+      font-size: 0.75rem;
+      opacity: 0.55;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  //Store Selector and Store Selector Links
+  &__store-selector {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding-top: 1rem;
+    border-top: 1px solid $s-color--border-light;
+
+    &-title {
+      font-size: 0.75rem;
+    }
+
+    &.is-desktop {
+      display: none;
+    }
+  }
+
+  &__copyright {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  &__newsletter {
+    &-form {
+      max-width: 35rem;
+      margin: 0 auto;
+
+      &-container {
+        padding: 2.25rem 1.5rem 2.5rem;
+      }
+
+      .o-newsletter-form__success {
+        text-align: center;
+      }
+    }
+
+    &-title {
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+  }
+
+  /*==== Media Queries ====*/
+
+  @include t-media-query($s-medium-up) {
+    &__inner {
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 3.5rem #{'min(4%, 5rem)'} 4.5rem;
+      max-width: 125rem;
+      margin: 0 auto;
+    }
+
+    &__logo {
+      position: static;
+      max-width: 15.75rem;
+      width: 100%;
+      margin: 0;
+    }
+
+    &__lower {
+      &-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.75rem #{'min(2%, 2.5rem)'};
+        max-width: 125rem;
+        margin: 0 auto;
+      }
+
+      &-left {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+      }
+
+      &-links {
+        margin: 0;
+      }
+
+      &-link {
+        font-size: 1rem;
+      }
+    }
+
+    &__social {
+      border-top: none;
+      opacity: 1;
+      justify-content: left;
+      margin-bottom: 0;
+
+      &.is-mobile {
+        display: none;
+      }
+      &.is-desktop {
+        display: flex;
+      }
+    }
+
+    &__store-selector {
+      border-top: none;
+      width: 40.05%;
+      padding: 0;
+      justify-content: left;
+
+      &.is-mobile {
+        display: none;
+      }
+
+      &.is-desktop {
+        display: flex;
+      }
+    }
+
+    &__copyright {
+      margin: 0;
+      margin-right: 1.5rem;
+      text-align: left;
+    }
+
+    &__newsletter {
+      &-form {
+        margin-bottom: 0.75rem;
+        margin-left: 0;
+        width: 35rem;
+
+        &-container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          text-align: left;
+          padding: 2.5rem 0 0;
+        }
+
+        .o-newsletter-form__success {
+          text-align: left;
+          font-size: 1rem;
+        }
+      }
+
+      &-title {
+        margin-bottom: 1.875rem;
+        text-align: left;
+      }
+    }
+  }
+}

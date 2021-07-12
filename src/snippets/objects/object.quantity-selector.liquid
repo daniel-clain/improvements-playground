@@ -1,0 +1,97 @@
+{%- comment -%}
+  Cart Page Quantity Selector
+    Quantity Selector for the Cart Page.
+
+  Params:
+    quantity - Default quantity (defaults to 1)
+    class - (Optional) String used as class for container.
+    name - (Optional) String used as name for the input field, defaults to "quantity"
+    min - Minimum possible value for the quantity selector (defaults to 0)
+    max - Maximum possible value for the quantity selector (defaults to null (no max))
+    lineindex - Number used for line attribute
+    item - Object containing line item data
+
+
+  Version:
+    1.0.0 - 2020/11/28
+{%- endcomment -%}
+
+{%- comment -%} Setup Defaults {%- endcomment -%}
+{%- if quantity == blank -%}{%- assign quantity = 1 -%}{%- endif -%}
+{%- if min == blank -%}{%- assign min = "0" -%}{%- endif -%}
+{%- if max == blank -%}{%- assign max = "null" -%}{%- endif -%}
+{%- if name == blank -%}{%- assign blank = 'quantity' -%}{%- endif -%}
+
+{%- comment -%} Convert string to int {%- endcomment -%}
+{%- if min != "null" -%}{%- assign min = min | plus: 0 -%}{%- endif -%}
+{%- if max != "null" -%}{%- assign max = max | plus: 0 -%}{%- endif -%}
+{%- assign quantity = quantity | plus: 0 -%}
+
+{%- comment -%} Enable / Disable based on state {%- endcomment -%}
+{%- assign minusDisabled = false -%}
+{%- assign plusDisabled = false -%}
+{%- assign inputDisabled = false -%}
+{%- if min != "null" and quantity <= min -%}{%- assign minusDisabled = true -%}{%- endif -%}
+{%- if max != "null" and quantity >= max -%}{%- assign plusDisabled = true -%}{%- endif -%}
+{%- if max != "null" and min >= max -%}{%- assign inputDisabled = true -%}{%- endif -%}
+
+<quantity-selector
+  class="o-quantity-selector {% if class != blank %}{{ class }}{% endif %}"
+  data-quantity-selector min="{{ min }}" max="{{ max }}" quantity="{{ quantity }}"
+  line="{{ lineIndex }}"
+>
+  <div class="o-quantity-selector__inner has-js">
+    {%- comment -%} Minus button {%- endcomment -%}
+    <a
+      href="/cart/change?line={{ lineIndex }}&amp;quantity={{quantity | minus: 1}}" class="
+        o-quantity-selector__button is-minus
+        {% if minusDisabled %}is-disabled{% endif %}
+      "
+      {% if minusDisabled %}disabled{% endif %} data-quantity-selector-minus
+    >
+      {%- render 'object.icon' with {
+        icon: 'minus',
+        class: 'o-quantity-selector__icon is-minus'
+      } -%}
+    </a>
+
+    <div class="o-quantity-selector__input">
+      <input
+        type="number"
+        readonly
+        class="o-input o-quantity-selector__input-field {% if inputDisabled %}is-disabled{% endif %}"
+        value="{{ quantity }}" data-quantity-selector-field {% if inputDisabled %}disabled{% endif %}
+        name="{{ name }}"
+      />
+    </div>
+
+    {%- comment -%} Plus button {%- endcomment -%}
+    <a
+      href="/cart/change?line={{ lineIndex }}&amp;quantity={{quantity | plus: 1}}" class="
+        o-quantity-selector__button is-plus
+        {% if plusDisabled %}is-disabled{% endif %}
+      "
+      {% if plusDisabled %}disabled{% endif %} data-quantity-selector-plus
+    >
+      {%- render 'object.icon' with {
+        icon: 'plus',
+        class: 'o-quantity-selector__icon is-plus'
+      } -%}
+    </a>
+  </div>
+
+  {% comment %} No Javascript Fallback {% endcomment %}
+  <div class="no-js">
+    <input
+      type="text"
+      type="number"
+      name="updates[]"
+      id="updates_{{ item.key }}"
+      value="{{ item.quantity }}"
+      min="0"
+      pattern="[0-9]*"
+      class="c-cart__quantity"
+      title="{{- 'general.cart.quantity' | t -}}"
+    />
+  </div>
+</quantity-selector>

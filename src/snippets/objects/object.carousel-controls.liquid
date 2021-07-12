@@ -1,0 +1,38 @@
+<div
+  class="o-carousel__controls {% if dots == true and arrows != true %}is-dots{% endif %}"
+  data-carousel-controls
+>
+  {%- if arrows -%}
+    <button class="o-carousel__arrow is-previous" data-carousel-previous>
+      {%- render 'object.icon' with {
+        icon: 'arrow--left', class: 'o-carousel__arrow-icon'
+      } -%}
+    </button>
+
+    <button class="o-carousel__arrow is-next" data-carousel-next>
+      {%- render 'object.icon' with {
+        icon: 'arrow--right', class: 'o-carousel__arrow-icon'
+      } -%}
+    </button>
+  {%- endif -%}
+
+  {%- if dots or slideSize != blank -%}
+    <div class="o-carousel__dots">
+      {%- if slideSize != blank -%}
+        {%- for i in (1..slideSize) -%}
+          <button class="o-carousel__dot" data-carousel-dot 
+            data-index="{{ forloop.index0 }}"
+            title="slide{{- forloop.index1 -}}"
+          ></button>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in blocks -%}
+          <button class="o-carousel__dot" data-carousel-dot 
+            data-index="{{ forloop.index0 }}"
+            title="slide{{- forloop.index1 -}}"
+          ></button>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

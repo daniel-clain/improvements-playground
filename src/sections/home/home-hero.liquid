@@ -1,0 +1,369 @@
+{% comment %}
+  Home Hero Banner
+    Hero banner section for the home page. Banner can be video or image
+    with content over the top. 
+
+  Version:
+    1.0.0 - 2021/04/09
+{% endcomment %}
+
+{%- liquid
+  assign autoplay = section.settings.autoplayEnabled
+  assign speed = section.settings.autoplaySpeed
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section
+    class="c-home-hero"
+    {% if section.blocks.size > 1 %}data-home-hero{% endif %}
+    data-autoplay="{{ autoplay }}"
+    data-autoplay-speed="{{ speed }}"
+    data-section
+  >
+    <div class="c-home-hero__carousel" data-carousel>
+      {%- for block in section.blocks -%}
+
+        {%- liquid
+          assign bls = block.settings
+          assign imageDesktop = bls.image
+          assign videoDesktop = bls.video
+          if imageDesktop == blank and videoDesktop == blank
+            continue
+          endif
+          assign imageCrop = block.settings.imageCrop
+          assign imageMobile = bls.imageMobile
+          assign videoMobile = bls.videoMobile
+          assign title = bls.title
+          assign description = bls.description
+          assign clickable = bls.clickable
+          assign btnLink = bls.btnLink
+          assign btnLabel = bls.btnLabel
+          assign hasBtn = false
+          if btnLink != blank and btnLabel != blank
+            assign hasBtn = true
+          endif
+          assign btnLink2 = bls.btnLink2
+          assign btnLabel2 = bls.btnLabel2
+          assign hasBtn2 = false
+          if btnLink2 != blank and btnLabel2 != blank
+            assign hasBtn2 = true
+          endif
+        -%}
+
+        {%- if btnLink != blank and clickable -%}
+          <a
+            href="{{ btnLink }}"
+            title="{{ btnLabel | escape }}"
+            class="c-home-hero__slide"
+          >
+        {%- else -%}
+          <div class="c-home-hero__slide">
+        {%- endif -%}
+
+        <div class="c-home-hero__media-container o-responsive-image-container">
+
+          {%- capture mediaClass -%}
+            c-home-hero__media o-responsive-image is-crop-{{ imageCrop }}
+            {% if imageMobile != blank %}has-mobile{% endif %}
+          {%- endcapture -%}
+
+          {%- if videoDesktop != blank -%}
+            {%- render 'object.html5-video' with {
+              videoUrlMp4: videoDesktop,
+              autoplay: true,
+              poster: imageDesktop,
+              posterWidth: 1600,
+              class: mediaClass
+            } -%}
+          {%- else -%}
+            {%- render 'tool.picture' with {
+              image: imageDesktop,
+              class: mediaClass,
+              alt: title,
+              width: 2560,
+              sizes: '374,750,1100,1650,2000'
+            } -%}
+          {%- endif -%}
+
+          {%- comment -%} Mobile Video or Image {%- endcomment -%}
+          {%- if videoMobile != blank or imageMobile != blank -%}
+            {%- capture mediaClass -%}
+              c-home-hero__media o-responsive-image is-mobile
+            {%- endcapture -%}
+            {%- if videoMobile != blank -%}
+              {%- render 'object.html5-video' with {
+                videoUrlMp4: videoMobile,
+                autoplay: true,
+                poster: imageMobile,
+                posterWidth: 750,
+                class: mediaClass
+              } -%}
+            {%- else -%}
+              {%- render 'tool.picture' with {
+                image: imageMobile,
+                class: 'c-home-hero__media o-responsive-image is-mobile',
+                alt: title,
+                width: 750,
+                lazy: false,
+                sizes: '374,450,750'
+              } -%}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Overlaid Content {%- endcomment -%}
+        {%- if title != blank or description != blank or hasBtn -%}
+          <div
+            class="c-home-hero__overlay
+              s-overlay--{{ bls.overlayPosition }}
+              s-align--{{ bls.overlayAlign }}
+              s-color--{{ bls.overlayColor }}"
+          >
+            {%- if title != blank and description != blank -%}
+              <div class="c-home-hero__titles">
+                {%- if title != blank -%}
+                  {%- if forloop.first -%}
+                    <h1 class="c-home-hero__title">
+                      {{- title | newline_to_br -}}
+                    </h1>
+                  {%- else -%}
+                    <h2 class="o-heading--1 c-home-hero__title">
+                      {{- title | newline_to_br -}}
+                    </h2>
+                  {%- endif -%}
+                {%- endif -%}
+                {%- if description != blank -%}
+                  <p class="c-home-hero__description o-type--4">
+                    {{- description | newline_to_br -}}
+                  </p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {% comment %} Slide Buttons {% endcomment %}
+            <div class="c-home-hero__btns {% if hasBtn2 %}has-two-btn{% endif %}">
+              {%- capture btnClass -%}
+                c-home-hero__btn o-btn
+                {% if bls.overlayColor != 'white' %}is-secondary{% endif %}
+              {%- endcapture -%}
+              {%- if hasBtn -%}
+                {%- if bls.clickable == false -%}
+                  <a
+                    href="{{ btnLink }}" title="{{ btnLabel | escape }}"
+                    class="{{ btnClass}}"
+                  >
+                    {{- btnLabel | escape -}}
+                  </a>
+                {%- else -%}
+                  <button class="{{ btnClass}}">
+                    {{- btnLabel | escape -}}
+                  </button>
+                {%- endif -%}
+              {%- endif -%}
+
+              {%- if hasBtn2 and bls.clickable == false -%}
+                <a
+                  href="{{ btnLink2 }}" title="{{ btnLabel2 | escape }}"
+                  class="{{ btnClass}}"
+                >
+                  {{- btnLabel2 | escape -}}
+                </a>
+              {%- endif -%}
+            </div>
+
+          </div>
+
+        {%- endif -%}
+
+        {%- if btnLink != blank and clickable -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+
+      {%- endfor -%}
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      {%- render 'object.carousel-controls' with { dots: true, blocks: section.blocks } -%}
+    {%- endif -%}
+
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Home Hero Banner",
+    "class": "c-section c-section__home-hero",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Home Hero Banner Carousel"
+      },
+      {
+        "type": "header",
+        "content": "Carousel Settings"
+      },
+      {
+        "id": "autoplayEnabled",
+        "type": "checkbox",
+        "label": "Autoplay",
+        "default": false
+      },
+      {
+        "id": "autoplaySpeed",
+        "type": "range",
+        "min": 1,
+        "max": 20,
+        "label": "Autoplay Speed",
+        "default": 3
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Media Content"
+          },
+          {
+            "type": "text",
+            "id": "video",
+            "info": "Videos can be uploaded via 'Settings'>'Files'>'Upload files'. Maximum file size is 20MB. Please try to keep the file size under 2MB. Leave blank to display hero image instead. Videos will be muted. Aim for dimensions of 2000x800px.",
+            "label": "Hero Video - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "videoMobile",
+            "info": "Videos can be uploaded via 'Settings'>'Files'>'Upload files'. Please try to keep the file size under 2MB. Aim for dimensions of 500x640px.",
+            "label": "Hero Video - Mobile"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Slide Image",
+            "info": "Please upload a .jpg of at least 2000x800px. Image will be used as a poster for the video if a video is set."
+          },
+          {
+            "type": "select",
+            "id": "imageCrop",
+            "label": "Desktop Media Crop",
+            "info": "Where is the focal point of your image located? Crop position for larger screens only.",
+            "options": [
+              {"value": "top-left", "label": "Top Left"},
+              {"value": "top-center", "label": "Top Centre"},
+              {"value": "top-right", "label": "Top Right"},
+              {"value": "middle-left", "label": "Middle Left"},
+              {"value": "middle-center", "label": "Middle Centre"},
+              {"value": "middle-right", "label": "Middle Right"},
+              {"value": "bottom-left", "label": "Bottom Left"},
+              {"value": "bottom-center", "label": "Bottom Centre"},
+              {"value": "bottom-right", "label": "Bottom Right"}
+            ],
+            "default": "middle-center"
+          },
+          {
+            "id": "imageMobile",
+            "type": "image_picker",
+            "label": "Slide Image - Mobile",
+            "info": "If left blank the Desktop image will be used. Image will be used as a poster for the video if a video is set. Please upload a .jpg of at least 750x960px."
+          },
+          {
+            "type": "header",
+            "content": "Image Overlay"
+          },
+          {
+            "id": "title",
+            "type": "textarea",
+            "label": "Image Overlay Title"
+          },
+          {
+            "id": "description",
+            "type": "textarea",
+            "label": "Image Overlay Description"
+          },
+          {
+            "id": "btnLink",
+            "type": "url",
+            "label": "Link"
+          },
+          {
+            "id": "btnLabel",
+            "type": "text",
+            "label": "Button Label",
+            "info": "Leave blank to hide the button."
+          },
+          {
+            "id": "btnLink2",
+            "type": "url",
+            "label": "Additional Button Link"
+          },
+          {
+            "id": "btnLabel2",
+            "type": "text",
+            "label": "Additiuonal Button Label",
+            "info": "Leave blank to hide the button."
+          },
+          {
+            "id": "overlayPosition",
+            "type": "select",
+            "label": "Overlay Position - Desktop",
+            "info": "Where would you like the content to be positioned on larger screens?",
+            "options": [
+              {"value": "top-left", "label": "Top Left"},
+              {"value": "top-center", "label": "Top Centre"},
+              {"value": "top-right", "label": "Top Right"},
+              {"value": "middle-left", "label": "Middle Left"},
+              {"value": "middle-center", "label": "Middle Centre"},
+              {"value": "middle-right", "label": "Middle Right"},
+              {"value": "bottom-left", "label": "Bottom Left"},
+              {"value": "bottom-center", "label": "Bottom Centre"},
+              {"value": "bottom-right", "label": "Bottom Right"}
+            ],
+            "default": "middle-center"
+          },
+          {
+            "id": "overlayAlign",
+            "type": "select",
+            "label": "Text Alignment - Desktop",
+            "options": [
+              {"value": "left", "label": "Left"},
+              {"value": "center", "label": "Centre"},
+              {"value": "right", "label": "Right"}
+            ],
+            "default": "left"
+          },
+          {
+            "id": "overlayColor",
+            "type": "select",
+            "label": "Overlay Colour",
+            "options": [
+              {"value": "white", "label": "White"},
+              {"value": "black", "label": "Black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "header",
+            "content": "Settings"
+          },
+          {
+            "id": "clickable",
+            "type": "checkbox",
+            "label": "Entire media clickable?",
+            "default": false,
+            "info": "Only use this setting when only one call to action button is used."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Hero Banner",
+        "category": "Media"
+      }
+    ]
+  }
+{% endschema %}

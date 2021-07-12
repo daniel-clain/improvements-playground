@@ -1,0 +1,21 @@
+/*
+ * Order
+ */
+
+.c-order {
+  &__order-table {
+    width: 100%;
+
+    th, td {
+      white-space: nowrap;
+      vertical-align: baseline;
+      text-align: left;
+      padding-right: 1.5rem;
+      padding-bottom: .5rem;
+    }
+
+    &-container {
+      overflow-x: auto;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+@function t-to-rem($size) {
+  @if unitless($size) {
+    $size: $size * 1px;
+  }
+  @return $size / $s-font--root-size * 1rem;
+}

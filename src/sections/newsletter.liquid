@@ -1,0 +1,66 @@
+{%- comment -%}
+  Newsletter Section
+    - Displays a heading, image and customer sign up form
+
+  Version:
+    1.0.0 - 2021/05/11
+{%- endcomment -%}
+
+{%- liquid
+  assign title = section.settings.title
+  assign image = section.settings.image
+-%}
+
+<section class="c-newsletter">
+
+  {%- if image != blank -%}
+    <div class="c-newsletter__image-container o-responsive-image-container">
+      {%- render 'tool.picture' with {
+        image: image,
+        class: 'c-newsletter__image o-responsive-image',
+        alt: title,
+        width: 1000,
+        sizes: '374,750,1100,1650,2000',
+        imageSizes: '300,750,600,800,1000'
+      } -%}
+    </div>
+  {%- endif -%}
+
+  <div class="c-newsletter__form-container">
+    {%- comment -%} Newsletter Form {%- endcomment -%}
+    {%- if title != blank -%}
+      <h6 class="c-newsletter__title">
+        {{- title | escape -}}
+      </h6>
+    {%- endif -%}
+    {%- render 'form.newsletter', class: 'c-newsletter__form' -%}
+  </div>
+
+</section>
+
+{% schema %}
+  {
+    "name": "Newsletter",
+    "class": "c-section c-section__newsletter",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Keep up to date with everything."
+      },
+      {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Image",
+        "info": "Please upload in .jpg format and with dimensions of 1000x320px."
+      }
+    ],
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Newsletter"
+      }
+    ]
+  }
+{% endschema %}

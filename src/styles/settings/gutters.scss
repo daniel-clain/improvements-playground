@@ -1,0 +1,25 @@
+/*
+ *  Gutters
+ *    Settings for the various gutters
+ *
+ *  Version:
+ *    1.0.0 - 2020/10/19
+ */
+
+$s-gutter--edge-mobile: 1rem;
+$s-gutter--edge-small: 2rem;
+$s-gutter--edge-medium: 7%;
+$s-gutter--edge-medium-alt: #{'min(4%,5rem)'};
+// $s-gutter--edge-large: 5.5%;
+$s-gutter--edge-xlarge: #{'min(9.5%, 11.875rem)'};
+
+//Vertical spacing between sections
+$s-gutter--section-v-medium: #{'min(6%, 7.5rem)'};
+// $s-gutter--section-v-medium-alt: 0.5rem;
+// $s-gutter--section-v-xlarge: #{'min(9.4%, 11.5rem)'};
+// $s-gutter--section-v-xlarge-alt: 1rem;
+
+//Header Heights in settings
+$s-gutter--header-height-small: 6.5rem;
+$s-gutter--header-height-medium: 7.5rem;
+

@@ -1,0 +1,80 @@
+/*
+ *  Home Message
+ *    Styles for the simple message banner for the home page.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/09
+ */
+
+.c-home-message {
+  padding: 0 2.5rem;
+  margin: 2.5rem auto 0.875rem;
+  text-align: center;
+  max-width: 50rem;
+
+  //Alternate Style, white text on blue background
+  &.is-alternate, &.is-beige {
+    padding: 4.75rem $s-gutter--edge-mobile;
+    margin: 0;
+    background: $s-color--background-secondary;
+    color: $s-color--font-invert;
+    max-width: none;
+  }
+
+  &.is-beige {
+    background: $s-color--quinary;
+    color: $s-color--quinary-compliment;
+  }
+
+  &__title {
+    margin: 0 auto;
+
+    strong {
+      color: $s-color--quartenary;
+      font-weight: $s-font--root-weight;
+    }
+
+    .is-alternate &, .is-beige & {
+      max-width: 36rem;
+    }
+  }
+
+  &__btn {
+    margin-top: 1.5rem;
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-up) {
+    margin: #{'min(5.2%, 6.5rem)'} auto #{'min(2.8%, 3.5rem)'};
+
+    &.is-alternate, &.is-beige {
+      padding: #{'min(10.8%, 13.5rem)'} $s-gutter--edge-medium #{'min(9.2%, 11.5rem)'};
+    }
+
+    &__title {
+
+      .is-alternate &, .is-beige & {
+        max-width: 80rem;
+        width: 65vw;
+      }
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+
+    &__btn {
+      margin-top: 2.25rem;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    max-width: 60rem;
+
+    &__btn {
+      margin-top: 3rem;
+    }
+  }
+}

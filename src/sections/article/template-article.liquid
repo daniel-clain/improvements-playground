@@ -1,0 +1,121 @@
+{%- comment -%}
+  Article Page
+
+  v1.0.0 - 2021/02/17
+{%- endcomment -%}
+
+{%- comment -%} Assign Variables {%- endcomment -%}
+{%- liquid
+  capture readTime
+    render 'tool.article-read-time', content: article.content
+  endcapture
+-%}
+
+<article class="c-article" data-article-selector>
+  {%- render 'article-header' with {
+    readTime: readTime
+  } -%}
+
+  <div class="c-article__main">
+    <div class="c-article__content rte" data-article-content-selector>
+      {{- article.content -}}
+    </div>
+
+    {%- render 'object.social-share-row' with {
+      class: 'c-article__social-row'
+    } -%}
+
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign bs = block.settings
+        assign author = bs.author | handleize
+        assign articleAuthor = article.author | handleize
+        assign authorImage = bs.image
+      -%}
+
+      {%- if author == articleAuthor -%}
+        <div class="c-article__author">
+          <div class="c-article__author-image o-responsive-image__container">
+            {%- render 'tool.picture' with {
+              image: authorImage,
+              width: 750,
+              alt: article.title,
+              sizes: "374,750"
+            } -%}
+          </div>
+          <div class="c-article__author-wrapper">
+            <p class="c-article__author-name">
+              {{- 'articles.written_by' | t | append: ' ' -}}
+              {{- article.author -}}
+            </p>
+
+            {%- if bs.position != blank -%}
+              <p class="c-article__author-position">
+                {{- bs.position -}}
+              </p>
+            {%- endif -%}
+          </div>
+        </div>
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- render 'related-articles' with {
+    class: 'c-article-related',
+    relatedBlog: blog,
+    title: section.settings.related-title,
+    articleLimit: 3,
+    carousel: true
+  } -%}
+</article>
+
+{% schema %}
+{
+  "name": "Article Template",
+  "class": "c-section c-section__article-template",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Authors can be shown on each article's page by creating their profile in the details blocks above. Delete all blocks to hide the author information on blog posts."
+    },
+    {
+      "type": "text",
+      "id": "related-title",
+      "label": "Related Articles Title",
+      "default": "Further reading..."
+    },
+    {
+      "id": "showOverlay",
+      "type": "checkbox",
+      "label": "Show Title Overlay",
+      "default": false,
+      "info": "If set the title, author and read time will show over the article image on all pages. "
+    }
+  ],
+  "blocks": [
+    {
+      "type": "author-details",
+      "name": "Author details",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Author image",
+          "info": "Please upload a 1x1 image."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name"
+        },
+        {
+          "type": "text",
+          "id": "position",
+          "label": "Author position"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,65 @@
+{%- comment -%}
+  Related blogs articles
+
+  Version
+    1.0.0 - 2020/03/25
+{%- endcomment -%}
+
+<section
+  class="c-article-related {% if carousel == false %}is-alternate{% endif %}"
+  {% if carousel %}data-feature-blocks{% endif %}
+>
+  <div class="c-article-related__inner">
+
+    {%- if title != blank -%}
+      <h4 class="c-article-related__heading">
+        {{- title | escape -}}
+      </h4>
+    {%- endif -%}
+    {%- comment -%} Blog Article Iteration {%- endcomment -%}
+    <div class="c-article-related__articles" data-feature-block-slides>
+      {%- for relatedArticle in relatedBlog.articles -%}
+
+        {%- if relatedArticle.id == article.id -%}{%- continue -%}{%- endif -%}
+
+        {%- assign articleLoopCount = articleLoopCount | plus: 1 -%}
+
+        {%- capture thumbnailClass -%}
+          c-article-related__article {% if carousel == false %}is-alternate{% endif %}
+        {%- endcapture -%}
+
+        {%- render 'object.article-thumbnail' with {
+          thumbnailArticle: relatedArticle,
+          class: thumbnailClass,
+          dataAttributes: 'data-feature-blocks-slide'
+        } -%}
+
+        {%- comment -%} Carousel Dots {%- endcomment -%}
+        {%- capture carouselDots -%}
+          {{- carouselDots -}}
+          <button
+            class="c-feature-blocks__dot"
+            data-carousel-dot
+            data-index="{{- forloop.index0 -}}"
+            type="button"
+          ></button>
+        {%- endcapture -%}
+
+        {%- if articleLoopCount == articleLimit -%}{%- break -%}{%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if viewAllBtn != blank -%}
+      <a href="{{ relatedBlog.url }}" class="o-btn c-article-related__btn is-secondary">
+        {{- viewAllBtn | escape -}}
+      </a>
+    {%- endif -%}
+
+    {%- comment -%} Carousel Dots {%- endcomment -%}
+    {%- if relatedBlog.articles.size > 1 and carousel -%}
+      {%- render 'object.carousel-controls' with { dots: true, slideSize: articleLoopCount } -%}
+    {%- endif -%}
+
+  </div>
+
+</section>

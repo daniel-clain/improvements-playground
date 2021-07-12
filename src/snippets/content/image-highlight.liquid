@@ -1,0 +1,36 @@
+{% comment %}
+  Image Highlight 
+
+  Version:
+    1.0.0 - 2021/04/19
+{% endcomment %}
+
+{%- if image != blank -%}
+  <div class="c-image-highlight">
+    <div class="c-image-highlight__image-container o-responsive-image__container">
+      {%- render 'tool.picture' with {
+        image: image,
+        class: 'c-image-highlight__image o-responsive-image',
+        alt: title,
+        width: 2000,
+        sizes: '375,500,1100,1650,2000',
+        imageSizes: '375,500,1100,1650,2000'
+      } -%}
+    </div>
+  
+  {%- if title != blank or description != blank -%}
+    <div class="c-image-highlight__content">
+      {%- if title != blank -%}
+        <h4 class="c-image-highlight__title">
+          {{- title | escape -}}
+        </h4>
+      {%- endif -%}
+      {%- if description != blank -%}
+        <p class="c-image-highlight__description o-type--1">
+          {{- description | escape | newline_to_br -}}
+        </p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  </div>
+{%- endif -%}

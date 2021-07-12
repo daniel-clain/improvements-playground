@@ -1,0 +1,49 @@
+/*
+*  Image Banner
+*    Styles for the reusable image/text snippet.
+*
+*  Version:
+*    1.0.0 - 2021/04/19
+*/
+
+.c-image-highlight {
+  padding-bottom: #{'min(53.33%, 12.5rem)'};
+  position: relative;
+
+  &__content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    text-align: center;
+    color: $s-color--white;
+    padding: 0 $s-gutter--edge-mobile;
+    max-width: 43rem;
+  }
+
+  &__title {
+    font-family: $s-font--root-family;
+    font-weight: $s-font--weight-bold;
+    margin-bottom: 0.8rem;
+  }
+
+  &__description {
+    margin: 0;
+    font-weight: $s-font--weight-bold;
+  }
+
+  /*==== Media Queries ====*/ 
+  @include t-media-query($s-medium-up) {
+    padding-bottom: #{'min(20%, 25rem)'};
+
+    &__content {
+      padding: 0;
+    }
+
+    &__title {
+      max-width: none;
+      margin-bottom: 0.7rem;
+    }
+  }
+}

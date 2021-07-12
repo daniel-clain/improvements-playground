@@ -1,0 +1,107 @@
+{%- comment -%}
+  Cart Upsell
+    Snippet to display upsell products in the cart drawer or cart page.
+    
+  Version:
+    1.0.1 - 2021/05/04
+{%- endcomment -%}
+
+{%- comment -%} Variables {%- endcomment -%}
+{%- liquid 
+  assign upsellCollection = collections[settings.cartUpsellCollection]
+-%}
+
+{%- if upsellCollection != blank and upsellCollection.products.size > 0 -%}
+  <div class="c-cart-upsell" data-cart-upsell>
+    <p class="c-cart-upsell__title o-type--4">
+      {{- 'cart.upsell_title' | t -}}
+    </p>
+
+    <div class="c-cart-upsell__items">
+      {%- assign realIndex = 0 -%}
+      {%- for upsellProduct in upsellCollection.products -%}
+        {%- assign upsellVariant = upsellProduct.variants.first -%}
+
+        {%- comment -%} Check that the variant is available {%- endcomment -%}
+        {%- unless upsellProduct.available == true -%}{%- continue -%}{%- endunless -%}
+
+        {%- if realIndex == 3 -%}{% break %}{%- endif -%}
+
+        {%- comment -%} Don't allow an item already in cart to be suggested {%- endcomment -%}
+        {%- liquid
+          assign existsInCart = false
+          for item in cart.items
+            if item.product_id == upsellProduct.id
+              assign existsInCart = true
+              break
+            endif
+          endfor
+        -%}
+
+        {%- unless existsInCart == false -%}{%- continue -%}{%- endunless -%}
+
+        <div class="c-cart-upsell__item" data-upsell-item>
+          <div class="c-cart-upsell__content">
+            <a href="{{- upsellProduct.url -}}" class="c-cart-upsell__image-wrapper">
+              <div class="c-cart-upsell__image-container o-responsive-image-container">
+                {%- render 'tool.picture' with {
+                  class: 'c-cart-upsell__image o-responsive-image',
+                  image: upsellProduct.images.first,
+                  width: 100,
+                  sizes: '375',
+                  imageSizes: '100'
+                } -%}
+              </div>
+            </a>
+          </div>
+
+          <form class="c-cart-upsell__btn-container" method="post" action="/cart/add">
+            <div class="c-cart-upsell__centre">
+              <a href="{{- upsellProduct.url -}}" class="c-cart-upsell__details">
+                <p class="c-cart-upsell__name o-tags">
+                  {{- upsellProduct.title -}}
+                </p>
+              </a>
+
+              {%- render 'object.product-template-swatches' with {
+                product: upsellProduct
+                variant: upsellProduct.first_available_variant,
+                printJson: true,
+                sizeSelect: true,
+                hideLabels: true,
+                colorExpand: true
+              }-%}
+
+              <input type="hidden" id="quantity" name="quantity" value="1"/>
+            </div>
+
+            <div class="c-cart-upsell__right">
+              <button type="submit" class="c-cart-upsell__btn" data-upsell-add>
+                <span class="c-cart-upsell__btn-text o-tags">
+                  {{- 'cart.add' | t -}}
+                </span>
+
+                <span class="c-cart-upsell__btn-icon-container">
+                  <svg class="c-cart-upsell__btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3.333v9.334M3.332 8h9.333"/></svg>
+                </span>
+              </button>
+
+              <div class="c-cart-upsell__pricing o-tags" data-product-pricing>
+                {%- if upsellVariant.compare_at_price > upsellVariant.price -%}
+                  <span class="is-money is-compare" data-product-compare-money>
+                    {{- upsellVariant.compare_at_price | money | replace: '.00', '' -}}
+                  </span>
+                {%- endif -%}
+                <span class="is-money" data-product-money>
+                  {{- upsellVariant.price | money | replace: '.00', ''  -}}
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        {%- assign realIndex = realIndex | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

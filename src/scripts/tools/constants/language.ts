@@ -1,0 +1,10 @@
+const PRODUCT_GROUP = 'products.product';
+export const PRODUCT_FREE = `${PRODUCT_GROUP}.free`;
+export const PRODUCT_ADD_TO_CART = `${PRODUCT_GROUP}.add_to_cart`;
+export const PRODUCT_ALL_IN_CART = `${PRODUCT_GROUP}.all_in_cart`;
+export const PRODUCT_CART_PENDING = `${PRODUCT_GROUP}.cart_pending`;
+export const PRODUCT_ADDED_TO_CART = `${PRODUCT_GROUP}.added_to_cart`;
+export const PRODUCT_SOLD_OUT = `${PRODUCT_GROUP}.sold_out`;
+export const PRODUCT_ERROR = `${PRODUCT_GROUP}.error`;
+export const COLLECTION_CLEAR_FILTERS = `collections.filters.clear_filters`;
+export const PRODUCT_NOTIFY_ME = `${PRODUCT_GROUP}.notify_me`

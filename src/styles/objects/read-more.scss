@@ -1,0 +1,31 @@
+.o-read-more{
+  &__content{
+    .is-desktop{ display: none; }
+    &.is-full{
+      display: none;
+      .is-expanded & { display: inline; }
+    }
+    &.is-less{
+      display: inline;
+      .is-expanded & { display: none; }
+    }
+
+    p {
+      margin-top: 0;
+    }
+  }
+  &__btn{
+    &.is-more{
+      display: inline;
+      .is-expanded & { display: none; }
+    }
+    &.is-less{
+      display: none;
+      .is-expanded & { display: inline; }
+    }
+  }
+  @include t-media-query($s-small-up) {
+    .is-desktop{ display: inline; }
+    .is-mobile{ display: none; }
+  }
+}

@@ -1,0 +1,171 @@
+/*
+ *  Pagination
+ *    Standard pagination. A fair bit of trumping due to how Shopify injects the facets.
+ *
+ * Dependencies:
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/26
+ */
+
+.o-pagination {
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0;
+  display: flex;
+  justify-content: left;
+  position: relative;
+  padding: 0 $s-gutter--edge-mobile 3rem $s-gutter--edge-mobile;
+
+  > span {
+    display: inline-block;
+
+    > a,
+    &.current,
+    &.deco {
+    }
+
+    > a,
+    &.deco {
+    }
+
+    &.current {
+      cursor: default;
+    }
+
+    > a,
+    &.current {
+    }
+
+    > a:hover,
+    &.current:hover {
+    }
+
+    > a:hover {
+      text-decoration: none;
+    }
+
+    &.current {
+      cursor: default;
+      position: relative;
+    }
+
+    &.page {
+      position: relative;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 0.875rem;
+      border: 1px solid $s-color--border-light;
+      line-height: 2.5rem;
+      border-radius: 0.125rem;
+      margin-right: 0.875rem;
+
+      &.current {
+        border: 1px solid $s-color--secondary;
+      }
+
+      & a {
+        display: block;
+        line-height: 2.5rem;
+      }
+    }
+
+    &.deco {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 0.875rem;
+      border: 1px solid $s-color--border-light;
+      line-height: 2.5rem;
+      margin-right: 0.875rem;
+      border-radius: 0.125rem;
+    }
+
+    &.next {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid $s-color--border-light;
+      border-radius: 0.125rem;
+
+      & > a {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        font-size: 0;
+
+        &:before {
+          content: '';
+          background: url('./../../assets/svg/icon-chevron-down.svg') no-repeat center center;
+          transform: rotate(-90deg);
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0.875rem;
+          height: 0.875rem;
+          transform: translate(-50%, -50%) rotate(-90deg);
+        }
+      }
+    }
+
+    &.prev {
+      display: none;
+    }
+
+    &:first-of-type {
+    }
+
+    &:last-of-type {
+    }
+  }
+
+  @include t-media-query($s-small-up) {
+    justify-content: center;
+    margin: 0 auto;
+    padding: 5rem $s-gutter--edge-medium;
+  }
+
+  @include t-media-query($s-large-up) {
+    padding: 7.5rem $s-gutter--edge-xlarge 10rem $s-gutter--edge-xlarge;
+
+    > span {
+      &.page {
+        font-size: 1.125rem;
+        width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+        border-radius: 0.25rem;
+        margin-right: 1rem;
+
+        &.current {
+          
+        }
+
+        & a {
+          line-height: 4rem;
+        }
+      }
+
+      &.deco {
+        font-size: 1.125rem;
+        width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+        border-radius: 0.25rem;
+      }
+
+      &.next {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.25rem;
+
+        & > a {
+          &:before {
+            width: 1.125rem;
+            height: 1.125rem;
+          }
+        }
+      }
+    }
+  }
+}

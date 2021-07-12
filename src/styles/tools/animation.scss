@@ -1,0 +1,65 @@
+@mixin t-anim--transition($properties, $time: $s-anim--time-short, $ease: $s-anim--ease-out, $delay: '') {
+  transition-timing-function: $ease;
+  transition-duration: $time;
+  transition-property: $properties;
+  @if $delay != '' {
+    transition-delay: $delay;
+  }
+}
+
+@mixin t-anim--animation(
+  $name: '',
+  $time: $s-anim--time-short,
+  $ease: $s-anim--ease-out,
+  $delay: '',
+  $fillMode: '',
+  $iterationCount: infinite
+) {
+  animation-duration: $time;
+  animation-timing-function: $ease;
+  animation-iteration-count: $iterationCount;
+  
+  @if $fillMode != '' {
+    animation-fill-mode: $fillMode;
+  }
+
+  @if $delay != '' {
+    animation-delay: $delay;
+  }
+
+  @if $name != '' {
+    animation-name: $name;
+  }
+}
+
+/*
+  Custom visibility timing
+  - Use a combination of mixins to create the desired visibility effect
+*/
+@mixin t-anim--visibility($time: $s-anim--time-med, $ease: $s-anim--ease-in-out, $reverse: false) {
+  @if $reverse == true {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity $time $ease, visibility 0s $time;
+    pointer-events: initial;
+  } @else {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity $time $ease, visibility 0s $time;
+    pointer-events: none;
+  }
+}
+
+@mixin t-anim--visibility-active($time: $s-anim--time-med, $ease: $s-anim--ease-in-out, $reverse: false) {
+  @if $reverse == true {
+    opacity: 0;
+    visibility: hidden;
+    transition-delay: 0s;
+    pointer-events: none;
+  } @else {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+    pointer-events: initial;
+  }
+}

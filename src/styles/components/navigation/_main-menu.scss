@@ -1,0 +1,624 @@
+/*
+ *  Main Menu
+ *    Styles for the shared mobile & desktop main menu.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/08
+ */
+
+$c-main-menu--border: 1px solid rgba($s-color--secondary, 0.1);
+
+.c-main-menu {
+  z-index: $s-z--menu;
+
+  //Shared styles for desktop and mobile
+
+  &__list {
+    margin: 0;
+    list-style: none;
+    padding: 0
+  }
+
+  &__link {
+    @extend %s-font--type-3;
+
+    .is-level-2 & {
+      @extend %s-font--type-2;
+    }
+  }
+
+  //Background close element
+  &__background {
+    position: fixed;
+    z-index: $s-z--menu-overlay;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0;
+    opacity: 0;
+    background: $s-color--sectary;
+    transition: opacity $s-anim--time-med $s-anim--ease-in-out,
+      width 0s $s-anim--ease-in-out $s-anim--time-med;
+
+    .is-menu-open &,
+    .is-menu-hover & {
+      width: 100%;
+      opacity: 0.6;
+      transition: opacity $s-anim--time-med $s-anim--ease-in-out 0.1s,
+        width 0s $s-anim--ease-in-out;
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  //Mobile menu specific styles
+  @include t-media-query($s-medium-down) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    width: 100%;
+    max-width: 31.25rem;
+    background: $s-color--background;
+    @include t-anim--transition(left, $s-anim--time-med);
+    padding: 0;
+    overflow: hidden;
+    &.is-menu-open {
+      left: 0;
+    }
+
+    &__header {
+      position: relative;
+      padding: 0.75rem 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__close {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 1.625rem 1.5rem;
+
+      &-icon {
+        width: 1.25rem;
+      }
+    }
+
+    //Mobile only logo
+    &__logo {
+      width: 7.5rem;
+
+      &-container {
+        display: block;
+        padding: 1rem;
+      }
+    }
+
+    //Search bar
+    &__search {
+      margin: 0 1.5rem 1.5rem;
+    }
+
+    //UL List
+    &__list {
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+
+      &.is-level-1 {
+        display: flex;
+        flex-direction: column;
+        left: 0;
+        @include t-anim--transition(left, $s-anim--time-med);
+
+        //Menu level states
+        .is-menu-level-2 & {
+          left: -100%;
+        }
+        .is-menu-level-3 & {
+          left: -200%;
+        }
+        .is-menu-level-4 & {
+          left: -300%;
+        }
+      }
+
+      &.is-level-2,
+      &.is-level-3 {
+        left: 100%;
+      }
+
+      //Styles for each level at different menu level states
+      &.is-level-1 {
+        &.is-submenu-open  {
+          .is-menu-level-1 & {
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+        }
+      }
+
+      &.is-level-2 {
+        opacity: 0;
+
+        .is-menu-level-1 & {
+          overflow: hidden;
+          opacity: 0;
+        }
+
+        &.is-submenu-open {
+          .is-menu-level-2 & {
+            opacity: 1;
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+        }
+      }
+
+      &.is-level-3 {
+        opacity: 0;
+        .is-menu-level-2 & {
+          overflow: hidden;
+          opacity: 0;
+        }
+
+        &.is-submenu-open {
+          opacity: 1;
+          z-index: 2;
+          .is-menu-level-3 & {
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+        }
+      }
+
+      //Shared submenu open styles
+      &.is-submenu-open {
+        opacity: 1;
+        z-index: 2;
+      }
+
+      &-container {
+        position: relative;
+        height: calc(100% - 4.5rem);
+
+        //Gradient element
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 12rem;
+          pointer-events: none;
+          background: linear-gradient(180deg, rgba($s-color--background,0), rgba($s-color--background,0) 5%, rgba($s-color--background,1));
+          z-index: 2;
+          opacity: 0;
+
+          .is-level-2 & {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    //LI element 
+    &__item {
+      padding: 0 1.5rem;
+
+      &.has-submenu:last-child {
+        margin-bottom: 6rem;
+      }
+
+      &.is-back {
+        background: $s-color--background-tertiary;
+        border-top: $c-main-menu--border;
+        border-bottom: $c-main-menu--border;
+
+        > .c-main-menu__link {
+          border: none;
+        }
+
+        //No border on next element
+        + .c-main-menu__item > .c-main-menu__link {
+          border: none;
+        }
+      }
+
+      &.is-additional {
+        background: $s-color--background-tertiary;
+        border-bottom: $c-main-menu--border;
+        position: relative;
+        z-index: 3;
+
+        &.is-first {
+          border-top: $c-main-menu--border;
+          margin-top: auto;
+        }
+      }
+
+      &.is-featured-image { display: none; }
+    }
+
+    //Individual link
+    &__link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0 1rem;
+      border-top: $c-main-menu--border;
+
+      &-icon {
+        width: 0.75rem;
+        margin-top: -0.125rem;
+
+        .is-back & {
+          transform: rotate(180deg);
+          margin-right: 0.5rem;
+          position: absolute;
+          left: 0;
+        }
+
+        .is-additional & {
+          margin-left: auto;
+        }
+      }
+
+      &.is-back {
+        justify-content: center;
+        position: relative;
+      }
+
+      &.is-last-link {
+        border-bottom: $c-main-menu--border;
+        margin-bottom: 4rem;
+      }
+
+      //Additional mobile only links
+      &.is-additional {
+        justify-content: flex-start;
+        align-items: center;
+        border: none;
+
+        svg {
+          width: 1.5rem;
+          margin-right: 0.75rem;
+        }
+      }
+    }
+  }
+
+
+  //Desktop menu specific styles
+  @include t-media-query($s-medium-up) {
+    align-self: stretch;
+
+    &__logo-container {
+      display: none;
+    }
+
+    //UL Element of top level links
+    &__list {
+      display: flex;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding: 0;
+
+      //Container outside the links in the top level of the menu
+      &-container {
+        height: 100%;
+        display: flex;
+      }
+
+      //Level 2 - mega nav for desktop users
+      &.is-level-2 {
+        position: absolute;
+        width: 100%;
+        z-index: $s-z--menu;
+        left: 0;
+        bottom: auto;
+        top: 100%;
+        max-height: 0;
+        overflow: hidden;
+        align-items: flex-start;
+        padding: 0 0 0 $s-gutter--edge-medium-alt;
+        opacity: 0;
+        @include t-anim--transition(max-height opacity, $s-anim--time-med);
+
+        //Pseudo element used for the upper shadow
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 10%;
+          opacity: 0;
+          @include t-anim--transition(opacity, $s-anim--time-med);
+          background: linear-gradient(0deg, rgba($s-color--background,0) 0%, rgba($s-color--secondary,0.06) 100%);
+        }
+      }
+
+      //Level 3 - Individual links for the final level
+      &.is-level-3 {
+        display: block;
+      }
+
+
+      //Hover state for the first level
+      &.is-level-1 > .c-main-menu__item:hover {
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 45%;
+          height: calc(50% - 0.375rem);
+          width: calc(100% + 20rem);
+        }
+      }
+    }
+
+    //Individual list item
+    &__item {
+      display: block;
+      margin: 0 0.25rem;
+      display: flex;
+      align-items: stretch;
+
+
+      //Hover trigger for the mega nav
+      &:hover {
+
+        .c-main-menu {
+
+          //Submenu expand/hover effect
+          &__list.is-level-2 {
+            max-height: 29.375rem;
+            opacity: 1;
+            background: $s-color--background;
+
+            &:before {
+              opacity: 1;
+            }
+          }
+
+          &__link {
+            text-decoration: none;
+          }
+        }
+
+        .is-menu-trigger {
+          position: relative;
+
+
+          .c-main-menu__link-inner:after {
+            background: $s-color--quartenary;
+          }
+        }
+      }
+
+      //Level 2 down
+      .is-level-2 & {
+        margin: 0;
+      }
+
+      //Level 2 specifically
+      &.is-level-2 {
+        display: block;
+        margin: #{'min(3.5%, 4.125rem)'} #{'clamp(1rem, 3%, 4rem)'} #{'min(3.5%, 4.125rem)'} 0;
+        white-space: nowrap;
+      }
+
+      .is-submenu & {
+        margin: 0;
+      }
+
+      &.has-submenu {
+        width: 19.35%;
+        margin: 0;
+      }
+
+      &.is-back,
+      &.is-mobile {
+        display: none;
+      }
+
+      //Additional mobile menu links
+      &.is-additional { display: none; }
+
+      //Desktop featured images
+      &.is-featured-image {
+        display: block;
+        width: #{'min(22.08%, 26.5rem)'};
+        align-self: stretch;
+        &.is-first { margin-left: auto; }
+      }
+    }
+
+    &__link {
+      text-transform: uppercase;
+      font-weight: $s-font--weight-bold;
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      padding: 0 0.75rem;
+
+      //Top level items that trigger the menu on hover
+      &.is-menu-trigger {
+        padding: 0 0.75rem;
+      }
+
+      //Level 2 down
+      .is-level-2 & {
+        position: relative;
+        padding: 0.25rem 0;
+
+        //Pseudo element used for second level links only
+        &:after {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 0.0625rem;
+          bottom: 0.5rem;
+          left: 0;
+          @include t-anim--transition(background)
+        }
+      }
+
+      //Level 3 down
+      .is-level-3 & {
+        font-weight: $s-font--root-weight;
+        text-transform: none;
+      }
+
+      &.has-submenu {
+        margin: 0;
+        padding: 0 0 0.375rem;
+      }
+
+      //Pseudo element used for underline effect on top levels
+      &-inner {
+        position: relative;
+        margin-top: 0.1875rem;
+
+        &:after {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 0.0625rem;
+          bottom: -0.125rem;
+          left: 0;
+          @include t-anim--transition(background)
+        }
+      }
+
+      &:hover {
+        .c-main-menu__link-inner:after {
+          background: $s-color--quartenary;
+        }
+
+        &:after {
+          background: $s-color--font;
+        }
+      }
+
+      //Active state for product and blog pages
+      &.is-submenu-open > .c-main-menu__link-inner:after {
+        background-color: $s-color--quartenary;
+      }
+
+      //Mobile accordion style icons
+      &-icon { display: none; }
+    }
+
+    //Desktop featured images
+    &__featured-image {
+      width: 100%;
+      @include t-anim--transition(transform, $s-anim--time-med);
+
+      &-container {
+        display: block;
+        position: relative;
+        height: 100%;
+        padding-bottom: 110.6%;
+
+        &:hover .c-main-menu__featured-image {
+          transform: scale(1.05);
+        }
+      }
+
+      &-title {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: $s-color--font-invert;
+
+        &.is-black {
+          color: $s-color--font;
+        }
+      }
+    }
+
+    //Mobile only elements
+    &__header,
+    &__search {
+      display: none;
+    }
+
+    //Mega nav image
+    &__image {
+
+      &-container {
+        display: block;
+        padding-bottom: 21.28%;
+        width: 18.55%;
+        margin: 0.75rem 0 0 auto;
+
+      }
+
+      &-link {
+        position: absolute;
+        left: 1.875rem;
+        bottom: 1.875rem;
+      }
+    }
+
+    &__background {
+      top: 7.5rem;
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+
+    &__item {
+      .is-level-2 & {
+        margin-right: 4%;
+      }
+
+      &.is-featured-image { margin-right: 0; }
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__link {
+      padding: 0 1.25rem;
+    }
+
+
+    &__item {
+      .is-level-2 & {
+        margin-right: 5.33%;
+      }
+      &.is-featured-image { margin-right: 0; }
+    }
+
+    &__link {
+
+      .is-level-3 & {
+        margin-bottom: 0.375rem;
+      }
+
+      &.has-submenu {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

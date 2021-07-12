@@ -1,0 +1,104 @@
+/*
+ * Styling for Article Header snippet
+ *
+ * v1.0.0 - 2021/04/26
+ */
+ 
+.c-article-header {
+  position: relative;
+
+  &__image-container {
+    padding-bottom: 64%;
+    position: relative;
+  }
+
+  &__content {
+    padding: 2.5rem 1.5rem 0;
+  }
+
+  &__title {
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  &__subtitle {
+    margin-right: 0.4rem;
+  }
+
+  &__seperator {
+    margin-right: 0.4rem;
+    font-size: 1.7rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  &__arrow {
+    display: none;
+  }
+
+  @include t-media-query($s-small-up) {
+    &__content {
+      padding: 2.5rem $s-gutter--edge-small 0;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    min-height: 25rem;
+    background-color: $s-color--background-tertiary;
+
+    &__image-container {
+      padding-bottom: 46.3%;
+      //Updated as per client's request
+      // padding-bottom: #{'clamp(35rem, 33.6%, 50rem)'};
+    }
+
+    &__content {
+      &:not(.is-static) {
+        color: $s-color--font;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 100%;
+        max-width: 26rem;
+        text-align: center;
+        padding: 0;
+        max-width: 57rem;
+        .has-image & {
+          color: $s-color--font-invert;
+        }
+      }
+
+      //Static option from the customiser
+      &.is-static {
+        background: $s-color--background;
+
+        + .c-article-header__arrow {
+          top: 0;
+          bottom: auto;
+          margin-top: 38.5%;
+        }
+      }
+
+      &-inner {
+
+        .is-static & {
+          margin: 0 auto;
+          max-width: 57.06rem;
+        }
+      }
+    }
+
+    &__arrow {
+      display: inline-block;
+      position: absolute;
+      right: 2.5rem;
+      bottom: 2.5rem;
+    }
+
+    &__icon {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+}

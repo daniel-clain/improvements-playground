@@ -1,0 +1,41 @@
+{%- comment -%}
+  Store Selector
+    Snippet for the store selector
+
+  Version:
+    1.0.0 2021/05/19
+{%- endcomment -%}
+
+<span class="o-store-selector {{ class }} has-js" data-store-selector>
+  {%- unless showMap == false -%}
+    <label class="o-store-selector__label">
+      {{- 'general.footer.store_selector_prefix' | t -}}
+    </label>
+
+    {%- if settings.flag != blank -%}
+      <div class="o-store-selector__flag">
+        {{- settings.flag -}}
+      </div>
+    {%- endif -%}
+  {%- endunless -%}
+
+  <div
+    class="o-form__input-group
+      {% unless selectStyle == 'is-secondary' %}is-dropdown{% endunless %}"
+  >
+    <select
+      class="o-store-selector__select o-select {{ selectStyle }}"
+      name="store"
+      title="{{ 'general.header.store_selector_title' | t }}"
+      data-store-selector-select
+    >
+      {%- for store in menu.links -%}
+        <option
+          value="{{ store.url }}"
+        >
+          {{- store.title | escape -}}
+        </option>
+      {%- endfor -%}
+    </select>
+  </div>
+</span>

@@ -1,0 +1,11 @@
+{%- assign itemJson = item | json -%}
+
+{%- capture extend -%}
+  "product": {%- render 'json.product' with { product: item.product } -%}
+{%- endcapture -%}
+
+{%- render 'tool.append-json' with {
+  jsonData: itemJson,
+  extra: extend,
+  dump: true
+} -%}

@@ -1,0 +1,29 @@
+/*
+ *  Login Form
+ *
+ *  Version:
+ *    1.0.0 - 2020/11/04
+ */
+
+
+.c-login-form {
+  display: none;
+  margin-bottom: 2rem;
+
+  .o-form__input-group {
+    margin-bottom: 1rem;
+  }
+
+  &.is-visible {
+    display: block;
+  }
+
+  &__forgot {
+    display: block;
+    margin-top: .75rem;
+  }
+
+  &__title.is-guest {
+    margin-top: 3rem;
+  }
+}

@@ -1,0 +1,43 @@
+{%- comment -%}
+  Stamped io implementation
+
+  Version:
+    1.0.0 - 2021/06/11
+{%- endcomment -%}
+
+{%- if settings.enable-reviews -%}
+  <section class="c-product-reviews">
+    {%- if section.settings.title != blank -%}
+      <h2 class="c-product-reviews__title o-heading--4">
+        {{- section.settings.title -}}
+      </h2>
+    {%- endif -%}
+
+    <div class="c-product-reviews__reviews">
+      <div id="stamped-main-widget"
+        data-widget-style="standard"
+        data-product-id="{{ product.id }}" 
+        data-name="{{ product.title | escape }}" 
+        data-url="{{ shop.url }}{{ product.url }}" 
+        data-image-url="{{ product.featured_image | product_img_url: "large" | replace: '?', '%3F' | replace: '&','%26'}}" 
+        data-description="{{ product.description | escape }}" 
+        data-product-sku="{{product.selected_or_first_available_variant.sku}}"> 
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Product Reviews",
+    "class": "c-section c-section__product-reviews",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Reviews Title",
+        "default": "See what they’re saying..."
+      }
+    ]
+  }
+{% endschema %}

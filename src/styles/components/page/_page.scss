@@ -1,0 +1,60 @@
+.c-page-template {
+  background-color: $s-color--background;
+  padding-bottom: 7rem;
+
+  &__header {
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  &__header-inner {
+    padding: 0 1.5rem;
+  }
+
+  &__heading {
+    max-width: 47.375rem;
+    margin: 0 auto;
+  }
+
+  &__content {
+    padding: 1.625rem $s-gutter--edge-mobile 0;
+    @extend %s-font--type-1;
+  }
+
+  /*** Media Queries ***/
+  @include t-media-query($s-small-up) {
+    padding-bottom: 11rem;
+
+    &__header {
+      padding: 3rem 0;
+      position: relative;
+    }
+
+    &__header-inner {
+      padding: 1.625rem 1.5rem 0;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    &__main {
+      width: 80%;
+      margin: 0 auto;
+      max-width: 57.06rem;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__main {
+      width: 65%;
+    }
+
+    &__header-inner {
+      width: 65%;
+    }
+
+    &__content {
+      max-width: calc(47.3125rem + 2 * #{$s-gutter--edge-mobile});
+      margin: 0 auto;
+    }
+  }
+}

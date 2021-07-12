@@ -1,0 +1,137 @@
+{%- comment -%}
+  Collection Template
+    Section for the template of the collection page.
+
+  Version:
+    1.0.0 - 2020/10/22
+{%- endcomment -%}
+
+{%- comment -%}
+  ALlow product language keys to be accessible to js
+{%- endcomment -%}
+{%- capture keys -%}
+  products.product.free;
+  products.product.add_to_cart;
+  products.product.all_in_cart;
+  products.product.cart_pending;
+  products.product.added_to_cart;
+  products.product.sold_out;
+  products.product.error;
+  products.product.upsell_prefix_add;
+  products.product.upsell_prefix_adding;
+  products.product.upsell_prefix_added;
+  collections.filters.clear_filters;
+  collections.filters.facet_title_type;
+  collections.filters.facet_title_price;
+  collections.filters.facet_title_colour;
+  collections.filters.facet_title_sport;
+  collections.filters.facet_title_size;
+  collections.filters.mobile_filter_button;
+{%- endcapture -%}
+
+{%- render 'tool.language-strings' with { keys: keys } -%}
+
+{%- liquid
+  capture perPage
+    render 'tool.collection-per-page'
+  endcapture
+  assign mf = collection.metafields.accentuate
+  assign seoText = collection.metafields.solbari.description
+  assign subHeading = mf.subHeading | default: collection.title
+  assign menuHandle = section.settings.menuHandle
+-%}
+
+
+<section
+  class="c-collection"
+  data-collection-template
+  data-collection-handle="{{ collection.handle | escape }}"
+  data-collection-per-page="{{ perPage }}"
+>
+  {%- comment -%} Supply Data to the AjaxCollection {%- endcomment -%}
+  <script type="application/json" data-collection-json>
+    {%- render 'json.collection' with { collection: collection } -%}
+  </script>
+  
+  <header class="c-collection__header">
+    {%- comment -%} h1 is in breadcrumb {%- endcomment -%}
+    {%- render 'collection-breadcrumb', {menuHandle: menuHandle} -%}
+
+
+    {%- if subHeading != blank -%}
+      <h4 class="c-collection__header-subtitle">
+        {{- subHeading -}}
+      </h4>
+    {%- endif -%}
+  </header>
+  
+  <div class="c-collection__inner">
+    {%- render 'facets-and-filter' -%}
+  </div>
+
+    
+  <div class="c-collection-products-wrapper">
+    {%- paginate collection.products by perPage -%}
+      
+      <div class="c-collection-products o-products-list c-collection__inner" data-collection-template-products>
+        
+        {%- comment -%} Empty Message {%- endcomment -%}
+        <p class="c-collection-products__no-results" data-collection-no-results>
+          {{- 'collections.collection.no_results' | t }}
+        </p>
+
+        {%- comment -%} Product Loop {%- endcomment -%}
+        {%- for product in collection.products -%}
+          {%- render 'object.product-thumbnail' with {
+            product: product,
+            variant: product.selected_or_first_available_variant,
+            collection: collection,
+            class: 'c-collection-products__product o-products-list__product c-collection-product'
+          } -%}
+        {%- endfor -%}
+      </div>
+
+
+      {%- assign perPageNum = perPage | times: 1 -%}
+      {%- unless collection.products.size < perPageNum -%}
+        
+        <div class="c-collection-products__pagination c-collection__inner">
+          
+          {%- comment -%} Standard Pagination (For no-JS) {%- endcomment -%}
+          <div class="no-js">
+            {%- render 'object.pagination', paginate -%}
+          </div>
+          <div class="o-pagination" data-other-paginator></div>
+        </div>
+        
+      {%- endunless -%}
+    {%- endpaginate -%}
+
+  </div>
+
+  {%- comment -%} Collection Description from MF to preserve existing data {%- endcomment -%}
+  {%- if seoText -%}
+    <div class="c-collection__description-wrapper">
+      <div class="c-collection__description">
+        {%- render 'object.read-more', text: seoText -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+
+</section>
+
+{% schema %}
+  {
+    "name": "Collection Section",
+    "class": "c-section c-section__collection-template",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "menuHandle",
+        "label": "Main Menu",
+        "info": "Required to make collection page breadcrumbs, if the main menu changes, this field should be updated to the new menu handle"
+      }
+    ]
+  }
+{% endschema %}

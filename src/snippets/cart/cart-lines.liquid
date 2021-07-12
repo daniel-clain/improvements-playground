@@ -1,0 +1,23 @@
+{%- comment -%}
+  Cart Lines
+    Snippet to display cart lines
+
+    Params:
+      - class: A string to be used as the component class
+
+  Version:
+    1.0.0 - 2021/03/04
+{%- endcomment -%}
+
+{%- assign class = class | default: 'c-cart-template' -%}
+
+<div class="{{- class -}}__lines-container" data-cart-line-container>
+  <div class="{{- class -}}__lines">
+    {%- for item in cart.items -%}
+      {%- render 'cart-line' with {
+        item: item,
+        lineIndex: forloop.index
+      } -%}
+    {%- endfor -%}
+  </div>
+</div>

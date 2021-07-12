@@ -1,0 +1,141 @@
+{%- comment -%}
+  FAQ Page
+  Loops through categories then loops through Questions/Answer pairs
+
+  Version:
+  1.0.0 - 2021/04/20
+{%- endcomment -%}
+
+{%- if section.settings.contact-btn != blank -%}
+
+  <div class="c-faq">
+
+    {%- render 'faq-accordion', with {
+      title: section.settings.title,
+      description: section.settings.description,
+      blocks: section.blocks
+    } -%}
+
+    {%- comment -%} FAQ Contact Section {%- endcomment -%}
+    {%- if section.settings.contact-heading != blank or
+      section.settings.contact-btn != blank -%}
+
+      <section class="c-faq__contact">
+
+        {% if section.settings.contact-heading != blank %}
+          <h5 class="o-heading--5 c-faq__contact-heading">
+            {{- section.settings.contact-heading -}}
+          </h5>
+        {% endif %}
+
+        {% if section.settings.contact-subheading != blank %}
+          <div class="c-faq__contact-subheading o-paragraph">
+            {{- section.settings.contact-subheading -}}
+          </div>
+        {% endif %}
+
+        {% if section.settings.contact-btn != blank %}
+          <a href="{{- section.settings.contact-url -}}"
+            class="o-btn c-faq__contact-button is-secondary"
+          >
+            {{- section.settings.contact-btn -}}
+          </a>
+        {% endif %}
+
+      </section>
+
+    {%- endif -%}
+
+  </div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "class": "c-section c-section__faq-template",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "FAQ Page Title",
+      "default": "Get your answer fast..."
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "FAQ"
+    },
+    {
+      "type": "header",
+      "content": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "contact-heading",
+      "label": "Heading",
+      "default": "Want to talk to a human?"
+    },
+    {
+      "type": "richtext",
+      "id": "contact-subheading",
+      "label": "Subheading",
+      "default": "<p>Need help? We're here for you.</p><p>Get in touch with our expert team</p>"
+    },
+    {
+      "type": "text",
+      "id": "contact-btn",
+      "label": "Button text",
+      "default": "Go to contact"
+    },
+    {
+      "type": "url",
+      "id": "contact-url",
+      "label": "Button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "FAQ Category",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Category Title",
+          "info": "This is the category for questions, i.e. Delivery."
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "FAQ Answer",
+      "settings": [
+        {
+          "id": "category",
+          "type": "text",
+          "label": "Category Title",
+          "info": "Category name for this question. Must match exactly what is entered for the Category Title, i.e. Delivery."
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Question",
+          "info": "The question, i.e. Can I pay with PayPal?"
+        },
+        {
+          "id": "answer",
+          "type": "richtext",
+          "label": "Answer/Content",
+          "info": "The answer content."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

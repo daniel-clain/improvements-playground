@@ -1,0 +1,45 @@
+{%- comment -%}
+  Search Bar
+    Used in the mobile menu and on toggle on the header.
+
+  Version:
+    1.0.0 - 2021/04/08
+{%- endcomment -%}
+
+<div class="o-search-bar {{ class }}" data-search-bar>
+  {%- comment -%} Search Bar/Form {%- endcomment -%}
+  <form
+    class="o-search-bar__bar o-form__input-row"
+    action="{{ routes.search_url }}"
+    method="get"
+    role="search"
+  >
+    <input type="hidden" name="type" value="product">
+
+    {%- comment -%} Search input field {%- endcomment -%}
+    <input
+      type="text"
+      class="o-input o-search-bar__input"
+      id="search-text {{ class }}"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'general.search.placeholder' | t }}"
+      aria-label="{{ 'general.search.placeholder' | t }}"
+      data-search-input
+      {% if isDesktop %}data-search-input-desktop{% endif %}
+    >
+
+    {%- comment -%} Search icon {%- endcomment -%}
+    <button
+      type="submit"
+      title="{{ 'general.search.title_tag' | t }}"
+      class="o-search-bar__btn"
+      data-search-submit
+    >
+      {%- render 'object.icon' with {
+        icon: 'search',
+        class: 'o-search-bar__icon o-btn__icon'
+      } -%}
+    </button>
+  </form>
+</div>

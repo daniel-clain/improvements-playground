@@ -1,0 +1,215 @@
+{%- comment -%}
+  Home Collection Options
+    Section to display an image and link for collections set as blocks.
+
+  Version
+    1.0.0 - 2021/04/13
+{%- endcomment -%}
+
+{%- liquid
+  assign link = section.settings.link
+  assign linkLabel = section.settings.linkLabel
+  assign sectionTitle = section.settings.title
+  assign groupBlocks = section.blocks | where: "type", "collection-group"
+  assign collectionBlocks = section.blocks | where: "type", "collection"
+-%}
+
+{%- comment -%} Iterate first through groups then by blocks {%- endcomment -%}
+{%- for group in groupBlocks -%}
+  {%- assign collectionContent = '' -%}
+  {%- assign groupName = group.settings.title | handleize -%}
+  {%- for block in collectionBlocks -%}
+
+    {%- comment -%} Skip those that don't match this group {%- endcomment -%}
+    {%- liquid
+      assign blockGroup = block.settings.group | handleize
+      unless blockGroup == groupName
+        continue
+      endunless
+      assign title = block.settings.title
+      assign url = block.settings.url
+      assign image = block.settings.image
+      if title == blank or url == blank or image == blank
+        continue
+      endif
+    -%}
+
+    {%- capture collectionContent -%}
+      {{- collectionContent -}}
+      <a
+        href="{{ url }}"
+        title="{{ title | escape }}"
+        class="c-collection-options__collection
+          {% unless activeSet %}is-collection-active{% endunless %}"
+        data-collection-button
+        data-collection-id="{{ block.id }}"
+      >
+        <h4 class="c-collection-options__collection-title">
+          {{- title | escape -}}
+        </h4>
+      </a>
+    {%- endcapture -%}
+
+    {%- comment -%} Capture images for all collections {%- endcomment -%}
+    {%- capture collectionImageContent -%}
+      {{- collectionImageContent -}}
+      <div
+        class="c-collection-options__collection-image-container o-responsive-image-container
+          {% unless activeSet %}is-collection-active{% endunless %}"
+        data-collection-image
+        data-collection-id="{{ block.id }}"
+      >
+        {%- render 'tool.picture' with {
+          image: image,
+          class: 'c-collection-options__collection-image o-responsive-image',
+          alt: title,
+          width: 1200,
+          sizes: '374,750,1100,1650,2000',
+          imageSizes: '300,750,750,1000,1200'
+        } -%}
+      </div>
+    {%- endcapture -%}
+
+    {%- comment -%} Used to set the active state for the first to print {%- endcomment -%}
+    {%- assign activeSet = true -%}
+  {%- endfor -%}
+
+  {%- comment -%} Was any content found for this group? {%- endcomment -%}
+  {%- if collectionContent == blank %}{% continue %}{% endif -%}
+
+  {%- comment -%} Add container for this group's content {%- endcomment -%}
+  {%- capture collectionGroupContent -%}
+    {{- collectionGroupContent -}}
+    <div
+      class="c-collection-options__collection-group
+        {% unless hasContent %}is-active{% endunless %}"
+      data-collection-group
+      data-group-handle="{{ groupName }}"
+    >
+      <div class="c-collection-options__collection-group-inner">
+        {{- collectionContent -}}
+      </div>
+      {%- if link != blank and linkLabel != blank -%}
+        <a href="{{ link }}" class="c-collection-options__link o-btn is-quaternary">
+          {{- linkLabel }}
+          {%- render 'object.icon' with {
+            icon: 'arrow--right--orange',
+            class: 'c-collection-videos__collection-link-icon o-btn__icon'
+          } -%}
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endcapture -%}
+
+  {%- comment -%} Capture controls content {%- endcomment -%}
+  {%- capture collectionGroupControls -%}
+    {{- collectionGroupControls -}}
+    <button
+      class="c-collection-options__collection-group-btn o-type--2
+        {% unless hasContent %}is-active{% endunless %}"
+      data-group-button
+      data-group-handle="{{ groupName }}"
+    >
+      {{- group.settings.title | escape }}
+    </button>
+  {%- endcapture -%}
+
+  {%- comment -%} Used to set the active state {%- endcomment -%}
+  {%- assign hasContent = true -%}
+{%- endfor -%}
+
+
+{%- if collectionGroupContent != blank -%}
+  <section class="c-collection-options" data-home-collection-options>
+    <div class="c-collection-options__inner">
+
+      {%- comment -%} Container for all of the images, only showing 1st {%- endcomment -%}
+      <div class="c-collection-options__images">
+        {{- collectionImageContent -}}
+      </div>
+
+      {%- comment -%} Title and the collection group content {%- endcomment -%}
+      <div class="c-collection-options__content">
+
+        {%- comment -%} Collection Group Controls {%- endcomment -%}
+        <div class="c-collection-options__collection-group-controls">
+          {{- collectionGroupControls -}}
+        </div>
+
+        <div class="c-collection-options__collections">
+          {{- collectionGroupContent -}}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Collection Options",
+    "class": "c-section c-section__home-collection-options",
+    "settings": [
+      {
+        "id": "link",
+        "type": "url",
+        "label": "Lower Link URL"
+      },
+      {
+        "id": "linkLabel",
+        "type": "text",
+        "label": "Lower Link Label"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection-group",
+        "name": "Collection Group",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Collection groups are added as controls above the collections. Default Women's and Men's."
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Group Name"
+          }
+        ]
+      },
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Collection Title"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Collection Image",
+            "info": "Please upload a JPG in at least 1200 x 680px."
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Collection URL"
+          },
+          {
+            "id": "group",
+            "type": "text",
+            "label": "Group Name",
+            "info": "Must be an exact match for the Group Name from the Collection Group block."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Options",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

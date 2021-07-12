@@ -1,0 +1,232 @@
+/*
+ *  Home Collection Options
+ *    Shows collection links with images that show on hover.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/13
+ */
+
+.c-collection-options {
+  padding: 5.5rem 0 3.5rem;
+  position: relative;
+
+  //Individual collection
+  &__collection {
+    padding-right: 0.5rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    -webkit-scroll-snap-align: start;
+    -webkit-scroll-snap-coordinate: 0% 0%;
+    outline: none;
+    &:hover { outline: none; }
+    opacity: 0.4;
+    @include t-anim--transition(opacity);
+
+    &.is-collection-active {
+      opacity: 1;
+    }
+
+    &-group {
+      display: none;
+      &.is-active { display: block; }
+      text-align: right;
+
+      //Scrollable element
+      &-inner {
+        display: flex;
+        overflow-y: hidden;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        -webkit-scroll-snap-points-x: repeat(100%);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      //Container of buttons to display collection groups
+      &-controls {
+        position: absolute;
+        left: $s-gutter--edge-mobile;
+        right: 0;
+        top: 3rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        overflow-y: hidden;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        -webkit-scroll-snap-points-x: repeat(100%);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      //Btn that controls the display of collection groups
+      &-btn {
+        font-family: $s-font--heading-family;
+        padding: 0.125rem 1rem 0.125rem 0;
+        margin-right: 0.5rem;
+        scroll-snap-align: start;
+        -webkit-scroll-snap-align: start;
+        -webkit-scroll-snap-coordinate: 0% 0%;
+        opacity: 0.4;
+        &.is-active {
+          opacity: 1;
+        }
+        @include t-anim--transition(opacity);
+      }
+    }
+
+    &-image-container {
+      padding-bottom: 0;
+      position: absolute;
+      top: 0;
+      left: $s-gutter--edge-mobile;
+      right: $s-gutter--edge-mobile;
+      height: 100%;
+      overflow: hidden;
+      border-radius: $s-image--border-radius-default;
+      opacity: 0;
+      @include t-anim--transition(opacity);
+
+      &.is-collection-active {
+        opacity: 1;
+        z-index: 2;
+      }
+    }
+  }
+
+  //Group of collection buttons
+  &__collections {
+    padding-left: $s-gutter--edge-mobile;
+    margin-top: 1rem;
+  }
+
+  &__images {
+    padding: 0 $s-gutter--edge-mobile 58.3%;
+    position: relative;
+  }
+
+  //Shop all link
+  &__link {
+    margin: 1.5rem $s-gutter--edge-mobile 0 0;
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-up) {
+
+    &__collection {
+      &-group-controls {
+        left: $s-gutter--edge-small;
+      }
+
+      &-image-container {
+        left: $s-gutter--edge-small;
+        right: $s-gutter--edge-small;
+      }
+    }
+
+    &__collections {
+      padding-left: $s-gutter--edge-small;
+    }
+
+    &__link {
+      margin-right: $s-gutter--edge-small;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: 0;
+
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: $s-page-wrap--xlarge;
+      margin: 0 auto;
+      padding: $s-gutter--section-v-medium #{'min(5.8%,5rem)'} $s-gutter--section-v-medium #{'min(8.8%,10rem)'};
+    }
+
+    &__content {
+      width: 30%;
+    }
+
+    &__images {
+      width: 68.15%;
+      order: 2;
+    }
+
+    &__collections {
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+
+    &__collection {
+      display: block;
+
+      &-group {
+        text-align: left;
+
+        &-controls {
+          position: static;
+        }
+
+        &-inner {
+          display: block;
+          overflow: hidden;
+        }
+
+        &-btn {
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+      }
+
+      &-title {
+        margin-bottom: 0.5rem;
+        @include t-anim--transition(transform);
+
+        .is-collection-active & {
+          transform: translateX(1rem);
+        }
+      }
+
+      &-image-container {
+        left: 0;
+        right: 0;
+      }
+    }
+
+    &__images {
+      padding-bottom: 38.625%;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__collection {
+
+      &-title {
+        margin-bottom: 1rem;
+      }
+    }
+
+    &__link {
+      margin-top: 2.375rem;
+    }
+  }
+}

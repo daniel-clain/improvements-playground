@@ -1,0 +1,203 @@
+{%- comment -%}
+  Cart Template
+    Section for the Cart template page.
+
+  Version:
+    1.0.0 - 2021/03/04
+{%- endcomment -%}
+
+{%- liquid
+  assign shippingTitle = section.settings.shippingTitle
+  assign shippingContent = section.settings.shippingContent
+  assign freeShippingThreshold = settings.freeShippingThreshold | times: 1
+  assign continueUrl = section.settings.continueUrl | default: routes.all_products_collection_url
+  assign paymentImages = section.blocks
+-%}
+
+{%- capture keys -%}
+  cart.free_shipping_remaining;
+  cart.free_shipping_unlocked;
+{%- endcapture -%}
+{%- render 'tool.language-strings' with { keys: keys } -%}
+
+<section class="c-cart-template {% unless cart.items.size > 0 %}is-empty{% endunless %}"
+  data-cart-template
+>
+  <div class="c-cart-template__inner">
+    {%- comment -%} Header {%- endcomment -%}
+    <header class="c-cart-template__header">
+      {%- if cart.items.size > 0 -%}
+        <h1 class="c-cart-template__title o-heading--5">
+          {{- 'cart.title' | t -}}
+        </h1>
+      {%- endif -%}
+
+      {%- comment -%} Shipping Progress {%- endcomment -%}
+      {%- render 'cart-shipping-progress' with {
+        minSpend: freeShippingThreshold,
+        subtotal: cart.items_subtotal_price | default: 0
+      } -%}
+    </header>
+
+    {%- comment -%} Columns {%- endcomment -%}
+    <div class="c-cart-template__columns">
+
+      {%- comment -%} Cart Lines {%- endcomment -%}
+        {%- if cart.items.size > 0 -%}
+          <div class="c-cart-template__column-lines" data-cart-lines>
+            {%- render 'cart-lines' with {
+              class: 'c-cart-template'
+            } -%}
+          </div>
+        {%- else -%}
+          {%- render 'cart-empty' -%}
+        {%- endif -%}
+
+      {%- comment -%} Cart Details {%- endcomment -%}
+      {%- if cart.items.size > 0 -%}
+        <div class="c-cart-template__column-details">
+          <div class="c-cart-template__details">
+
+            {%- comment -%} Subtotal {%- endcomment -%}
+            <div class="c-cart-template__subtotal-row o-type--4">
+              <span class="c-cart-template__subtotal">
+                {{- 'cart.subtotal' | t -}}
+              </span>
+
+              <span class="is-money is-compare
+                {% unless cart.original_total_price > cart.items_subtotal_price -%}
+                  is-hidden
+                {%- endunless %}"
+                data-cart-subtotal-original
+              >
+                {{- cart.original_total_price | money_with_currency | remove: '.00' -}}
+              </span>
+
+              <span class="is-money" data-cart-subtotal>
+                {{- cart.items_subtotal_price | money_with_currency | remove: '.00' -}}
+              </span>
+            </div>
+
+            {%- comment -%} Button {%- endcomment -%}
+            <div class="c-cart-template__btn-row">
+              <a href="/checkout"
+                class="c-cart-template__btn is-checkout-btn o-btn is-full is-secondary"
+              >
+                <span class="o-btn__inner">
+                  {{- 'cart.go_to_checkout' | t -}}
+                </span>
+
+                {%- render 'object.icon' with {
+                  icon: 'lock',
+                  class: 'c-cart-template__checkout-icon'
+                } -%}
+              </a>
+
+              <a href="{{ continueUrl }}"
+                class="c-cart-template__btn is-tertiary o-btn"
+              >
+                {{- 'cart.continue_shopping' | t -}}
+              </a>
+            </div>
+
+            {%- render 'cart-payment-row' with {
+              payments: paymentImages
+            } -%}
+          </div>
+
+          {%- comment -%} Shipping & Returns {%- endcomment -%}
+          {%- if shippingTitle != blank and shippingContent != blank -%}
+            <div class="c-cart-template__shipping-container" data-info-popup-container>
+              <a href="#" class="c-cart-template__shipping-btn" data-info-popup-btn>
+                {%- render 'object.icon' with {
+                  icon: 'plus-circle',
+                  class: 'c-cart-template__shipping-icon'
+                } -%}
+
+                <span class="c-cart-template__shipping-text">
+                  {{- 'cart.shipping_returns_policy' | t -}}
+                </span>
+              </a>
+
+              <div
+                class="c-cart-template__shipping-content-container"
+                data-modal-content="shippingInfo"
+                data-show-exit-controls="true"
+              >
+                <button class="c-modal__close" data-modal-close>
+                  {%- render 'object.icon' with {
+                    icon: 'close',
+                    class: 'c-modal__close-icon'
+                  } -%}
+                </button>
+                <h5 class="c-cart-template__shipping-title">
+                  {{- shippingTitle -}}
+                </h5>
+
+                <div class="c-cart-template__shipping-content">
+                  {{- shippingContent -}}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Upsell {%- endcomment -%}
+  {%- render 'cart-upsell' -%}
+</section>
+
+{% schema %}
+{
+  "name": "Cart Template",
+  "class": "c-section c-section__cart-template",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Shipping Information",
+      "info": "This content will appear in the popup."
+    },
+    {
+      "type": "text",
+      "id": "shippingTitle",
+      "label": "Shipping Title"
+    },
+    {
+      "type": "richtext",
+      "id": "shippingContent",
+      "label": "Shipping Content"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "id": "continueUrl",
+      "type": "url",
+      "label": "Continue Shopping URL",
+      "info": "If left blank the user will be directed to the store's all products collection."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paymentImages",
+      "name": "Payment Images",
+      "settings": [
+        {
+          "id": "image",
+          "type": "textarea",
+          "label": "Payment Image",
+          "info": "Please paste SVG code here."
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Payment Title"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,115 @@
+{%- comment -%}
+  props
+  - mf
+  - variant
+{%- endcomment -%}
+
+{%- liquid
+  assign globalMf = shop.metafields.globals
+  assign primaryFeatureIconRef = mf.feature_icon[0]
+  for globalRef in globalMf.reference_name
+    if globalRef == primaryFeatureIconRef
+      assign primaryFeatureIconName = globalMf.display_name[forloop.index0]
+      assign primaryFeatureIconUrl = globalMf.icon[forloop.index0]
+      break
+    endif
+  endfor
+-%}
+
+
+{%- if product.media.size > 0 -%}
+  {%- comment -%}
+    Capture Media Data
+    - Capture all carousel media in one loop instead of running multiple loops
+  {%- endcomment -%}
+  {%- for media in product.media -%}
+    {%- comment -%} Carousel Slides {%- endcomment -%}
+    {%- capture carouselSlides -%}
+      {{- carouselSlides -}}
+      <div
+        class="c-product-gallery__slide"
+        data-product-gallery-slide
+        data-index="{{- forloop.index0 -}}"
+        data-media-id="{{- media.id -}}"
+        data-image-colour="{{- media.alt -}}"
+      >
+        {%- if media.media_type == 'image' -%}
+          <div class="c-product-gallery__slide-image-container o-responsive-image-container">
+            {%- assign attr = '' -%}
+            {%- if forloop.first -%}{%- assign attr = 'itemprop="image"' -%}{%- endif -%}
+            {%- render 'tool.picture' with {
+              image: media,
+              class: 'c-product-gallery__slide-image o-responsive-image',
+              alt: page_title,
+              width: 850,
+              sizes: '320,350,500,750',
+              attributes: attr
+            } -%}
+          </div>
+        {%- elsif media.media_type == 'video' -%}
+          <div class="c-product-gallery__slide-video-container">
+            {%- for videoSrc in media.sources -%}
+              {%- if videoSrc.format == 'mp4' -%}
+                {%- render 'object.html5-video' with {
+                  class: 'c-product-gallery__slide-video',
+                  videoUrlMp4: videoSrc.url
+                } -%}
+                {% break %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- elsif media.media_type == 'external_video' -%}
+          <div class="c-product-gallery__slide-ext-video-container">
+            {{- media | external_video_tag -}}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endcapture -%}
+
+    {%- comment -%} Carousel Dots {%- endcomment -%}
+    {%- capture carouselDots -%}
+      {{- carouselDots -}}
+      <button
+        class="c-product-gallery__dot"
+        data-carousel-dot
+        data-index="{{- forloop.index0 -}}"
+        type="button"
+        title="Carousel navigation"
+      ></button>
+    {%- endcapture -%}
+
+  {%- endfor -%}
+
+  {%- comment -%}
+    Display captured data
+  {%- endcomment -%}
+  <div class="c-product-gallery" data-product-gallery>
+    
+    {%- if primaryFeatureIconUrl and primaryFeatureIconName -%}
+      <div class="c-product-gallery__primary-feature o-primary-feature-icon">
+        <img 
+          class="o-primary-feature-icon__image" 
+          src="{{- primaryFeatureIconUrl -}}" 
+          alt="{{- primaryFeatureIconName | escape -}}"
+        />
+        <div class="o-primary-feature-icon__title">
+          {{- primaryFeatureIconName -}}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Carousel Slides {%- endcomment -%}
+    <div class="c-product-gallery__slides" data-product-gallery-slides>
+      {{- carouselSlides -}}
+    </div>
+
+    {%- if product.media.size > 1 -%}
+      {%- comment -%} Carousel Dots {%- endcomment -%}
+      <div class="c-product-gallery__dots" data-carousel-dots>
+        {{- carouselDots -}}
+      </div>
+    {%- endif -%}
+  
+  </div>
+
+{%- endif -%}

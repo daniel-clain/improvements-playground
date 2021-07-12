@@ -1,0 +1,84 @@
+.o-carousel {
+  position: relative;
+
+  &__controls {
+    display: none;
+    width: 100%;
+    &.is-initialised { display: block; }
+    @include t-absolute-center-y;
+
+    &.is-dots {
+      position: static;
+      transform: none;
+    }
+  }
+
+  &__arrow {
+    @include t-absolute-center-y;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5625rem;
+
+    &:hover {
+      outline: none;
+    }
+
+    &.is-previous {
+      left: 0;
+    }
+
+    &.is-next {
+      right: 0;
+    }
+
+    &-icon {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__dots {
+    @include t-absolute-center-x;
+    bottom: 0;
+  }
+
+  &__dot {
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 50%;
+    background: $s-color--font;
+    margin: 0 0.3125rem;
+    opacity: 0.4;
+    @include t-anim--transition(all);
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+
+
+  @include t-media-query($s-medium-up) {
+    &__arrow {
+      @include t-anim--transition(all);
+
+      &.is-previous { 
+
+        &:hover {
+        }
+      }
+
+      &.is-next {
+
+        &:hover {
+        }
+      }
+    }
+
+    // &__dot {
+    //   width: 0.625rem;
+    //   height: 0.625rem;
+    //   margin: 0 0.4375rem;
+    // }
+  }
+}

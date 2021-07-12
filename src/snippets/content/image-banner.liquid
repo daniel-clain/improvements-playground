@@ -1,0 +1,55 @@
+{% comment %}
+  Image Banner 
+    Snippet to display an Image and Text block banner
+
+  Version:
+    1.0.0 - 2021/04/19
+{% endcomment %}
+
+{%- if imgDesktop != blank -%}
+  <section class="c-image-banner {{ contentPosition }}
+    {% if title != blank or description != blank %}has-content{% endif %}"
+  >
+    <div class="c-image-banner__image-container o-responsive-image__container">
+      {%- capture imageClass -%}
+        c-image-banner__image o-responsive-image is-crop-{{ imageCrop }}
+        {% if imgMobile != blank %}has-mobile{% endif -%}
+      {%- endcapture -%}
+
+      {%- render 'tool.picture' with {
+        image: imgDesktop,
+        class: imageClass,
+        alt: title,
+        width: 2000,
+        sizes: '375,500,1100,1650,2000',
+        imageSizes: '375,500,1100,1650,2000'
+      } -%}
+
+      {%- if imgMobile != blank -%}
+        {%- render 'tool.picture' with {
+          image: imgMobile,
+          class: 'c-image-banner__image is-mobile o-responsive-image',
+          alt: title,
+          width: 750,
+          sizes: '375,500,750',
+          imageSizes: '375,500,750'
+        } -%}
+      {%- endif -%}
+    </div>
+  
+  {%- if title != blank or subtitle != blank -%}
+    <div class="c-image-banner__content">
+      {%- if title != blank -%}
+        <h1 class="c-image-banner__title">
+          {{- title | escape -}}
+        </h1>
+      {%- endif -%}
+      {%- if subtitle != blank -%}
+        <p class="c-image-banner__subtitle o-type--4">
+          {{- subtitle | escape | newline_to_br -}}
+        </p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  </section>
+{%- endif -%}

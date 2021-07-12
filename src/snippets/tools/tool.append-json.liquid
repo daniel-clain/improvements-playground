@@ -1,0 +1,42 @@
+{% comment %}
+  Append JSON
+    Simple snippet to append a JSON object with more data.
+
+  Parameters:
+    jsonData - JSON String (not object) to append. If "null", will do nothing
+    extra - Extra JSON to append.
+
+  Returns:
+    appended - The Appended JSON Object, or null if the source is null
+
+  Version:
+    1.0.0 - 2018/08/23
+{% endcomment %}
+{%- if jsonData == 'null' or extra == blank -%}
+  {%- assign appended = jsonData -%}
+{%- else -%}
+  {%- assign jsonSplit = jsonData | replace: '}', '+}' -%}
+  {%- assign jsonSplit = jsonSplit | split: '}' -%}
+  {%- assign appended = '' -%}
+
+  {%- for split in jsonSplit %}
+    {%- if forloop.last -%}
+      {%- assign c = split | size | minus: 1 -%}
+      {%- assign b = split | slice: 0, c -%}
+      {%- assign appended = appended | append: b -%}
+    {%- else -%}
+      {%- assign b = split | append: '}' -%}
+      {%- assign b = b | replace: '+}', '}' -%}
+      {%- assign appended = appended | append: b -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- assign appended = appended | append: ',' -%}
+  {%- assign appended = appended | append: extra -%}
+  {%- assign appended = appended | append: '}' -%}
+{%- endif -%}
+
+{%- comment -%} Dump JSON {%- endcomment -%}
+{%- if dump -%}
+  {{- appended -}}
+{%- endif -%}

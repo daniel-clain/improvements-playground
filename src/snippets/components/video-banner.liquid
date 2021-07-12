@@ -1,0 +1,43 @@
+{%- comment -%}
+  Props
+    video
+    image
+    imageMobile
+{%- endcomment -%}
+{%- liquid 
+  assign img = image | img_url: 'master'
+-%}
+<div class="c-video-banner {%- if imageMobile != blank %} has-mobile-image {% endif -%} ">
+  <div class="c-video-banner__inner">
+    <a 
+      class="c-video-banner__video-container  o-responsive-image-container"
+      data-lity
+      href="{{- video -}}"
+    >
+      {%- if imageMobile != blank -%}
+        {%- render 'tool.picture' with {
+          image: imageMobile,
+          class: 'c-video-banner__image o-responsive-image is-mobile',
+          alt: page_title,
+          width: 750, 
+          sizes: '375,750',
+          imageSizes: '375,750'
+        } -%}
+        
+      {%- endif -%}
+      {%- render 'tool.picture' with {
+        image: image,
+        class: 'c-video-banner__image o-responsive-image is-desktop',
+        alt: page_title,
+        width: 1840, 
+        sizes: '375,750,1100,1350,1650',
+        imageSizes: '375,750,1000,1230,1510'
+      } -%}
+      {%- render 'object.icon' with {
+        icon: 'play',
+        class: 'c-video-banner__video-icon',
+        attributes: 'data-video-play-button'
+      } -%}
+    </a>
+  </div>
+</div>

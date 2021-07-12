@@ -1,0 +1,66 @@
+{% comment %}
+  Order Template
+
+  Version:
+    1.0.0 - 2020/03/26
+{% endcomment %}
+
+
+<div class="p-customer c-activate-account">
+  <div class="c-activate-account__main">
+
+    {%- comment -%} Title {%- endcomment -%}
+    <h2 class="c-activate-account__title">
+      <span class="p-customer__title c-login-form__title o-title o-heading__inner o-heading--4">
+        {{- 'customer.activate_account.title' | t -}}
+      </span>
+    </h2>
+
+
+    <section class="c-activate-account__form-container">
+
+      {%- form 'activate_customer_password', class: 'o-form p-customer__form c-activate-account__form' -%}
+        {{- form.errors | default_errors -}}
+
+        <div class="o-form__input-group ">
+
+          <input type="password"
+            name="customer[password]"
+            class="o-input is-large is-block c-activate-account__input is-primary"
+            placeholder="{{ 'customer.activate_account.password' | t }}"
+          />
+
+        </div>
+
+        <div class="o-form__input-group ">
+
+          <input type="password" class="o-input is-large is-block c-activate-account__input is-primary"
+            name="customer[password_confirmation]"
+            placeholder="{{ 'customer.activate_account.password_confirm' | t }}"
+          />
+
+        </div>
+
+        <div class="p-customer__btn-row c-activate-account__row">
+
+          <button
+            type="submit"
+            class="o-btn is-palette-1 c-activate-account__btn is-left is-secondary"
+          >
+            {{- 'customer.activate_account.submit' | t -}}
+          </button>
+
+          <button
+            type="submit"
+            class="o-btn is-palette-1 c-activate-account__btn is-left is-secondary"
+            name="decline"
+          >
+            {{- 'customer.activate_account.cancel' | t -}}
+          </button>
+
+        </div>
+      {%- endform -%}
+
+    </section>
+  </div>
+</div>

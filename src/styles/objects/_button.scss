@@ -1,0 +1,184 @@
+/*
+ *  Button Styles
+ *    Clicky tappy touchy buttons
+ *
+ *  Version:
+ *    2.0.0 - 2021/04/09
+ */
+
+.o-btn {
+  //Display Related
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: $s-button--padding-small;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  border-radius: $s-input--radius;
+
+  //Typography Related
+  @extend %s-font--button;
+
+  /* Color Styles */
+  //Primary Black on White
+  color: $s-color--primary;
+  background: $s-color--primary-compliment;
+
+  //Secondary White on Blue
+  &.is-secondary {
+    color: $s-color--secondary-compliment;
+    background: $s-color--secondary;
+  }
+
+  &.is-tertiary {
+    color: $s-color--tertiary;
+    background: $s-color--tertiary-compliment;
+    border: 1px solid $s-color--border-dark;
+  }
+
+  &.is-quaternary {
+    color: $s-color--quartenary;
+    background: transparent;
+    padding: 0;
+    @extend %s-font--button--2;
+
+    .o-btn__icon {
+      height: 0.5rem;
+    }
+  }
+
+  &.is-link{
+    border: none;
+    background: transparent;
+    padding: 0;
+    text-transform: none;
+    font-weight: $s-font--root-weight;
+    opacity: 0.4;
+
+    &:hover{
+      opacity: 1;
+      color: $s-color--quartenary;
+      background: transparent;
+    }
+  }
+
+  &.is-reset{
+    background-color: unset;
+    padding: unset;
+    border-radius: unset;
+    font-weight: unset;
+    text-transform: unset;
+    
+    &:hover {
+      background-color: unset;
+      color: $s-color--primary;
+    }
+  }
+
+  &.is-hidden {
+    display: none;
+  }
+
+  &.has-icon {
+    display: flex;
+    align-items: center;
+
+    // & > .o-icon--play-small {
+    //   height: 1.063rem;
+    //   width: 0.9375rem;
+    //   margin-right: 0.9375rem;
+    // }
+  }
+
+  &.is-disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    // background: rgba($s-color--gold, 0.6);
+    color: $s-color--background;
+    // border-color: $s-color--disabled-border;
+
+    .o-btn__icon,
+    .o-btn__icon * {
+      // fill: $s-color--disabled-compliment;
+    }
+  }
+
+  /* Size Styles */
+  &.is-full-width {
+    width: 100%;
+  }
+
+  &.is-wide {
+    padding: $s-button--padding-wide-small;
+  }
+
+  /*** Sub Components ***/
+  &__icon {
+    height: 0.875rem;
+    margin-left: 0.5rem;
+    width: auto;
+  }
+
+  .o-loader {
+    font-size: 0;
+    opacity: 1;
+    display: block;
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: $s-button--padding-medium;
+
+    &.is-wide {
+      padding: $s-button--padding-wide-medium;
+    }
+
+    /*** States ***/
+    &:hover {
+      text-decoration: none;
+      color: rgba($s-color--primary, 0.7);
+      background: $s-color--primary-hover;
+    }
+
+    &.is-secondary {
+      &:hover {
+        color: $s-color--secondary-compliment;
+        background: $s-color--secondary-hover;
+      }
+    }
+
+    &.is-tertiary {
+      &:hover {
+        color: $s-color--tertiary;
+        background: $s-color--tertiary-compliment;
+        opacity: 0.7;
+      }
+    }
+
+    &.is-quaternary {
+
+      .o-btn__icon {
+        height: 0.625rem;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        background: transparent;
+        color: $s-color--quartenary;
+      }
+    }
+
+    &__icon {
+      height: 0.8rem;
+      padding-bottom: 0.1rem;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    padding: $s-button--padding-xlarge;
+
+    &.is-wide {
+      padding: $s-button--padding-wide-xlarge;
+    }
+  }
+}

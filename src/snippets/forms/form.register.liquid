@@ -1,0 +1,141 @@
+{% comment %}
+  Register Form
+    Simple Register Form
+
+  Version:
+    1.0.0 - 2020/03/25
+{% endcomment %}
+
+
+<div class="c-register-form {{ class }}">
+
+  <h2>
+    <span class="p-customer__title c-register-form__title o-title o-heading__inner o-heading--4">
+      {{- 'customer.register.title' | t -}}
+    </span>
+  </h2>
+
+  {%- form 'create_customer'-%}
+
+    {%- comment -%} First Name {%- endcomment -%}
+    {%- assign input_name = 'first_name'-%}
+    <div class="o-form__input-group {% if form.errors contains input_name %}has-error{% endif %}">
+      <input
+        type="text"
+        placeholder="{{'customer.register.' | append: input_name | t}}"
+        name="customer[{{ input_name }}]"
+        class="
+          o-input
+          o-form__text
+          c-login-register__input
+          c-register-form__input
+          is-primary
+        "
+        value="{%if form[input_name]%}{{ form[input_name] }}{%endif%}"
+        required
+        spellcheck="false"
+      />
+    </div>
+
+    {%- comment -%} Last Name {%- endcomment -%}
+    {%-assign input_name = 'last_name'-%}
+    <div class="o-form__input-group">
+      <input
+        type="text"
+        placeholder="{{'customer.register.' | append: input_name | t}}"
+        name="customer[{{ input_name }}]"
+        class="
+          o-input
+          o-form__text
+          c-login-register__input
+          c-register-form__input
+          is-primary
+        "
+        value="{%if form[input_name]%}{{ form[input_name] }}{%endif%}"
+        required
+        spellcheck="false"
+      />
+    </div>
+
+    {%- comment -%} Email {%- endcomment -%}
+    {%- assign input_name = 'email' -%}
+    <div class="o-form__input-group">
+      <input
+        type="email"
+        placeholder="{{'customer.register.' | append: input_name | t}}"
+        name="customer[{{ input_name }}]"
+        class="
+          o-input
+          o-form__text
+          c-login-register__input
+          c-register-form__input
+          is-primary
+        "
+        value="{%if form[input_name]%}{{ form[input_name] }}{%endif%}"
+        required
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+      />
+    </div>
+
+    {%- comment -%} Password {%- endcomment -%}
+
+    <p class="c-register-form__error o-form__errors" data-register-password-error>
+      {{- 'customer.register.password_mismatch' | t -}}
+    </p>
+
+    {%- assign input_name = 'password' -%}
+    <div class="o-form__input-group">
+      <input
+        data-password
+        type="password"
+        placeholder="{{'customer.register.' | append: input_name | t}}"
+        name="customer[{{ input_name }}]"
+        class="
+          o-input
+          o-form__text
+          c-login-register__input
+          c-register-form__input
+          is-primary
+        "
+        value="{%if form[input_name]%}{{ form[input_name] }}{%endif%}"
+        required
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+      />
+    </div>
+
+    {%- comment -%} Confirm Password {%- endcomment -%}
+    {%- assign input_name = 'confirm-password' -%}
+    <div class="o-form__input-group">
+      <input
+        data-password-confirm
+        type="password"
+        placeholder="{{'customer.register.' | append: input_name | t}}"
+        name="customer[{{ input_name }}]"
+        class="
+          o-input
+          o-form__text
+          c-login-register__input
+          c-register-form__input
+          is-primary
+        "
+        value="{%if form[input_name]%}{{ form[input_name] }}{%endif%}"
+        required
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+      />
+    </div>
+
+    <div class="c-register-form__btn-container">
+      <button type="submit" class="o-btn c-register-form__btn is-palette-1 is-secondary" data-register-submit>
+        {{- 'customer.register.submit' | t -}}
+      </button>
+    </div>
+
+  {%-endform-%}
+</div>
+{%- assign form = nil-%}

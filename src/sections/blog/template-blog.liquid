@@ -1,0 +1,93 @@
+{%- comment -%}
+  Blog Listing Page
+
+  v1.0.0 - 2021/04/20
+{%- endcomment -%}
+
+{%- liquid 
+  assign categoryBlocks = section.blocks | where: 'type', 'blog-filter'
+  assign firstBlog = blog.articles | first
+  assign perPage = section.settings.posts_per_page
+-%}
+
+<div class="c-blog-template">
+  {%- assign description = section.settings.description | default: blog.title -%}
+
+  {%- render 'blog-header' with {
+    categoryBlocks: categoryBlocks,
+    description: description,
+    title: section.settings.title
+  } -%}
+
+  {%- paginate blog.articles by perPage -%}
+    <div class="c-blog-template__articles">
+      {%- for article in blog.articles -%}
+
+          {% comment %} Featured thumbnail {% endcomment %}
+          {%- assign featuredNum = forloop.index0 | modulo: 4 -%}
+          {%- if forloop.first or featuredNum == 0 -%}
+
+            {% comment %} Alternating image position {% endcomment %}
+            {%- liquid
+              assign imageSideNum = forloop.index0 | modulo: 8
+              assign isImageLeft = false
+              if forloop.first or imageSideNum == 0
+                assign isImageLeft = true
+              endif
+            -%}
+
+            {%- render 'object.article-thumbnail' with {
+              class: 'c-blog-template__article',
+              thumbnailArticle: article,
+              isFeatured: true
+              isImageLeft: isImageLeft
+            } -%}
+
+          {%- else -%}
+            {%- render 'object.article-thumbnail' with {
+              class: 'c-blog-template__article',
+              thumbnailArticle: article
+            } -%}
+          {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- render 'object.pagination' with {
+      paginate: paginate,
+      class: 'c-blog-template__pagination'
+    } -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Blog Listing Template",
+  "class": "c-section c-section__blog-template",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Blog Listing Page Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Blog Listing Page Subheading",
+      "info": "Leave blank for blog name."
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts Per Page",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,93 @@
+{%- comment -%}
+  Article Thumbnail
+    Snippet to display article thumbnail.
+
+    Params:
+      class: A string to be used as an additional class
+      thumbnailArticle: An article object to be used for the thumbnail
+
+  Version:
+    1.0.0 - 2021/04/26
+{%- endcomment -%}
+
+{%- liquid  
+  capture readTime
+    render 'tool.article-read-time', content: thumbnailArticle.content
+  endcapture
+  assign isAlternate = false
+  if class contains 'alternate'
+    assign isAlternate = true
+  endif
+-%}
+
+<article class="o-article-thumbnail {{ class }}
+  {% if isFeatured %} is-featured{% endif %}
+  {% if isImageLeft %} is-image-left{% endif %}"
+  {{ dataAttributes }} 
+  data-article-thumbnail>
+
+  {%- if thumbnailArticle.image != blank -%}
+    <a
+      href="{{- thumbnailArticle.url -}}"
+      class="o-article-thumbnail__image-container o-responsive-image-container"
+    >
+
+    {%- if isFeatured -%} 
+      {%- render 'tool.picture' with {
+        image: thumbnailArticle.image,
+        class: 'o-article-thumbnail__image o-responsive-image',
+        alt: thumbnailArticle.title,
+        width: 1200,
+        sizes: '375,500,1100',
+        imageSizes: '375,500,1200'
+      } -%}
+
+    {%- else -%}
+      {%- render 'tool.picture' with {
+        image: thumbnailArticle.image,
+        class: 'o-article-thumbnail__image o-responsive-image',
+        alt: thumbnailArticle.title,
+        width: 600,
+        sizes: '375,500,1100',
+        imageSizes: '300,500,560'
+      } -%}
+
+    {%- endif -%}
+    </a>
+  {%- endif -%}
+
+  {%- comment -%} Content {%- endcomment -%}
+  <div class="o-article-thumbnail__content-wrapper">
+    <a href="{{- thumbnailArticle.url -}}" class="o-article-thumbnail__content">
+      {%- if thumbnailArticle.tags.size > 0 -%}
+        <p class="o-article-thumbnail__tag">
+          {{- thumbnailArticle.tags | first -}}
+        </p>
+      {%- endif -%}
+
+      <h5 class="o-article-thumbnail__title">
+        {{- thumbnailArticle.title -}}
+      </h5>
+
+      {%- if isFeatured -%}
+        <p class="o-article-thumbnail__description">
+          {{- thumbnailArticle.excerpt_or_content | strip_html | truncatewords: 30, '...' -}}
+        </p>
+      {%- endif -%}
+
+      {%- comment -%} Read Time {%- endcomment -%}
+      {%- if readTime != blank and isAlternate == false -%}
+        <span class="o-article-thumbnail__read-time">
+          {{- readTime -}}
+        </span>
+      {%- endif -%}
+
+      {%- comment -%} Read more link for {%- endcomment -%}
+      {%- if isAlternate -%}
+        <span class="o-article-thumbnail__read-time">
+          {{- 'articles.read_now_link' | t -}}
+        </span>
+      {%- endif -%}
+    </a>
+  </div>
+</article>

@@ -1,0 +1,76 @@
+/*
+ *  Shipping Progress
+ *    Styles for the shipping progress component
+ *
+ *  Version:
+ *    1.0.0 - 2021/05/03
+ */
+
+.c-shipping-progress {
+  padding: 1.5rem $s-gutter--edge-mobile 0;
+
+  .c-cart-template & {
+    padding: 0;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid $s-color--border-light;
+
+    &__progress {
+      max-width: 21.4375rem;
+      margin: 0 auto;
+    }
+  }
+
+  .is-empty.c-cart-template & {
+    border-bottom: none;
+    padding-bottom: 2.2rem;
+  }
+
+  &__label {
+    margin: 0;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  &__progress {
+    position: relative;
+
+    &-bar {
+      display: block;
+      height: 0.25rem;
+      background-color: $s-color--background-secondary;
+      opacity: 0.1;
+      border-radius: 0.25rem;
+    }
+
+    &-fill {
+      @include t-anim--transition((width, border-radius), $s-anim--time-short, linear);
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height: 100%;
+      border-radius: 0.25rem;
+      background-color: $s-color--background-secondary;
+    }
+  }
+
+  /*** Media Queries ***/
+
+  @include t-media-query($s-medium-up) {
+    padding: 1.5rem 1.5rem 0;
+
+    .c-cart-template & {
+      padding-bottom: 0;
+      border: none;
+      width: 36%;
+      margin: 0;
+
+      &__progress {
+        max-width: 29.3rem;
+        margin: 0 auto;
+        border-radius: 0.25rem;
+        overflow: hidden;
+      }
+    }
+  }
+}

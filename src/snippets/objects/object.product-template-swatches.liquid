@@ -1,0 +1,208 @@
+{%- comment -%}
+  Product Swatches
+    Swatches specific for the product template.
+
+    Params:
+      - printJson: If true the JSON for the product will also be attached
+      - product: Product to generate for
+      - variant: Current selected variant, or blank
+      - class: A string to be used as an additional class
+      - sizeSelect: Boolean to change size to dropdown
+      - labels: Boolean to hide labels, default true
+      - colourExpand: Boolean to hide excess colours
+
+  Version:
+    1.0.0 - 2020/11/18
+{% endcomment %}
+
+<div class="o-swatches {{ class }}" data-swatches>
+  {%- comment -%}
+    Variant Selector
+     - (Controlled by swatches, and fallback for no JS Support
+  {%- endcomment -%}
+
+  <div class="o-swatches__variant-selector no-js">
+    {%- render 'object.variant-selector' with {
+      variant: variant,
+      product: product,
+      printJson: printJson,
+      class: 'o-swatches__variant-selector'
+    } -%}
+  </div>
+
+  {%- comment -%} Visual Swatches {%- endcomment -%}
+  {%- unless product.has_only_default_variant or product.options_with_values.size == 1 -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign optionHandle = option.name | handleize -%}
+
+      {%- if optionHandle == 'color' or optionHandle == 'colour' -%}
+
+        <div class="o-swatches__swatch is-color" data-swatch>
+
+          {%- unless hideLabels -%}
+            <label class="o-swatches__label o-type--2">
+              {{- option.name }}:
+            </label>
+          {%- endunless -%}
+          <div class="o-swatches__swatch-options"
+            data-swatch-group
+            data-swatch-position="{{ option.position }}"
+            data-index="option{{ option.position }}"
+            data-swatch-option-name="{{ option.name }}"
+          >
+            {%- for value in option.values -%}
+              <button
+                type="button"
+                class="o-swatches__swatch-button
+                {% if option.selected_value == value %}is-selected{% endif %}
+                is-visible"
+                data-swatch-object
+                data-value="{{ value | handle }}"
+                data-swatch-position="{{ option.position }}"
+                title="{{ value | escape }}"
+              >
+                <div class="o-swatches__swatch-button-inner s-swatch--{{ value | handle }}">
+                </div>
+              </button>
+            {%- endfor -%}
+
+            {%- if colorExpand -%}
+              <button class="o-btn is-reset o-colour-expand-toggle" data-colour-expand-toggle title="Show more colours"></button>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- elsif optionHandle == 'size' -%}
+        {%- if option.values.size == 1 -%}
+          {%- continue -%}
+        {%- endif -%}
+        <div class="o-swatches__swatch is-size" data-swatch>
+          {%- unless hideLabels -%}
+            <label class="o-swatches__label o-type--2">
+              {{- option.name -}}: 
+              {% if sizeGuideLink -%}
+                {{- sizeGuideLink -}}
+              {%- endif -%}
+            </label>
+          {%- endunless -%}
+
+          {%- liquid
+            assign allSizesMapped = true
+          -%}
+          {%- capture selectSwatch -%}
+            <select class="o-swatches__swatch-select-inner o-input 
+              is-secondary o-form__input"
+              data-swatch-selector
+              data-swatch-position="{{ option.position }}">
+          {%- endcapture -%}
+
+          {%- for value in option.values -%}
+            {%- liquid
+              if value == 'X-SMALL' or value == 'XSMALL' 
+                assign displayVal = 'XS'
+              elsif value == 'SMALL'
+                assign displayVal = 'S'
+              elsif value == 'MEDIUM'
+                assign displayVal = 'M'
+              elsif value == 'LARGE'
+                assign displayVal = 'L'
+              elsif value == 'X-LARGE' or value == 'XLARGE' 
+                assign displayVal = 'XL'
+              elsif value == 'XX-LARGE' or value == 'XXLARGE' 
+                assign displayVal = 'XXL'
+              else
+                assign displayVal = value
+                assign allSizesMapped = false
+              endif
+            -%}
+            {%- capture selectSwatch -%}
+              {{- selectSwatch -}}
+              <option
+                value="{{ value | handleize }}"
+                {% if option.selected_value == value %}selected{% endif %}
+              >
+                {{- value | downcase -}}
+              </option>
+            {%- endcapture -%}
+
+            {%- unless allSizesMapped == false or sizeSelect -%}
+              {%- capture buttonsSwatch -%}
+                {{- buttonsSwatch -}}
+                <button
+                  type="button"
+                  class="o-swatches__swatch-button
+                  {% if option.selected_value == value %}is-selected{% endif %}"
+                  data-swatch-object
+                  data-value="{{ value | handle }}"
+                  data-swatch-position="{{ option.position }}"
+                  title="{{ value | escape }}"
+                >
+                  {{- displayVal -}}
+                </button>
+              {%- endcapture -%}
+            {%- endunless -%}
+
+          {%- endfor -%}
+            
+          {%- capture selectSwatch -%}
+            {{- selectSwatch -}}
+            </select>
+          {%- endcapture -%}
+
+          <div class="o-swatches__swatch-options {% if sizeSelect %}o-form__input-group is-dropdown{% endif %}"
+            data-swatch-group
+            data-swatch-position="{{ option.position }}"
+            data-index="option{{ option.position }}"
+            data-swatch-option-name="{{ option.name }}"
+          >
+
+            {%- if sizeSelect or allSizesMapped == false -%}
+              {{- selectSwatch -}}
+            {%- else -%}
+              {{- buttonsSwatch -}}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- else -%}
+        {% comment %} Default for "No Swatch" (Dropdown only) {% endcomment %}
+        <div class="o-swatches__swatch is-other">
+          {%- unless hideLabels -%}
+            <label for="o-swatches__swatch-select--{{ option.name | handleize }}" class="o-swatches__label o-type--2">
+              {{- option.name -}}
+            </label>
+          {%- endunless -%}
+
+          <div class="o-swatches__swatch-select has-js" data-swatch>
+            <div class="o-swatches__swatch-select-option o-form__input-group is-dropdown"
+              data-swatch-group
+              data-swatch-position="{{ option.position }}"
+              data-index="option{{ option.position }}"
+              data-swatch-option-name="{{ option.name }}"
+              id="o-swatches__swatch-select--{{ option.name | handleize }}"
+            >
+              <select class="
+                  o-swatches__swatch-select-inner
+                  o-input
+                  {% unless hideLabels %}
+                    is-primary
+                  {% else %}
+                    is-secondary
+                  {% endunless %}
+                  o-form__input
+                "
+                data-swatch-selector
+                data-swatch-position="{{ option.position }}"
+              >
+                {%- for value in option.values -%}
+                  <option value="{{ value | handleize }}" {% if option.selected_value == value %}selected{% endif %} >
+                    {{ value }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endunless -%}
+</div>

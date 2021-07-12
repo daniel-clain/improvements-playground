@@ -1,0 +1,9 @@
+.c-about-values {
+  @include t-media-query($s-medium-up) {
+    .c-feature-blocks {
+      &__inner {
+        padding: #{'min(8%, 10rem)'} $s-gutter--edge-medium-alt #{'min(6%, 7.5rem)'};
+      }
+    }
+  }
+}

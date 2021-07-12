@@ -1,0 +1,58 @@
+/*
+ *  Newsletter Form
+ *    Reusable newsletter form
+ *
+ *  Version
+ *    1.0.0 - 2021/05/12
+ */
+
+.o-newsletter-form {
+
+
+  &__input {
+    padding: 1rem 1rem 0.875rem;
+
+    &.o-input {
+      border: none;
+
+      &.has-error { border: 1px solid $s-color--error; }
+    }
+
+    &-container {
+      background: $s-color--background;
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+  }
+
+  &__submit {
+    padding: 0.5rem 1rem;
+    border: none;
+    font-family: $s-font--root-family;
+    font-weight: $s-font--root-weight;
+    text-transform: none;
+  }
+
+
+  @include t-media-query($s-medium-up) {
+
+    &__input {
+      padding: 1.125rem 1.25rem 1.25rem;
+    }
+
+    &__submit {
+      padding: 1rem 1.5rem;
+    }
+
+    &__submit, &__input {
+      font-size: 1.125rem;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__input {
+      padding: 1.625rem 1.5rem 1.4375rem;
+    }
+  }
+}

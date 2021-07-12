@@ -1,0 +1,118 @@
+.c-article-related {
+  background-color: $s-color--background-tertiary;
+  padding: 3.5rem 0;
+  z-index: 0;
+  position: relative;
+  text-align: center;
+
+  &.is-alternate {
+    padding: 3.5rem $s-gutter--edge-mobile;
+  }
+
+  &__heading {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  &__articles {
+    display: flex;
+    overflow: hidden;
+
+    .is-alternate & {
+      display: block;
+      overflow: visible;
+    }
+  }
+
+  &__article {
+    width: 100%;
+    flex-shrink: 0;
+    padding-bottom: 0;
+
+    .is-alternate & {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .o-carousel {
+    &__controls {
+      position: relative;
+      justify-content: center;
+      height: 1.3125rem;
+      margin-top: 0.625rem;
+    }
+  }
+
+  &__btn {
+    margin-top: 2rem;
+  }
+
+
+  @include t-media-query($s-small-up) {
+    &.is-alternate {
+      padding: 3.5rem $s-gutter--edge-small;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: $s-gutter--section-v-medium 5rem;
+
+    &.is-alternate {
+      padding: $s-gutter--section-v-medium $s-gutter--edge-medium-alt;
+    }
+
+    &__articles {
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .is-alternate & {
+        justify-content: space-between;
+        display: flex;
+      }
+
+      &:after {
+        content: '';
+        width: 30.43%;
+      }
+    }
+
+    &__article {
+      width: 30.43%;
+      padding: 0;
+
+      .is-alternate & {
+        width: 30.43%;
+        margin: 0;
+      }
+    }
+
+    &__inner {
+      max-width: 120rem;
+      margin: 0 auto;
+
+      .is-alternate & {
+        max-width: $s-page-wrap--large;
+      }
+    }
+
+    &__heading {
+      margin-bottom: 2.5rem;
+    }
+
+    &__btn {
+      margin-top: 2.5rem;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__heading {
+      margin-bottom: 5rem;
+    }
+
+    &__btn {
+      margin-top: 5rem;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.c-about-video {
+  padding: 4rem $s-gutter--edge-mobile;
+  background-color: $s-color--background-tertiary;
+  overflow: hidden;
+
+  .c-video-banner {
+    // Fix safari not showing border radius
+    z-index: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  @include t-media-query($s-small-up) {
+    padding: 0;
+  }
+
+  @include t-media-query($s-medium-up) {
+    .c-video-banner {
+      border-radius: 1rem;
+    }
+  }
+}

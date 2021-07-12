@@ -1,0 +1,42 @@
+{% comment %}
+  404 Template
+
+  Version:
+    1.0.0 - 2019/03/19
+{% endcomment %}
+
+{%- assign continueUrl = section.settings.continueUrl | default: routes.all_products_collection_url -%}
+
+<section class="c-404">
+  <p class="c-404__pretitle">
+    {{- 'general.404.pretitle' | t -}}
+  </p>
+  <h1 class="c-404__title o-heading--3">
+    {{- 'general.404.title' | t -}}
+  </h1>
+  <p>
+    {{- 'general.404.subtext_html' | t -}}
+  </p>
+  <a href="{{ continueUrl }}" class="c-404__btn is-secondary o-btn">
+    {{- 'general.404.continue_button' | t -}}
+  </a>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "class": "c-section c-section__404",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "id": "continueUrl",
+      "type": "url",
+      "label": "Continue Shopping URL",
+      "info": "If left blank the user will be directed to the store's all products collection."
+    }
+  ]
+}
+{% endschema %}

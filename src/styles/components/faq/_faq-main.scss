@@ -1,0 +1,60 @@
+/*
+ *  FAQ
+ *    Styles for the FAQ Page
+ *
+ *  Version:
+ *    1.0.0 - 2021/03/10
+ */
+
+.c-faq {
+  position: relative;
+  background-color: $s-color--background-tertiary;
+  padding: 4rem 0 5rem;
+
+  &__contact {
+    text-align: center;
+    margin: 5rem $s-gutter--edge-mobile 0;
+
+    &-heading {
+      margin-bottom: 1rem;
+    }
+
+    &-subheading {
+      p {
+        margin: 0;
+      }
+
+      p:first-of-type {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    &-button {
+      margin-top: 1.375rem;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: 5rem 0 7.5rem;
+
+    &__contact {
+      margin: 5rem auto 0;
+      max-width: 49rem;
+
+      &-heading {
+        margin-bottom: 0.8rem;
+        font-size: 1.5rem;
+      }
+
+      &-subheading {
+        p:first-of-type {
+          margin-bottom: 0rem;
+        }
+      }
+
+      &-button {
+        margin-top: 1.3rem;
+      }
+    }
+  }
+}

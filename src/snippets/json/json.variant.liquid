@@ -1,0 +1,35 @@
+{% comment %}
+  Variant JSON
+    Snippet to include JSON for a variant.
+
+  Parameters:
+    variant - Variant to print the JSON for
+    product - Product this variant belongs to (optional but faster)
+
+  Version:
+    1.0.0 - 2018/08/06
+{% endcomment %}
+{%- unless product != nil -%}
+  {%- assign product = variant.product -%}
+{%- endunless -%}
+
+{%- comment -%} Generate default JSON {%- endcomment -%}
+{%- assign variantJson = variant | json -%}
+
+{%- comment -%} Extra JSON to extend onto default JSON {%- endcomment -%}
+{%- capture extend -%}
+  "product_id": {{ product.id | json }},
+  "inventory_policy": {{ variant.inventory_policy | json }},
+  "inventory_quantity": {{ variant.inventory_quantity | json }},
+  "compare_at_price": {{ variant.compare_at_price | json }}
+  {%- comment -%}
+    If you want to use variant level metafields you can add those here
+  {%- endcomment -%}
+{%- endcapture -%}
+
+{%- comment -%} Perform Ammend {%- endcomment -%}
+{%- render 'tool.append-json' with {
+  jsonData: variantJson,
+  extra: extend,
+  dump: true
+} -%}

@@ -1,0 +1,80 @@
+{%- comment -%}
+  props
+  - menuHandle
+
+{%- endcomment -%}
+
+
+
+{%- liquid
+  assign menu = linklists[menuHandle]
+  assign baseClass = 'o-collection-breadcrumb'
+  assign nodeClass = baseClass | append: '__node o-type--2'
+-%}
+{%- capture leafNode -%}
+  <li>
+    <h1 
+      class="{{nodeClass}} is-leaf-node" 
+      aria-current="page"
+    >
+      {{ collection.title -}}
+    </h1>
+  </li>
+{%- endcapture -%}
+
+{%- if menu != blank-%}
+
+  {%- for link in menu.links -%}
+    {%- if link.active -%}
+      {%- capture breadcrumb -%}
+        {{- leafNode -}}
+      {%- endcapture -%}
+      {%- break -%}
+    {%- endif -%}
+    
+    {%- for link2 in link.links -%}
+      {%- if link2.active -%}
+        {%- capture breadcrumb -%}
+          <li>
+            <a href="{{link.url}}" class="{{nodeClass}}">
+              {{- link.title -}}
+            </a>
+          </li>
+          {{- leafNode -}}
+        {%- endcapture -%}
+        {%- break -%}
+      {%- endif -%}
+
+      {%- for link3 in link2.links -%}
+        {%- if link3.active -%}
+          {%- capture breadcrumb -%}
+            <li>
+              <a href="{{link.url}}" class="{{nodeClass}}">
+                {{- link.title -}}
+              </a>
+            </li>
+            <li>
+              <a href="{{link2.url}}" class="{{nodeClass}}">
+                {{- link2.title -}}
+              </a>
+            </li>
+            {{- leafNode -}}
+          {%- endcapture -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+    
+  <nav class="o-collection-breadcrumb" aria-label="breadcrumb">
+    <ul>
+      {%- if breadcrumb -%}
+        {{- breadcrumb -}}
+      {%- else -%}
+        {{- leafNode -}}
+      {%- endif -%}
+    </ul>
+  </nav>
+
+{%- endif -%}

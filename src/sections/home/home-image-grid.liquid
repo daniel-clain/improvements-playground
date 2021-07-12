@@ -1,0 +1,93 @@
+{%- comment -%}
+  Home Image Grid
+    Displays images with optional link in a grid like format.
+    If more than 4 blocks are added the grid turns into a carousel
+    for mobile devices.
+
+  Version
+    1.0.0 - 2021/04/09
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="c-image-grid" data-image-grid>
+
+    <div class="c-image-grid__carousel" {% if section.blocks.size > 4 %}data-carousel{% endif %}>
+
+      {%- comment -%}
+        Two "Groups" of blocks, used to give a carousel while still in 2x2 grid style.
+      {%- endcomment -%}
+      {%- for block in section.blocks limit: 4 -%}
+        {%- if forloop.first -%}
+          <div class="c-image-grid__carousel-group">
+        {%- endif -%}
+          {%- render 'home-image-grid-block' with {
+            title: block.settings.title,
+            image: block.settings.image,
+            url: block.settings.url
+          } -%}
+        {%- if forloop.last -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- for block in section.blocks limit: 4 offset: 4 -%}
+        {%- if forloop.first -%}
+          <div class="c-image-grid__carousel-group">
+        {%- endif -%}
+          {%- render 'home-image-grid-block' with {
+            title: block.settings.title,
+            image: block.settings.image,
+            url: block.settings.url
+          } -%}
+        {%- if forloop.last -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+
+    {%- comment -%} Carousel Dots {%- endcomment -%}
+    {%- if section.blocks.size > 4 -%}
+      {%- render 'object.carousel-controls' with { dots: true, slideSize: 2 } -%}
+    {%- endif -%}
+
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Home Image Grid",
+    "class": "c-section c-section__home-image-grid",
+    "max_blocks": 8,
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image",
+            "info": "Please upload in .jpg format and with a ratio of 430 x 584px"
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Image Grid",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

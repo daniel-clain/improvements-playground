@@ -1,0 +1,31 @@
+{%- comment -%}
+  Content is set via the web component
+{%- endcomment -%}
+
+{%- liquid 
+  assign buttonNames = shop.metafields.globals.button_name | json | remove: '"' | remove: '[' | remove: ']' 
+  assign buttonCols = shop.metafields.globals.button_collection | json | remove: '"' | remove: '[' | remove: ']'
+-%}
+
+<cart-drawer
+  class="c-cart-drawer {% if cart.item_count == 0 %}is-empty{% endif %}"
+  data-shipping-min-spend="{{- settings.freeShippingThreshold | times: 1 -}}"
+  data-drawer-upsell="{{- settings.cartUpsellCollection -}}"
+  {% if buttonNames %}data-empty-buttons="{{- buttonNames -}}"{% endif %}
+  {% if buttonCols %}data-empty-collections="{{- buttonCols -}}"{% endif %}
+></cart-drawer>
+
+<div class="c-cart-drawer__overlay" data-body-overlay></div>
+
+{% schema %}
+  {
+    "name": "Cart Drawer",
+    "class": "c-section c-section__cart-drawer",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Settings to control the messaging in the cart drawer and the free shipping tier values are found in the general 'Theme Settings' section of the customiser."
+      }
+    ]
+  }
+{% endschema %}

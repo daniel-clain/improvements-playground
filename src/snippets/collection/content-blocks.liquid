@@ -1,0 +1,81 @@
+{%- comment -%}
+  Content Blocks
+    Snippet for drawing content from the theme customiser in
+    product loops on collection pages.
+
+  Version:
+    1.0.0 - 2020/10/27
+{%- endcomment -%}
+
+{%- comment -%} Find the content blocks for this section {%- endcomment -%}
+{%- for block in section.blocks -%}
+
+  {%- comment -%} Find the content blocks that match this collection (removed for jfp) {%- endcomment -%}
+  {%- comment -%}
+    assign collectionSplit = block.settings.collections | split: ','
+    assign collectionMatch = false
+    for col in collectionSplit
+      assign colStrip = col | strip
+      if colStrip == collection.handle
+        assign collectionMatch = true
+        break
+      endif
+    endfor
+
+    unless collectionMatch
+      continue
+    endunless
+  {%- endcomment -%}
+
+  {%- liquid
+    assign image = block.settings.image
+    if image == blank
+      continue
+    endif
+    assign title = block.settings.title
+    assign btnLink = block.settings.btn-link
+    assign btnLabel = block.settings.btn-label
+    assign hasBtn = false
+    if btnLink != blank and btnLabel != blank
+      assign hasBtn = true
+    endif
+  -%}
+
+  <div 
+    class="o-content-block o-content-block--{{block.id}}"
+    data-content-block 
+    data-content-block-position="{{ block.settings.position }}"
+  >
+    <div class="o-content-block__inner">
+      <div class="o-content-block__image-wrap">
+        <div class="o-content-block__image">
+          {%- render 'tool.picture' with {
+            image: image,
+            class: 'o-content-block__image__img',
+            alt: title,
+            width: 448,
+            sizes: '448',
+            imageSizes: '448'
+          } -%}
+        </div>
+      </div>
+  
+      {%- if title != blank or hasBtn -%}
+        {%- if title != blank -%}
+          <p class="o-content-block__content">
+            {{- title | escape -}}
+          </p>
+        {%- endif -%}
+        {%- if hasBtn -%}
+          <a
+            href="{{ btnLink }}"
+            class="o-content-block__btn o-btn"
+          >
+            {{- btnLabel | escape -}}
+          </a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+
+{%- endfor -%}

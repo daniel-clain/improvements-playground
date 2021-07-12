@@ -1,0 +1,82 @@
+{% comment %}
+  Search Template Section
+
+  Version:
+    1.0.0 - 2021/05/12
+{% endcomment %}
+
+<div class="c-search-template
+  {% if search.performed and search.results_count == 0 %} no-results{% endif %}" 
+  data-search-template
+>
+  <header class="c-search-template__header">
+    <p class="c-search-template__title">
+      {{- 'general.search.title' | t -}}
+    </p>
+
+    {%- if search.performed and search.results_count == 0 -%}
+      <h1 class="c-search-template__results-text o-heading--4">
+        {{- 'general.search.no_results_html' | t: terms: search.terms -}}
+      </h1>
+
+      <p class="c-search-template__results-subtitle">
+        {{- 'general.search.no_results_subtitle' | t -}}
+      </p>
+
+      {%- render 'cart-empty' with {
+        hideTitle: true
+      } -%}
+    {%- else -%}
+      <h1 class="c-search-template__results-text o-heading--4">
+        {{- 'general.search.results_for_html' | t: terms: search.terms -}}
+      </h1>
+    {%- endif -%}
+  </header>
+
+  {% comment %} Paginate Results {% endcomment %}
+  {%- paginate search.results by section.settings.products-per-page -%}
+
+    {% comment %} Results Container and results {% endcomment %}
+    <div class="c-search-template__results" data-search-template-results>
+      {%- if search.performed -%}
+
+        <div class="c-search-template__products o-products-list">
+          {% for item in search.results %}
+            {%- unless item.object_type == 'product' -%}
+              {%- continue -%}
+            {%- endunless -%}
+
+            {%- render 'object.product-thumbnail' with {
+              product: item,
+              variant: item.selected_or_first_available_variant,
+              class: 'c-search-template__product o-products-list__product'
+            } -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {% comment %} Pagination Page Selector {% endcomment %}
+    {%- if paginate.pages > 1 -%}
+      {%- include 'object.pagination' -%}
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "class": "c-section c-section__search-template",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products-per-page",
+      "label": "Products Per Page",
+      "min": 1,
+      "max": 25,
+      "step": 1,
+      "default": 20
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+{% comment %}
+  Login/Register Template Section
+    Section shared between both the login and register templates.
+
+  Version:
+    1.0.0 - 2020/03/25
+{% endcomment %}
+
+
+<div class="p-customer c-login-register" data-login-register>
+  {%- comment -%}
+    Form Hack - Error Message Form
+    - Is a fake form to capture the error messages. Because by default Shopify
+      will give both forms error messages regardless of which form was actually
+      submmited.
+
+    Thanks Shopify
+  {%- endcomment -%}
+
+  <section class="c-login-register__form-container is-error-form">
+    {%- form 'customer_login' -%}
+      {%- if form.errors -%}
+        <div class="o-form__errors c-login-register__errors">
+          {{- form.errors | default_errors -}}
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </section>
+
+  {%- comment -%} Login Section {%- endcomment -%}
+  <section class="c-login-register__form-container is-login">
+    {%- render 'form.login', class: 'c-login-register__form' -%}
+
+    {%- comment %} Reset Password Form {%- endcomment -%}
+    {%- render 'form.reset-password', class: 'c-login-register__form' -%}
+  </section>
+
+  {%- comment -%} Register Section {%- endcomment -%}
+  <section class="c-login-register__form-container is-register">
+    {%- render 'form.register', class: 'c-login-register__form' -%}
+  </section>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Login/Register Page",
+    "class": "c-section__login-register",
+    "settings": [
+    ]
+  }
+{% endschema %}

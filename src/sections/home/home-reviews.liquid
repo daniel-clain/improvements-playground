@@ -1,0 +1,151 @@
+{%- comment -%}
+  Home Reviews
+    Dynamic to display up to 3 reviewsd from section blocks.
+
+  Version:
+    1.0.0 - 2021/05/13
+{%- endcomment -%}
+
+{%- comment -%} Rating percent value reduced to visualise the difference {%- endcomment -%}
+{%- liquid
+  assign title = section.settings.title
+  assign rating = section.settings.rating | times: 1.0
+  assign percent = rating | divided_by: 5 | times: 96
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section
+    class="c-home-reviews"
+    data-home-reviews
+  >
+
+    <div class="c-home-reviews__inner">
+
+      {%- if title != blank or rating != blank -%}
+        <header class="c-home-reviews__header">
+          {%- if title != blank -%}
+            <h2 class="c-home-reviews__title o-heading--4">
+              {{- title | escape | newline_to_br -}}
+            </h2>
+          {%- endif -%}
+  
+          {%- if rating != blank -%}
+            <div class="c-home-reviews__rating-container">
+              <h5 class="c-home-reviews__rating o-heading--5--alt">
+                {{- rating -}}
+              </h5>
+              <span class="c-home-reviews__stars-outer">
+                {%- render 'object.icon' with {
+                  icon: 'stars',
+                  class: 'c-home-reviews__stars is-base'
+                } -%}
+                <span
+                  class="c-home-reviews__stars-container"
+                  style="width: {{ percent }}%"
+                >
+                  {%- render 'object.icon' with {
+                    icon: 'stars--yellow',
+                    class: 'c-home-reviews__stars'
+                  } -%}
+                </span>
+              </span>
+            </div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+  
+      <div class="c-home-reviews__carousel" data-carousel>
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign title = block.settings.title
+            assign content = block.settings.content
+            assign author = block.settings.author
+            if title == blank or content == blank
+              continue
+            endif
+          -%}
+          <div
+            class="c-home-reviews__review"
+            data-home-reviews-content="{{ title | handle }}"
+          >
+            {%- if title != blank -%}
+              <h6 class="c-home-reviews__review-title {{ section.settings.reviewTitleSize }}">
+                {{- title | escape -}}
+              </h6>
+            {%- endif -%}
+            <p class="c-home-reviews__review-content">
+              {{- content | escape -}}
+            </p>
+            <p class="c-home-reviews__review-author o-type--2">
+              {{- author | escape -}}
+            </p>
+          </div>
+        {%- endfor -%}
+      </div>
+  
+      {%- comment -%} Carousel Dots {%- endcomment -%}
+      {%- render 'object.carousel-controls' with { dots: true, blocks: section.blocks } -%}
+    </div>
+
+  </section>
+{%- endif -%}
+
+{% schema %} 
+  {
+    "name": "Home reviews",
+    "class": "c-section c-section__home-reviews",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "id": "title",
+        "type": "textarea",
+        "label": "Section Title"
+      },
+      {
+        "id": "rating",
+        "type": "text",
+        "label": "Average Rating",
+        "default": "4.8"
+      },
+      {
+        "id": "reviewTitleSize",
+        "type": "select",
+        "label": "Individual Review Title Size",
+        "options": [
+          {"value": "o-heading--6", "label": "H6 Size"},
+          {"value": "o-heading--5", "label": "H5 Size"}
+        ],
+        "default": "o-heading--6"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "usp",
+        "name": "Review",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Review Title"
+          },
+          {
+            "id": "content",
+            "type": "textarea",
+            "label": "Review Content"
+          },
+          {
+            "id": "author",
+            "type": "text",
+            "label": "Author Name & Location"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Reviews",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

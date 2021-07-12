@@ -1,0 +1,51 @@
+{%- comment -%}
+  Blog Preview
+    Uses the related articles snippet to populate blogs on the home page. 
+
+  Version
+    1.0.0 - 2020/05/07
+{%- endcomment -%}
+
+{%- assign ss = section.settings -%}
+
+{%- render 'related-articles' with {
+  class: 'c-article-related',
+  relatedBlog: blogs[ss.blogHandle],
+  title: ss.title,
+  articleLimit: 3,
+  carousel: false,
+  viewAllBtn: ss.btnLabel
+} -%}
+
+{% schema %}
+  {
+    "name": "Article Template",
+    "class": "c-section c-section__article-template",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Related Articles Title",
+        "default": "Further reading..."
+      },
+      {
+        "id": "blogHandle",
+        "type": "blog",
+        "label": "Blog",
+        "info": "Blog to pull articles from."
+      },
+      {
+        "id": "btnLabel",
+        "type": "text",
+        "label": "Go To Blog Button Label",
+        "default": "VIEW ALL ARTICLES"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Blog Preview",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %} 

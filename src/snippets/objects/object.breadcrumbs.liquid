@@ -1,0 +1,55 @@
+{% comment %}
+  Breadcrumbs
+{% endcomment %}
+
+
+{%- liquid
+  assign separator = '—'
+-%}
+
+<nav
+  class="o-breadcrumbs {%- if class != blank %} {{ class -}}__breadcrumbs{%- endif -%}"
+  role="navigation" aria-label="breadcrumbs"
+>
+  <a href="/"><span>{{- 'breadcrumbs.home' | t -}}</span></a>
+  {%- if template contains 'page' %}
+    {%- if pageParent != blank -%}
+      <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+      <a href="/pages/{{- pageParent | handleize -}}">
+        <span class="o-breadcrumbs__current-title">{{- pageParent | downcase -}}</span>
+      </a>
+    {%- endif -%}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    <span class="o-breadcrumbs__current-title">{{- page.title -}}</span>
+  {%- elsif template contains 'product' %}
+    {%- if collection.url -%}
+      <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+      {{ collection.title | link_to: collection.url }}
+    {% endif %}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    <span class="o-breadcrumbs__current-title">{{- product.title -}}</span>
+  {%- elsif template contains 'collection' and collection.handle -%}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    <span class="o-breadcrumbs__current-title">{{- collection.title -}}</span>
+  {% elsif template == 'blog' %}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    {% if current_tags %}
+      {{ blog.title | link_to: blog.url }}
+      <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+      <span>{{ current_tags | join: " + " }}</span>
+    {% else %}
+    <span class="o-breadcrumbs__current-title">{{- blog.title -}}</span>
+    {% endif %}
+  {% elsif template == 'article' %}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    {{ blog.title | link_to: blog.url }}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    <span class="o-breadcrumbs__current-title">{{ article.title }}</span>
+  {% elsif template == 'search' %}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    <span class="o-breadcrumbs__current-title">{{- 'general.search.title' | t -}}</span>
+  {% else %}
+    <span aria-hidden="true" class="o-breadcrumbs__separator">{{- separator -}}</span>
+    <span class="o-breadcrumbs__current-title">{{ page_title }}</span>
+  {% endif %}
+</nav>

@@ -1,0 +1,80 @@
+{% comment %}
+  Collection JSON
+    Generates a set of data for a Collection in a JSON format.
+
+  Dependencies:
+    collection/json.product.liquid
+
+  Parameters you MUST supply:
+    collection - Collection to print data for
+
+  Version:
+    3.0.1 - 2020/03/10
+{% endcomment %}
+
+{%- comment -%} Determine which REAL page we're on {%- endcomment -%}
+{%- capture perPage -%}
+  {%- render 'tool.collection-per-page' -%}
+{%- endcapture -%}
+
+{%- if page == blank -%}
+  {%- if paginate -%}
+
+    {%- assign page = paginate.current_page -%}
+    {%- capture product_data_json -%}
+      {%- for product in collection.products -%}
+        {%- render 'json.product' with { collection: collection, product: product, dumpImages: true } -%}
+        {%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+  {%- else -%}
+
+    {%- paginate collection.products by perPage -%}
+      {%- assign page = paginate.current_page -%}
+      {%- capture product_data_json -%}
+        {%- for product in collection.products -%}
+          {%- render 'json.product' with { collection: collection, product: product, dumpImages: true } -%}
+          {%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+    {%- endpaginate -%}
+
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- if all_products_count == blank -%}
+  {%- assign all_products_count = collection.all_products_count -%}
+{%- endif -%}
+
+{%- if
+  all_product_handles == blank and collection != blank and
+  collection.products != blank and page == 1 and genHandles != false
+-%}
+  {%- capture all_product_handles -%}
+    {%- assign t = collections[collection.handle] -%}
+    {%- paginate t.products by all_products_count -%}
+      {%- for product in t.products -%}
+        {{ product.handle | json }}
+        {%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    {%- endpaginate -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- comment -%} Are we already paginating? If not do so, if so then do not {%- endcomment -%}
+{
+  "id": {% if collection.id %}{{ collection.id | json }}{% else %}0{% endif %},
+  "handle": {{ collection.handle | json }},
+  "title": {{ collection.title | json }},
+  "all_tags": {{ collection.all_tags | json }},
+  "all_types": {{ collection.all_types | json }},
+  "all_products_count": {{ all_products_count | json }},
+  "page": {{ page | json }},
+  "default_sort_by": {{ collection.default_sort_by | json }},
+  "products": [ {{ product_data_json }} ]
+  {%- if all_product_handles != blank -%}
+  , "all_product_handles": [ {{- all_product_handles -}} ]
+  {%- endif -%}
+}

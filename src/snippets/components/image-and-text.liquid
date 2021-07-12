@@ -1,0 +1,40 @@
+{%- comment -%}
+  Props
+    title
+    text
+    image
+    imageLeft
+    imageClass
+{%- endcomment -%}
+
+{%- if image != blank and title != blank -%}
+  <div class="c-image-and-text {% if imageLeft == true %} is-image-left{% endif %}
+    {% if imageClass != blank %}{{ imageClass }}{% endif %}">
+    <div class="c-image-and-text__inner">
+      <div class="c-image-and-text__text-container">
+        <h4 class="c-image-and-text__title">{{- title -}}</h4>
+        <p class="c-image-and-text__text">{{- text -}}</p>
+      </div>
+      <div class="c-image-and-text__image-container o-responsive-image-container">
+        {%- if video != blank -%}
+          {%- render 'object.html5-video' with {
+            videoUrlMp4: video,
+            autoplay: true,
+            poster: image,
+            posterWidth: 1200,
+            class: 'c-image-and-text__image o-responsive-image'
+          } -%}
+        {%- else -%}
+          {%- render 'tool.picture' with {
+            image: image,
+            class: 'c-image-and-text__image o-responsive-image',
+            alt: title,
+            width: 1200, 
+            sizes: '375,750,1100,1350,1650',
+            imageSizes: '375,750,1100,675,900'
+          } -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

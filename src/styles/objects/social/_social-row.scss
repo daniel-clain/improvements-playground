@@ -1,0 +1,44 @@
+/*
+ *  Social Row
+ *    Styles for the Social Row object.
+ *
+ *  Version:
+ *    1.0.0 - 2021/05/19
+ */
+
+.o-social-row {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+
+  &__link {
+    display: block;
+    padding: 0.25rem 0.25rem 0.25rem 0;
+    height: 2rem;
+  }
+
+  &__icon {
+    display: block;
+    max-width: 1.5rem;
+    height: 100%;
+  }
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-medium-up) {
+    &__link {
+      margin-right: 1.2rem;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__link {
+      margin-right: 2rem; 
+    }
+  } 
+}

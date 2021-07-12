@@ -1,0 +1,104 @@
+.c-contact {
+  position: relative;
+  background-color: $s-color--background-tertiary;
+  padding: 3.37rem 0 7.5rem;
+
+  &__title {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 2.3rem;
+  }
+
+  &__description {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  &__section {
+    background-color: $s-color--background;
+    border-radius: 0.5rem;
+    padding: 2.4rem 1.5rem 2.75rem;
+    margin: 0 $s-gutter--edge-mobile 1rem;
+
+    &-heading {
+      margin-bottom: 0.6rem;
+    }
+  
+    &-subheading {
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-text {
+      em {
+        opacity: 0.4;
+        font-style: normal;
+      }
+    }
+
+    &--info {
+      padding-bottom: 1.7rem;
+
+      .c-contact__section-heading {
+        margin-bottom: 1.1rem;
+      }
+    }
+  }
+
+  &__faq.c-faq-accordion {
+    margin-top: 4rem;
+  }
+
+  @include t-media-query($s-small-up) {
+    &__section {
+      padding: 2.75rem 2.5rem 3rem;
+      margin: 0 4rem 1rem;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: 5rem 0 10rem;
+
+    &__section {
+      max-width: 49rem;
+      margin: 0 auto 2rem;
+      padding: 3rem 2.5rem 5rem;
+      border-radius: 1rem;
+
+      &-heading {
+        margin-bottom: 0.8rem;
+      }
+    
+      &-subheading {
+        margin-bottom: 1.5rem;
+      }
+
+      &--info {
+        padding-bottom: 2rem;
+
+        p {
+          margin-top: 0.8rem;
+          margin-bottom: 0.8rem;
+        }
+      }
+    }
+
+    &__title {
+      margin-bottom: 3rem;
+    }
+
+    &__description {
+      margin-bottom: 1rem;
+    }
+
+    &__faq.c-faq-accordion {
+      margin-top: 5rem;
+    }
+  }
+}

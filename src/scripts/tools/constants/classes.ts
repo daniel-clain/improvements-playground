@@ -1,0 +1,29 @@
+export const CLASS_ACTIVE = 'is-active';
+export const CLASS_OPEN = 'is-open';
+export const CLASS_HIDDEN = 'is-hidden';
+export const CLASS_VISIBLE = 'is-visible';
+export const CLASS_FADE_IN = 'is-fade-in';
+export const CLASS_FADE_OUT = 'is-fade-out';
+export const CLASS_STICKY = 'is-sticky';
+export const CLASS_FIXED = 'is-fixed';
+export const CLASS_STUCK = 'is-stuck';
+export const CLASS_UNAVAILABLE = 'is-unavailable';
+export const CLASS_SELECTED = 'is-selected';
+export const CLASS_DISABLED = 'is-disabled';
+export const CLASS_SCROLL_DISABLED = 'is-scroll-disabled';
+export const CLASS_SOLD_OUT = 'is-sold-out';
+export const CLASS_HAS_ERROR = 'has-error';
+export const CLASS_MENU_TOGGLE = 'is-menu-open';
+export const CLASS_INITIALISED = 'is-initialised';
+
+export const CLASS_EXPANDED = 'is-expanded';
+export const CLASS_HAS_COMPARE = 'has-compare';
+export const CLASS_IS_EMPTY = 'is-empty';
+export const CLASS_OVERLAY_OPEN = 'is-overlay-open';
+export const CLASS_IS_CART_OPEN = 'is-cart-open';
+
+/* export const CLASS_SEARCH_OPEN = 'is-search-open';
+export const CLASS_MENU_OPEN = 'is-menu-open';
+export const CLASS_SUBMENU_OPEN = 'is-lvl2-open';
+export const CLASS_SUBSUBMENU_OPEN = 'is-lvl3-open';
+export const CLASS_ALT = 'is-alternate'; */

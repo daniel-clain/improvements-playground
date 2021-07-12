@@ -1,0 +1,102 @@
+/*
+ *  Login Register
+ *
+ *  Version:
+ *    1.0.0 - 2020/11/04
+ */
+
+
+.c-login-register {
+  margin: 1.5rem auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  .o-btn:not(.is-guest) {
+    margin-top: 1rem;
+  }
+
+  .errors {
+    text-align: left;
+    color: $s-color--error;
+
+    & > ul {
+      margin: 0;
+      padding-left: 1.4rem;
+    }
+  }
+
+  &__input {
+    border-radius: 1.5625rem;
+    padding-right: 5.625rem;
+  }
+
+  &__errors {
+    margin-bottom: 1rem;
+  }
+
+  &__form-container {
+    max-width: 35.9375rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    margin: 2.5rem auto;
+    padding: 0 3rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &__errors {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    &__form {
+      .is-register & {
+        padding-left: 10%;
+      }
+
+      .is-login & {
+        height: 100%;
+        padding-right: 10%;
+        border-right: 1px solid $s-color--border-light;
+      }
+
+      &-container {
+        max-width: unset;
+
+        &.is-error-form {
+          width: 100%;
+        }
+
+        &.is-login, &.is-register {
+          width: 50%;
+        }
+      }
+    }
+
+    &__input {
+      padding: 0.5rem 4.375rem 0.5rem 1.25rem;
+      font-size: 0.625rem;
+      letter-spacing: 0.05em;
+    }
+
+    .o-btn:not(.is-guest) {
+      margin-top: 2rem;
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+    margin: 9rem auto;
+    padding: 0 10rem;
+    max-width: 100rem;
+
+    &__input {
+      font-size: 0.875rem;
+      line-height: 1.45;
+      letter-spacing: 0.04357em;
+      padding: 0.9rem 1.25rem;
+    }
+  }
+}

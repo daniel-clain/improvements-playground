@@ -1,0 +1,56 @@
+{%- comment -%}
+  props
+  - text
+  - mobileWordCount?
+  - desktopWordCount?
+{%- endcomment -%}
+{%- liquid
+  assign mobileWordCount = mobileWordCount | default: 16
+  assign desktopWordCount = desktopWordCount | default: 25
+  assign textLength = text | split: ' ' | size
+-%}
+
+{%- capture readMoreButtons -%}
+  <button class="o-read-more__btn is-more o-btn is-reset" data-read-more-toggle>
+    {{- 'general.read_more_buttons.read_more' | t -}}
+  </button>
+  <button class="o-read-more__btn is-less o-btn is-reset" data-read-more-toggle>
+    {{- 'general.read_more_buttons.read_less' | t -}}
+  </button>
+{%- endcapture -%}
+
+<div
+  class="o-read-more
+    {% if textLength <= desktopWordCount %}is-expanded{%- endif -%}"
+  data-read-more-container
+>
+  {%- if text contains '<p' or text contains '<h' -%}
+    <div class="o-read-more__content is-full
+      "
+    >
+      {{- text | replace: '<h1', '<h4' | replace: 'h1>', 'h4>' | remove: '<hr>' -}}
+      {%- if textLength > desktopWordCount -%}
+        {{- readMoreButtons -}}
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <p class="o-read-more__content is-full ">
+      {{- text -}}
+      {%- if textLength > desktopWordCount -%}
+        {{- readMoreButtons -}}
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+
+  {%- if textLength > desktopWordCount -%}
+    <p class="o-read-more__content is-less">
+      <span class="is-mobile">
+        {{- text | strip_html | truncatewords: mobileWordCount, '... ' -}}
+      </span>
+      <span class="is-desktop">
+        {{- text | strip_html | truncatewords: desktopWordCount, '... ' -}}
+      </span>
+      {{- readMoreButtons -}}
+    </p>
+  {%- endif -%}
+</div>

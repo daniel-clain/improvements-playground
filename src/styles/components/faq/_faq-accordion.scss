@@ -1,0 +1,167 @@
+/*
+ *  FAQ Accordion
+ *    Styles for the faq accordion
+ *
+ *  Version:
+ *    1.0.0 - 2021/03/10
+ */
+
+.c-faq-accordion {
+  margin: 0 $s-gutter--edge-mobile;
+
+  &__heading {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 2.3rem;
+  }
+
+  &__subheading {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  &__slide {
+    background-color: $s-color--background;
+    border-radius: 0.5rem;
+    padding: 0 1.5rem;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.is-visible {
+      display: block;
+    }
+
+    &.is-visible-body > .c-faq-accordion__body {
+      display: block;
+    }
+
+    &:not([open]) {
+      .c-faq-accordion__title {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__title {
+    margin: 0;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid $s-color--border-light;
+    cursor: pointer;
+    // Prevent blue outline on click
+    outline: none;
+    user-select: none;
+    list-style: none;
+
+    &-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-icon {
+      width: 1rem;
+      height: 1rem;
+
+      &.is-minus {
+        display: none;
+      }
+
+      &.is-plus {
+        display: block;
+      }
+    }
+
+    // Hide summary marker
+    &::marker, &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__body {
+    padding: 0;
+    margin: 0;
+    cursor: default;
+    user-select: none;
+    list-style: none;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  &__question {
+    margin-bottom: 0.7rem;
+
+    &-container {
+      padding: 1rem 0;
+      border-bottom: 1px solid $s-color--border-light;
+
+      &:last-of-type {
+        border-bottom: none;
+        padding-bottom: 1.75rem;
+      }
+    }
+  }
+
+  &__answer {
+    display: block;
+
+    &.is-hidden {
+      display: none;
+    }
+
+    &-expand {
+      opacity: 0.4;
+    }
+  }
+
+  @include t-media-query($s-small-up) {
+    margin: 0 $s-gutter--edge-medium;
+
+    &__slide {
+      padding: 0 2.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    margin: 0 auto;
+    max-width: 49rem;
+
+    &__heading {
+      margin-bottom: 3rem;
+    }
+
+    &__subheading{
+      margin-bottom: 1rem;
+    }
+
+    &__slide {
+      padding: 0 2.5rem;
+      border-radius: 1rem;
+    }
+
+    &__title {
+      padding: 2.1rem 0;
+
+      &-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+
+    &__question {
+      margin-bottom: 1rem;
+
+      &-container {
+        padding: 1.5rem 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{%- form 'contact', class: 'c-contact__form', id: 'contact' -%}
+  {%- if form.posted_successfully? -%}
+    <p class="o-form__success">
+      {%- render 'object.icon' with {
+        icon: 'check-circle',
+        class: 'c-contact__success-icon'
+      } -%}
+      {{- 'contact.form.form_successful' | t -}}
+    </p>
+  {%- else -%}
+    {%- if form.errors != blank -%}
+      <div class="o-form__errors" data-contact-errors>
+        {{- form.errors | default_errors -}}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Form Inputs {%- endcomment -%}
+    <div class="c-contact__form-inner-wrapper" data-contact-inner-form>
+      <div class="c-contact__input-wrapper">
+        <div class="o-form__input-group">
+          <input
+            type="text"
+            name="contact[first]"
+            class="o-input is-primary c-contact__input"
+            required
+            data-contact-input
+            placeholder="{{- 'contact.form.first_name' | t -}}"
+            value="{%- if form[first] -%}{{- form[first] -}}{%- endif -%}"
+          >
+        </div>
+
+        <div class="o-form__input-group">
+          <input
+            type="text"
+            name="contact[last]"
+            class="o-input is-primary c-contact__input"
+            required
+            data-contact-input
+            placeholder="{{- 'contact.form.last_name' | t -}}"
+            value="{%- if form[last] -%}{{- form[last] -}}{%- endif -%}"
+          >
+        </div>
+
+        <div class="o-form__input-group c-contact__error-wrapper">
+          <input
+            type="email"
+            name="contact[email]"
+            class="o-input is-primary c-contact__input {% if form.errors contains 'email' -%}has-error{%- endif -%}"
+            required
+            data-contact-input
+            placeholder="{{- 'contact.form.email' | t -}}"
+            value="{%- if form[email] -%}{{- form[email] -}}{%- endif -%}"
+          >
+
+          {%- render 'object.icon' with {
+            icon: 'error',
+            class: 'c-contact__error-icon'
+          } -%}
+        </div>
+
+        <div class="o-form__input-group c-contact__optional-wrapper" data-contact-optional>
+          <input
+            type="tel"
+            name="contact[phone]"
+            class="o-input is-primary c-contact__input"
+            data-contact-input
+            placeholder="{{- 'contact.form.phone' | t -}}"
+            value="{%- if form[phone] -%}{{- form[phone] -}}{%- endif -%}"
+            data-contact-optional-input
+          >
+          <div class="c-contact__optional-tag is-visible o-paragraph" data-contact-optional-tag>
+            {{- 'contact.form.optional' | t -}}
+          </div>
+        </div>
+
+        <div class="o-form__input-group c-contact__optional-wrapper" data-contact-optional>
+          <input
+            type="text"
+            name="contact[ref]"
+            class="o-input is-primary c-contact__input"
+            data-contact-input
+            placeholder="{{- 'contact.form.order_ref_no_mobile' | t -}}"
+            data-desktop-placeholder="{{- 'contact.form.order_ref_no_desktop' | t -}}"
+            data-mobile-placeholder="{{- 'contact.form.order_ref_no_mobile' | t -}}"
+            value="{%- if form[ref] -%}{{- form[ref] -}}{%- endif -%}"
+            data-contact-optional-input
+          >
+          <div class="c-contact__optional-tag is-visible o-paragraph" data-contact-optional-tag>
+            {{- 'contact.form.optional' | t -}}
+          </div>
+        </div>
+
+        <div class="o-form__input-group c-contact__error-wrapper is-dropdown">
+          <select 
+            name="contact[country]"
+            class="o-input c-contact__input is-primary"
+            data-contact-input
+            data-contact-select
+            required
+          >
+            <option disabled selected value="">
+              {{- 'contact.form.country' | t -}}
+            </option>
+            {{ country_option_tags }}
+          </select>
+        </div>
+      </div>
+
+      {%- comment -%} Form Text Area {%- endcomment -%}
+      <div class="c-contact__text-area-wrapper">
+        <textarea
+          type="textarea"
+          name="contact[message]"
+          class="o-input is-primary c-contact__text-area"
+          required
+          data-contact-input
+          placeholder="{{- 'contact.form.message' | t -}}"
+          value="{%- if form[message] -%}{{- form[message] -}}{%- endif -%}"
+        ></textarea>
+      </div>
+
+      {%- comment -%} Form Submit {%- endcomment -%}
+      <button class="c-contact__button c-contact__button--contact o-btn is-secondary">
+        {{- 'contact.form.submit' | t -}}
+      </button>
+    </div>
+  {%- endif -%}
+{%- endform -%}

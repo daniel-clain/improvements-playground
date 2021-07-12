@@ -1,0 +1,143 @@
+.c-product-details {
+  max-width: $s-page-wrap--xlarge;
+  margin: 0 auto;
+
+  &__sub-heading {
+    margin: 0;
+    color: rgba($s-color--primary, 0.4);
+  }
+
+  &__heading {
+    margin-bottom: t-to-rem(20)
+  }
+
+  &__size-guide-link {
+    @extend %s-font--type-2;
+  }
+
+  &__right-container {
+    padding: t-to-rem(36) 4.2% t-to-rem(56);
+  }
+
+  &__rating {
+    margin: t-to-rem(25) 0 t-to-rem(29);
+
+    .stamped-badge-caption {
+      margin-left: 0.5rem;
+      color: $s-color--dark-blue;
+      @extend %s-font--type-2;
+      text-transform: capitalize;
+
+      & > span {
+        display: none !important;
+      }
+    }
+  }
+
+  &__price-compare {
+    color: $s-color--font-disabled;
+    text-decoration: line-through;
+    display: none;
+
+    .has-compare & {
+      display: inline-block;
+    }
+  }
+
+  &__price {
+    margin: t-to-rem(32) 0;
+  }
+
+  &__add-btn {
+    width: 100%;
+    margin: 0 auto t-to-rem(36);
+  }
+
+  &__feature-icons {
+    display: flex;
+    justify-content: space-between;
+    width: #{'min(100%, 20rem)'};
+    margin: auto;
+    margin-bottom: t-to-rem(40);
+  }
+
+  @include t-media-query($s-small-up) {
+    &__right-container {
+      padding: 8%;
+    }
+
+    &__accordion {
+      margin-bottom: unset;
+
+    }
+
+    &__inner {
+      padding: 0 $s-gutter--edge-small;
+      margin: $s-gutter--edge-small 0;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    &__right-container {
+      padding: unset;
+      position: sticky;
+      top: t-to-rem(128);
+      flex: 1;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__inner {
+      padding: 0 $s-gutter--edge-medium;
+      margin: $s-gutter--section-v-medium 0;
+    }
+
+    &__rating {
+      margin: t-to-rem(27) 0 t-to-rem(36);
+    }
+
+    &__price {
+      margin: t-to-rem(36) 0;
+    }
+
+    &__add-btn {
+      margin-bottom: t-to-rem(50);
+    }
+
+    &__feature-icons {
+      width: #{'min(100%, 26rem)'};
+      margin: 0 auto t-to-rem(58);
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+    &__accordion {
+      .o-accordion__slide-title {
+        height: t-to-rem(72);
+      }
+    }
+  }
+
+
+  @include t-media-query($s-xlarge-up) {
+    &__inner {
+      padding: 0 $s-gutter--edge-xlarge;
+    }
+
+    &__title {
+      font-size: t-to-rem(18);
+    }
+
+    &__price {
+      margin: t-to-rem(42) 0;
+    }
+
+    &__add-btn {
+      margin-bottom: t-to-rem(72);
+    }
+
+    &__feature-icons {
+      margin-bottom: t-to-rem(64);
+    }
+  }
+}

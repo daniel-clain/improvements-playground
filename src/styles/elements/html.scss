@@ -1,0 +1,41 @@
+html,body {
+  margin: 0;
+  padding: 0;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+
+  //Setup default fonts. I don't use the pseudoclass here since it will add in
+  //media queries that we don't want.
+  @include t-font--root;
+  color: $s-color--font;
+
+  &.is-scroll-disabled {
+    overflow: hidden;
+  }
+
+  /**
+    Accessibility focus styles - replace border variable with correct
+    border color
+  */
+  // .js-focus-visible :focus:not(.focus-visible) {
+  //   outline: none;
+  // }
+
+  // *:focus {
+  //   outline: $s-color--border-dark solid 0.0625rem;
+  // }
+
+  // *:focus:not(:focus-visible) {
+  //   outline: none;
+  // }
+
+  // *:focus-visible {
+  //   outline: $s-color--border-dark solid 0.0625rem;
+  // }
+
+  // .js-focus-visible :focus:not(.focus-visible) {
+  //   outline: none;
+  // }
+}

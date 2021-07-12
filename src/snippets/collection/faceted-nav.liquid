@@ -1,0 +1,46 @@
+{%- comment -%}
+  Faceted Nav
+    The Faceted Nav for the Collection template.
+
+  Version:
+    1.0.0 - 2020/10/22
+{%- endcomment -%}
+
+{%- assign facets = 'category,type,brand,age,size' | split: ',' -%}
+
+<nav class="c-collection-faceted-nav" data-faceted-nav>
+
+  <div class="c-collection-faceted-nav__inner">
+
+    {%- comment -%} Clear and return buttons {%- endcomment -%}
+    <button
+      class="c-collection-faceted-nav__toggle"
+      data-collection-template-toggle-filters
+    >
+      {{- 'collections.filters.refine_button' | t -}}
+    </button>
+
+    <div class="c-collection-faceted-nav__facets">
+
+      {%- comment -%} Iterate through the defined facets {%- endcomment -%}
+      {%- for facet in facets -%}
+        <div
+          class="c-collection-faceted-nav__group is-{{ facet }}"
+          data-faceted-nav-group data-faceted-nav-{{ facet }}
+        >
+        </div>
+      {%- endfor -%}
+
+    </div>
+
+    {%- comment -%} Clear button for mobile {%- endcomment -%}
+    <button
+      class="c-collection-faceted-nav__clear-btn"
+      data-collection-template-clear-filters
+    >
+      {{- 'collections.filters.clear_filters' | t -}}
+    </button>
+
+  </div>
+
+</nav>

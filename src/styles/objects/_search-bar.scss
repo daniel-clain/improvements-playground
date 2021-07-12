@@ -1,0 +1,77 @@
+/*
+ *  Search Bar
+ *    Styles for the Search Bar.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/09
+ */
+
+.o-search-bar {
+  position: relative;
+  border: 1px solid $s-color--border-light;
+  border-radius: 1.5rem;
+
+  &.has-error, &.has-error:hover {
+    border-color: $s-color--error;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.9375rem 2.75rem 0.9375rem 1.5rem;
+  }
+
+  //Search Button and Icon
+  &__btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.625rem 0.875rem;
+  }
+
+  &__icon {
+    width: 1.5rem;
+    height: auto;
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-medium-up) {
+    @include t-anim--transition(border);
+
+    &:hover {
+      border-color: rgba($s-color--border, 0.5);
+    }
+
+    &__btn {
+      right: 0;
+    }
+
+    &__icon {
+      width: 1.125rem;
+    }
+
+    &__input {
+      height: 3rem;
+      padding: 0.9375rem 2.25rem 0.9375rem 1rem;
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+
+    &__btn {
+      right: 0.5rem;
+    }
+
+    &__icon {
+      width: 1.5rem;
+    }
+
+    &__input {
+      width: 100%;
+      padding: 0.9375rem 2.75rem 0.9375rem 1.5rem;
+    }
+  }
+}

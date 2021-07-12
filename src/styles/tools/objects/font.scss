@@ -1,0 +1,227 @@
+/*
+ *  Body Font
+ *    Font applied to the root element
+ */
+
+@mixin t-font--root {
+  font-size: $s-font--root-size;
+  font-weight: $s-font--root-weight;
+  font-family: $s-font--root-family;
+  font-display: swap;
+  line-height: $s-font--root-line;
+  letter-spacing: $s-font--root-letter;
+}
+
+
+//=== Base font sizing & styles ===//
+
+// Default paragraph type (P1 in Figma, but used as the default site wide)
+%s-font--type-1 {
+  font-family: $s-font--root-family;
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1rem;
+  }
+}
+
+// Alternate paragraph style, larger on desktop
+%s-font--type-2 {
+  font-family: $s-font--root-family;
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 1.125rem;
+  }
+}
+
+%s-font--type-3 {
+  font-family: $s-font--root-family;
+  font-size: 0.875rem;
+}
+
+%s-font--type-4 {
+  font-family: $s-font--root-family;
+  font-size: 1rem;
+  line-height: 1.5;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1.125rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 1.25rem;
+  }
+}
+
+
+
+//=== Controls and buttons ===//
+
+%s-font--button {
+  font-size: 0.875rem;
+  font-weight: $s-font--weight-bold;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+%s-font--button--2 {
+  font-size: 0.875rem;
+  font-weight: $s-font--root-weight;
+  line-height: 1;
+  text-transform: none;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1rem;
+  }
+  @include t-media-query($s-medium-up) {
+    font-size: 1.125rem;
+  }
+}
+
+
+%s-font--input {
+  font-size: 0.875rem;
+  line-height: 1.28;
+}
+
+%s-font--input-2 {
+  font-size: 0.875rem;
+  line-height: 1.75;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+
+//=== Headings, titles and subtitles ===//
+
+// Base heading styles
+%s-font--heading {
+  font-family: $s-font--heading-family;
+  font-weight: $s-font--heading-weight;
+  font-display: swap;
+  margin: 0 0 0.5em;
+}
+
+// Heading size styles, numbers align with default <h> tag sizing
+%s-font--heading-1 {
+  @extend %s-font--heading;
+  font-size: 2.5rem;
+  line-height: 1;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 5.625rem; // Fallback, needs separate media Q
+  }
+
+  @include t-media-query($s-medium-up) {
+    font-size: #{"clamp(3rem, 4.8vw, 6rem)"};
+  }
+}
+
+%s-font--heading-2 {
+  @extend %s-font--heading;
+  font-size: 2rem; // Different to font sheet as per conversation with UX
+
+  @include t-media-query($s-medium-up) {
+    font-size: 4.5rem; // Fallback, needs separate media Q
+  }
+
+  @include t-media-query($s-medium-up) {
+    font-size: #{"clamp(2.75rem, 3.6vw, 4.5rem)"};
+  }
+}
+
+%s-font--heading-3 {
+  @extend %s-font--heading;
+  font-size: 2rem;
+  line-height: 1.13;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 3rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 4rem;
+  }
+}
+
+%s-font--heading-4 {
+  @extend %s-font--heading;
+  font-size: 1.25rem;
+  line-height: 1.4;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1.875rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 2.5rem;
+  }
+}
+
+%s-font--heading-4--alternate {
+  @extend %s-font--heading-4;
+  font-family: $s-font--root-family;
+  font-weight: $s-font--weight-bold;
+  line-height: 1.2
+}
+
+%s-font--heading-5 {
+  @extend %s-font--heading;
+  font-size: 1.25rem;
+  line-height: 1.25;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1.625rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 2rem;
+  }
+}
+
+%s-font--heading-5--alternate {
+  @extend %s-font--heading-5;
+  font-family: $s-font--root-family;
+  font-weight: $s-font--weight-bold;
+  line-height: 1.2
+}
+
+%s-font--heading-6 {
+  @extend %s-font--heading;
+  // font-family: $s-font--root-family;
+  // font-weight: $s-font--weight-bold;
+  font-size: 1rem;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1.25rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 1.5rem;
+  }
+}
+
+%s-font--heading-7 {
+  @extend %s-font--heading;
+  font-family: $s-font--root-family;
+  font-weight: $s-font--weight-bold;
+  font-size: 1.25rem;
+
+  @include t-media-query($s-medium-up) {
+    font-size: 1.125rem;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    font-size: 1.25rem;
+  }
+}

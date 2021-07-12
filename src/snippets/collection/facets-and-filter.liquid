@@ -1,0 +1,46 @@
+{%- comment -%}
+  Faceted Nav
+    The Faceted Nav for the Collection template.
+
+  Version:
+    1.0.0 - 2020/10/22
+{%- endcomment -%}
+
+<div class="c-facets-and-filter">
+
+  {%- assign facets = 'type,size,colour,price,sport' | split: ',' -%}
+
+  <button class="c-facets-and-filter__open-drawer-button" title="open drawer"  data-open-drawer-button>
+    {{- 'collections.filters.mobile_filter_button' | t -}}
+  </button>
+
+  <div class="c-facets-and-filter__drawer-overlay" data-close-drawer-button></div>
+  <div class="c-facets-and-filter__drawer-wrapper">
+    <div class="c-facets-and-filter__drawer-header">
+      <button class="c-facets-and-filter__drawer-close is-reset" title="close drawer" data-close-drawer-button>
+      </button>
+      <h2 class="c-facets-and-filter__drawer-title o-type--1">
+        {{- 'collections.filters.refine_button' | t -}}
+      </h2>
+    </div>
+    <div class="c-facets-and-filter__facets" data-faceted-nav>
+      {%- for facet in facets -%}
+        <div
+          class="c-facets-and-filter__group is-{{ facet }}"
+          data-faceted-nav-group data-faceted-nav-{{ facet }}
+        >
+        </div>
+      {%- endfor -%}
+    </div>
+    
+    <button class="c-facets-and-filter__clear-filters o-btn is-reset" title="clear filters" data-clear-filters-button>
+      {{- 'collections.filters.clear_filters' | t -}}
+    </button>
+    <button class="c-facets-and-filter__drawer-apply o-btn is-secondary" title="close drawer" data-close-drawer-button>
+      {{- 'collections.filters.apply_button' | t -}}
+    </button>
+  </div>
+      
+  <div class="c-facets-and-filter__group is-sort" data-faceted-nav-group data-sort></div>
+</div>
+

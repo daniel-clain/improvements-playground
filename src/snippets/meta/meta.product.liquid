@@ -1,0 +1,8 @@
+{%- comment -%} Product Metadata {%- endcomment -%}
+<meta itemprop="name" content="{{ product_title | escape }}{% unless product.has_only_default_variant %} - {{ variant.title | escape }}{% endunless %}" />
+<meta itemprop="url" content="{{ shop.url }}{{ variant.url }}" />
+{%- if product.vendor != blank -%}
+  <meta itemprop="brand" content="{{ product.vendor | escape }}" />
+{%- endif -%}
+<meta itemprop="image" content="{{ product.featured_image | img_url: '600x600' }}" />
+<meta itemprop="description" content="{{ product.description | strip_html | escape }}" />

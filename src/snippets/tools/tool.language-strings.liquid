@@ -1,0 +1,28 @@
+{% comment %}
+  Language Strings
+    Easy snippet to inject a set of strings into the Javascript.
+
+  Params:
+    keys - Keys of object to inject, semicolon seperated.
+
+  Version:
+    2.0.0 - 2020/10/15
+{% endcomment %}
+<script type="text/javascript" data-language-strings>
+  var a = function(k,v) {((window.Language=window.Language||{}).strings=window.Language.strings||{})[k]=v;};
+  {%- liquid
+    assign keysSplit = keys | split: ';'
+    for key in keysSplit
+      assign k = key | remove: ' ' | strip_newlines
+      if k == blank
+        continue
+      endif
+
+      echo 'a('
+      echo k | json
+      echo ','
+      echo k | t | json
+      echo ');'
+    endfor
+  -%}
+</script>

@@ -1,0 +1,19 @@
+{% comment %}
+  Article Read Time
+    Tool to calculate how many minutes it takes to read an article.
+    Requires an article.content as content.
+
+  Version:
+    1.0.0 - 2020/08/11
+{% endcomment %}
+
+{%- liquid
+  assign wpm = settings.article-wpm | default: 130
+  assign wpmAsFloat = wpm | divided_by: 1.0
+  assign contentSplit = content | split: ' '
+  assign wordCount = contentSplit.size
+  assign minutes = wordCount | divided_by: wpmAsFloat | ceil 
+-%}
+{%- if minutes != blank and minutes != 0 -%}
+  {{- minutes }} {{ 'articles.read_time_postfix' | t  -}}
+{%- endif -%}

@@ -1,0 +1,40 @@
+{%- liquid 
+  assign mf = product.metafields.accentuate
+  assign s = section.settings
+  assign title = mf.lifestyleImageTitle | default: s.title
+  assign text = mf.lifestyleImageText | default: s.text
+  assign image = mf.lifestyleImageImage | default: s.image
+-%}
+
+<section class="c-product-image-and-text">
+  {%- render 'image-and-text' with {
+    title: title,
+    text: text,
+    image: image
+  } -%}
+</section>
+
+
+{% schema %}
+  {
+    "name": "Image & Text",
+    "class": "c-section c-section__product-image-and-text",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "text",
+        "type": "textarea",
+        "label": "Text"
+      },
+      {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}

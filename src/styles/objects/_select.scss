@@ -1,0 +1,32 @@
+/*
+ *  Select Styles
+ *    Select Object styles.
+ *
+ *  Version:
+ *    1.0.0 - 2021/06/01
+ */
+
+.o-select {
+
+
+  //Border style
+  &.is-secondary {
+    @extend %s-font--input-2;
+    border: 1px solid $s-color--border-light;
+    border-radius: 0.125rem;
+    padding: 0.75rem 2rem 0.625rem 1rem;
+    background: url('./../../assets/svg/icon-chevron-down.svg') no-repeat;
+    background-position: right 1.125rem center;
+    background-size: 0.75rem;
+
+    &:hover, &:focus {
+      border-color: rgba($s-color--secondary, 0.5);
+      outline: none;
+    }
+
+    option {
+      padding: 0.5rem 1rem;
+      line-height: 1.25;
+    }
+  }
+}

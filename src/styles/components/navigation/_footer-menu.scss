@@ -1,0 +1,117 @@
+/*
+ *  Footer Accordion
+ *    Styles for the footer menu/accordion
+ *
+ *  Version:
+ *    1.0.0 - 2021/05/19
+ */
+
+.c-footer-menu {
+  &__column {
+    overflow: hidden;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.is-visible {
+      display: block;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    padding: 1.25rem 1rem;
+    border-top: 1px solid $s-color--border-light;
+    cursor: pointer;
+    font-size: 1.125rem;
+    user-select: none;
+    list-style: none;
+    outline: none;
+
+    &-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-icon {
+      width: 1rem;
+      height: 1rem;
+
+      &.is-minus {
+        display: none;
+
+        [open] & {
+          display: block;
+        }
+      }
+
+      &.is-plus {
+        display: block;
+
+        [open] & {
+          display: none;
+        }
+      }
+    }
+
+    // Hide summary marker
+    &::marker, &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__link-items {
+    padding: 0 1rem 1.5rem;
+    margin: 0;
+    cursor: default;
+    user-select: none;
+    list-style: none;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  &__link {
+    display: block;
+    padding-bottom: 0.75rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    width: 39.65%;
+    padding-right: 1.75rem;
+    
+    &__title {
+      border: none;
+      padding: 0;
+      margin-bottom: 1.5rem;
+      cursor: default;
+      opacity: 0.6;
+
+      &-icon.o-icon {
+        [open] & {
+          display: none;
+        }
+      }
+    }
+
+    &__link-items {
+      padding: 0;
+    }
+
+    &__link {
+      display: block;
+      padding-bottom: 0;
+      margin-bottom: 1rem;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+}

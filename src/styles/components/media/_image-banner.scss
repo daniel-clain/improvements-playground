@@ -1,0 +1,84 @@
+/*
+ *  Image Banner
+ *    Styles for the reusable image/text snippet.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/19
+ */
+
+.c-image-banner {
+  padding-bottom: 160%;
+  padding-bottom: #{'min(128%, 95vh)'};
+  position: relative;
+
+  &__image {
+    &.has-mobile {
+      display: none;
+    }
+  }
+
+  &__content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    max-width: 26rem;
+    padding: 0 1.875rem;
+    text-align: center;
+    color: $s-color--font-invert;
+  }
+
+  &__title {
+    max-width: 22.5rem;
+    margin: 0 auto 0.8rem;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  &__description {
+    display: block;
+    position: relative;
+  }
+
+  /*==== Media Queries ====*/
+
+  @include t-media-query($s-small-up) {
+    padding-bottom: 95vh;
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding-bottom: 43.9%; // Fallback for IE
+    padding-bottom: #{'clamp(35rem, 43.9%, 50rem)'};
+
+    &__image {
+      &.has-mobile { display: block; }
+      &.is-mobile { display: none; }
+      @include t-crop-position();
+    }
+
+    &__content {
+      padding: 0;
+    }
+
+    &__title {
+      max-width: none;
+      margin-bottom: 1.5rem;
+    }
+
+    &__subtitle {
+      max-width: 29rem;
+      margin: 0 auto;
+      font-size: 1.25rem;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    &__content {
+      max-width: 38.125rem;
+    }
+  }
+}

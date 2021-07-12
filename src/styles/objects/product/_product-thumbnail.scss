@@ -1,0 +1,251 @@
+/*
+ *  Products Thumbnail
+ *    Styles for the reusable product thumbnail object.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/14
+ */
+
+.o-product-thumbnail {
+  position: relative;
+
+  &__primary-feature{
+    margin: 0;
+    top: 0;
+    box-shadow: unset;
+    padding: 0;
+    background: unset;
+
+    .o-primary-feature-icon{
+      &__image{
+        height: t-to-rem(20);
+        margin-right: 8px;
+      }
+      &__title{
+        font-size: t-to-rem(14);
+      }
+    }
+  }
+
+  &__colour-options{
+    margin-top: t-to-rem(16);
+    &-expand{
+      font-size: t-to-rem(12);
+      margin-bottom: t-to-rem(14);
+      &.is-hidden{
+        display: none;
+      }
+    }
+
+    .o-swatches__swatch{
+      margin-bottom: unset;
+      
+
+      &.is-color{
+        overflow: hidden;
+        display: flex;
+
+        
+        max-height: t-to-rem(16);
+        transition: max-height $s-anim--time-short;
+        
+
+        &.is-expanded{
+          max-height: t-to-rem(48);
+        }
+
+        .o-swatches__swatch{
+          &-button{
+            flex-shrink: 0;
+            width: t-to-rem(16);
+            height: t-to-rem(16);
+          }
+        }
+      }
+    }
+
+  }
+
+
+  &__inner {
+    
+    padding-top: t-to-rem(32);
+    .is-carousel-style & {
+      padding-top: 0;
+    }
+
+    //Equalising heights in flex rows
+    display: flex;
+    flex-direction: column;
+
+    &:hover { text-decoration: none; }
+  }
+
+  &__image-container {
+    padding-bottom: 135%;
+    border-radius: $s-image--border-radius-default;
+
+    &-outer {
+      position: relative;
+
+      //Lower dropshadow for the carousel style only
+      &:after {
+        .is-carousel-style & {
+          content: '';
+          position: absolute;
+          z-index: -2;
+          transform: translateX(-50%);
+          bottom: -0.5rem;
+          left: 50%;
+          width: 81.5%;
+          height: 39%;
+          background: $s-color--secondary;
+          filter: blur(1.5rem);
+          opacity: 0.1;
+        }
+      }
+    }
+  }
+
+  //Container of titles and pricing
+  &__details {
+    margin: 1rem 0 0;
+  }
+
+
+  &__title {
+    margin: 0 0 t-to-rem(8);
+    font-family: $s-font--root-family;
+  }
+
+  &__subtitle {
+    margin: t-to-rem(8) 0 0;
+    opacity: 0.4;
+  }
+
+  &__title, &__subtitle {
+    .is-carousel-style & {
+      text-align: center;
+    }
+  }
+  &__price{
+    margin: t-to-rem(8) 0 0;
+    &-compare{
+      color: $s-color--font-disabled;
+      text-decoration: line-through;
+      margin-right: t-to-rem(10);
+      display: none;
+      .has-compare & {
+        display: inline-block;
+      }
+    }
+
+    .is-carousel-style & {
+      display: none;
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-down) {
+
+    // Carousel style thumbnail has a smaller font size on mobile only
+    &__title, &__subtitle {
+      .is-carousel-style & {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  @include t-media-query($s-small-up) {
+    &__colour-options{
+      margin-top: t-to-rem(14);
+      .o-swatches__swatch{
+        &.is-color{
+          max-height: t-to-rem(24);
+          transition: max-height $s-anim--time-short;
+          &.is-expanded{
+            max-height: t-to-rem(72);
+          }
+
+          .o-swatches__swatch-button{
+            width: t-to-rem(24);
+            height: t-to-rem(24);
+          }
+        }
+      }
+    }
+
+    .o-primary-feature-icon{
+      &__image{
+        height: t-to-rem(20);
+      }
+      &__title{
+        font-size: t-to-rem(14);
+      }
+    }
+
+    &__image-container {
+      border-radius: $s-image--border-radius-medium;
+    }
+
+    &__details{
+      margin: t-to-rem(24) 0 0;
+    }
+    &__price{
+      margin: t-to-rem(14) 0 0;
+    }
+    
+
+  }
+
+
+  @include t-media-query($s-medium-up) {
+    &__primary-feature{
+      .o-primary-feature-icon{
+        &__image{
+          height: t-to-rem(26);
+          margin-right: t-to-rem(10);
+        }
+        &__title{
+          padding-top: t-to-rem(4);
+          font-size: t-to-rem(18);
+        }
+      }
+    }
+
+    &__inner{
+      padding-top: t-to-rem(44);
+    }
+
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__details{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      .is-carousel-style & {
+        justify-content: center;
+        margin-top: 2.5rem;
+      }
+    }
+
+    &__price{
+      flex-shrink: 0;
+      margin: 0 0 0 t-to-rem(16);
+      &-compare{
+        margin-right: t-to-rem(12);
+      }
+    }
+
+
+    &__image-container-outer:after {
+      filter: blur(2.5rem);
+    }
+  }
+}

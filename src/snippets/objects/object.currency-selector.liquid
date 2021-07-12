@@ -1,0 +1,26 @@
+{%- comment -%}
+  Currency Selector
+    Snippet for the Shopify Multi-Currency selector
+
+  Version:
+    1.0.1 2021/05/31
+{%- endcomment -%}
+
+{%- form 'currency', id: formId -%}
+  <span class="o-currency-selector has-js {{ class }}">
+    <select
+      class="o-currency-selector__select o-select is-secondary"
+      name="currency"
+      title="{{'general.currency.change_currency' | t }}"
+      data-currency-selector
+    >
+      {%- for currency in shop.enabled_currencies -%}
+        {%- if currency == cart.currency -%}
+          <option selected="true">{{ currency.iso_code }}</option>
+        {%- else -%}
+          <option>{{ currency.iso_code }}</option>
+        {%- endif -%}
+      {%- endfor -%}
+    </select>
+  </span>
+{%- endform -%}

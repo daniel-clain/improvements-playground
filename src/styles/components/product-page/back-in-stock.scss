@@ -1,0 +1,56 @@
+
+.c-back-in-stock{
+  &__heading{
+    margin-bottom: t-to-rem(8);
+  }
+  &__text{
+    display: block;
+    margin: t-to-rem(8) 0 t-to-rem(20);
+  }
+  &__email-input{
+    display: block;
+    &.o-input.is-primary{
+      margin: t-to-rem(20) 0;
+    }
+  }
+  &__button{
+    display: block;
+    margin-top: t-to-rem(20);
+  }
+
+  &__form{
+    display: block;
+    .is-submitted &, .has-failed &{
+      display: none;
+    }
+  }
+
+  &__success-message{
+    display: none;
+    .is-submitted &{
+      display: block;
+    }
+  }
+  &__failure-message{
+    display: none;
+    .has-failed &{
+      display: block;
+    }
+  }
+  @include t-media-query($s-small-up) {
+    &__heading{
+      margin-bottom: t-to-rem(16);
+    }
+    &__text{
+      margin: t-to-rem(16) 0 t-to-rem(24);
+    }
+    &__email-input{
+      &.o-input.is-primary{
+        margin: t-to-rem(24) 0;
+      }
+    }
+    &__button{
+      margin-top: t-to-rem(24);
+    }
+  }
+}

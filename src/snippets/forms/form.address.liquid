@@ -1,0 +1,345 @@
+{%comment%}
+  Address Form
+    Reusable Address Edit/Insertion form
+
+  Dependencies:
+    templates/customer/addresses.liquid
+
+  Settings:
+    address (Optional) - Address to edit, if none is supplied this will be assumed to be a create address form.
+
+  Version:
+    1.0.0 - 2020/03/26
+{%endcomment%}
+
+{%- assign isEdit = false -%}
+{%- if address != blank -%}
+  {%- assign isEdit = true -%}
+{%- endif -%}
+
+{{ form.errors | default_errors }}
+
+{% comment %} First Name {% endcomment %}
+{%- assign field_name = 'first_name' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    required
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{ address[field_name] }}
+      {%- endif -%}
+    "
+    autocapitalize="words"
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+
+{% comment %} Last Name {% endcomment %}
+{%- assign field_name = 'last_name' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    required
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    autocapitalize="words"
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+
+{% comment %} Company {% endcomment %}
+{%- assign field_name = 'company' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    autocapitalize="words"
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+
+{% comment %} Address Line 1 * {% endcomment %}
+{%- assign field_name = 'address1' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    required
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{ address[field_name] }}
+      {%- endif -%}
+    "
+    autocapitalize="words"
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+{% comment %} Address Line 2 {% endcomment %}
+{%- assign field_name = 'address2' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    autocapitalize="words"
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+{% comment %} City {% endcomment %}
+{%- assign field_name = 'city' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    required
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    autocapitalize="words"
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+
+{% comment %} Country {% endcomment %}
+{%- assign field_name = 'country' -%}
+<div class="o-form__input-group is-dropdown {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <select
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      c-account__input
+      is-primary
+    "
+    required
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    data-form-id="{{ form.id }}"
+    data-default="{{ form[field_name] }}"
+    data-address-form-country
+  >
+    {{ country_option_tags }}
+  </select>
+</div>
+
+{% comment %} Province / State {% endcomment %}
+{%- assign field_name = 'province' -%}
+{%- assign value = '' -%}
+{%- if form['province'] != blank -%}
+  {%- assign value = form['province'] -%}
+{%- elsif address['province'] != blank -%}
+  {%- assign value = address['province'] -%}
+{%- endif -%}
+<div
+  class="
+    o-form__input-group
+    c-addresses__input-province
+    is-dropdown
+  "
+>
+  <select
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      c-account__input
+      is-primary
+      {%if form.errors contains field_name %}has-error{% endif %}
+    "
+    data-default="{{form.province}}"
+    data-address-form-province
+    data-value="{{ value | escape }}"
+  >
+  </select>
+</div>
+
+
+{% comment %} Zip {% endcomment %}
+{%- assign field_name = 'zip' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    required
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    spellcheck="false"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+{% comment %} Phone {% endcomment %}
+{%- assign field_name = 'phone' -%}
+<div class="o-form__input-group {%if form.errors contains field_name %}has_error{% endif %}">
+
+  <input
+    type="text"
+    name="address[{{ field_name }}]"
+    class="
+      o-input
+      o-form__input
+      o-form__text
+      {%if form.errors contains field_name %}has-error{% endif %}
+      c-account__input
+      is-primary
+    "
+    value="
+      {%- if form[field_name] -%}
+        {{ form[field_name] }}
+      {%- elsif address[field_name] -%}
+        {{address[field_name]}}
+      {%- endif -%}
+    "
+    pattern="[0-9\s\-]*"
+    placeholder="{{ 'customer.addresses.' | append: field_name | t }}"
+  />
+</div>
+
+
+<div class="o-form__input-group">
+  <div class="o-form__default-checkbox">
+    {{- form.set_as_default_checkbox -}}
+    <label class="c-addresses__form__label" for="address_default_address_{{ form.id }}">
+      {{ 'customer.addresses.set_default' | t }}
+    </label>
+  </div>
+</div>
+
+
+<div class="p-customer__btn-row">
+
+  {%- comment -%} Add/Update Button {%- endcomment -%}
+  <button type="submit" class="o-btn is-palette-1 c-addresses__btn is-left no-icon is-secondary">
+    <span class="o-btn__inner">
+      {%- if isEdit == true -%}
+        {{- 'customer.addresses.update' | t -}}
+      {%-  else -%}
+        {{- 'customer.addresses.add' | t -}}
+      {%-  endif -%}
+    </span>
+  </button>
+
+  {%- comment -%} Cancel Button {%- endcomment -%}
+  <button type="button" class="o-btn is-palette-1 c-addresses__btn is-right no-icon is-secondary"
+    data-address-create-hide data-address-edit-hide>
+    <span class="o-btn__inner">
+      {{- 'customer.addresses.cancel' | t -}}
+    </span>
+  </button>
+
+</div>

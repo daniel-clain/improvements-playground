@@ -1,0 +1,41 @@
+{%- comment -%}
+  Region Selector
+    Snippet shown in a modal containing store and currency selectors.
+
+  Version:
+    1.0.1 2021/05/31
+{%- endcomment -%}
+
+{%- assign storeMenu = linklists[settings.store-menu] -%}
+
+<div
+  class="c-region-selector"
+  data-modal-content="regionSelector"
+  data-show-exit-controls="true"
+>
+  <button class="c-modal__close" data-modal-close>
+    {%- render 'object.icon' with {
+      icon: 'close',
+      class: 'c-modal__close-icon'
+    } -%}
+  </button>
+  {%- if storeMenu.links.size > 0 -%}
+    <p class="c-region-selector__heading">
+      {{- 'general.region_selector.select_region_title' | t -}}
+    </p>
+    {%- render 'object.store-selector' with {
+      menu: storeMenu,
+      showMap: false,
+      selectStyle: 'is-secondary',
+      class: 'c-region-selector__store-selector'
+    } -%}
+
+    <div class="c-region-selector__separator"></div>
+  {%- endif -%}
+
+  <p class="c-region-selector__heading">
+    {{- 'general.region_selector.select_currency_title' | t -}}
+  </p>
+  {%- render 'object.currency-selector' -%}
+
+</div>

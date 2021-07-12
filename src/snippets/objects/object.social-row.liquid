@@ -1,0 +1,61 @@
+{% comment %}
+  Social Icon Row
+    Row of social media icons with links to their relative pages.
+    Links defined in Settings Schema
+
+  Version:
+    1.0.0 - 2021/05/18
+{% endcomment %}
+
+{%- liquid
+  assign facebook = settings.social_facebook_link
+  assign instagram = settings.social_instagram_link
+  assign pinterest = settings.social_pinterest_link
+  assign twitter = settings.social_twitter_link
+-%}
+
+{%- if facebook != blank or instagram != blank or pinterest != blank or
+  twitter != blank or youtube != blank
+-%}
+
+  <div class="o-social-row {{class}}">
+
+    {%- if facebook != blank -%}
+      <a href="{{ facebook }}" class="o-social-row__link" target="_blank">
+        {%- render 'object.icon' with {
+          icon: 'facebook--dark',
+          class: 'o-social-row__icon'
+        } -%}
+      </a>
+    {%- endif -%}
+
+    {%- if instagram != blank -%}
+      <a href="{{ instagram }}" class="o-social-row__link" target="_blank">
+        {%- render 'object.icon' with {
+          icon: 'instagram-dark',
+          class: 'o-social-row__icon'
+        } -%}
+      </a>
+    {%- endif -%}
+
+    {%- if twitter != blank -%}
+      <a href="{{ twitter }}" class="o-social-row__link" target="_blank">
+        {%- render 'object.icon' with {
+          icon: 'twitter-dark',
+          class: 'o-social-row__icon'
+        } -%}
+      </a>
+    {%- endif -%}
+
+    {%- if pinterest != blank -%}
+      <a href="{{ pinterest }}" class="o-social-row__link" target="_blank">
+        {%- render 'object.icon' with {
+          icon: 'pinterest-dark',
+          class: 'o-social-row__icon'
+        } -%}
+      </a>
+    {%- endif -%}
+
+  </div>
+
+{%- endif -%}

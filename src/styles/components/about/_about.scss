@@ -1,0 +1,19 @@
+.c-page-about {
+  &__description {
+    margin: 0;
+    padding: 2.5rem 4.26% 3.5rem;
+
+    &-container {
+      background-color: $s-color--background-tertiary;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__description {
+      text-align: center;
+      max-width: 40rem;
+      padding: 5rem 0;
+      margin: 0 auto;
+    }
+  }
+}

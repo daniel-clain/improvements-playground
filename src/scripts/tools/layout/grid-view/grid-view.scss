@@ -1,0 +1,43 @@
+@import './../../../../styles/base.scss';
+
+$c-grid-view--color-edges: rgba(255, 0, 0, 0.1);
+$c-grid-view--color-gutters: rgba(0, 255, 0, 0.1);
+$c-grid-view--color-columns: rgba(0, 0, 255, 0.1);
+
+.c-grid-view {
+  display: none;
+  z-index: 1000;
+  background: $c-grid-view--color-edges;
+  pointer-events: none;
+
+  &,&__inner {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  &__inner {
+    @include t-grid($ledge: true, $redge: true);
+
+    &:after {
+      content: '';
+      height: 100%;
+      @include t-grid--column(12);
+      background: $c-grid-view--color-gutters;
+    }
+  }
+
+  &__column {
+    position: relative;
+    background: $c-grid-view--color-columns;
+    @include t-grid--column(1);
+    height: 100%;
+    z-index: 1;
+  }
+
+  &.is-visible {
+    @include t-grid($ledge: true, $redge: true);
+  }
+}

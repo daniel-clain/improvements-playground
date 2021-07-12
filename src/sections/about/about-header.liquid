@@ -1,0 +1,92 @@
+{% comment %}
+  About Header 
+    Section to display a about banner and header
+
+  Version:
+    1.0.0 - 2021/04/19
+{% endcomment %}
+
+
+
+{%- assign ss = section.settings -%}
+
+{%- if ss.imgDesktop != blank or ss.description != blank -%}
+  <section class="c-about-header">
+
+  {%- render 'image-banner' with {
+    imgDesktop: ss.imgDesktop,
+    imgMobile: ss.imgMobile,
+    title: ss.title,
+    subtitle: ss.subtitle,
+    imageCrop: ss.imageCrop
+  }-%}
+
+  {%- if ss.description != blank -%}
+    <div class="c-page-about__description-container">
+      <p class="c-page-about__description">
+        {{- ss.description | escape -}}
+      </p>
+    </div>
+  {%- endif -%}
+
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "About Header",
+  "class": "c-section c-section__about-header",
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Title",
+      "info": "Add the title for the block"
+    },
+    {
+      "id": "subtitle",
+      "type": "textarea",
+      "label": "Subtitle"
+    },
+    {
+      "id": "description",
+      "type": "textarea",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Page Banner"
+    },
+    {
+      "id": "imgDesktop",
+      "type": "image_picker",
+      "label": "Image - Desktop",
+      "info": "Please upload a .jpg of at least 2000x1000px."
+    },
+    {
+      "id": "imgMobile",
+      "type": "image_picker",
+      "label": "Image - Mobile",
+      "info": "Please upload a .jpg of at least 375x480px. If left blank the Desktop image will be used."
+    },
+    {
+      "type": "select",
+      "id": "imageCrop",
+      "label": "Desktop Image Crop",
+      "info": "Where is the focal point of your image located? Crop position for larger screens only.",
+      "options": [
+        {"value": "top-left", "label": "Top Left"},
+        {"value": "top-center", "label": "Top Centre"},
+        {"value": "top-right", "label": "Top Right"},
+        {"value": "middle-left", "label": "Middle Left"},
+        {"value": "middle-center", "label": "Middle Centre"},
+        {"value": "middle-right", "label": "Middle Right"},
+        {"value": "bottom-left", "label": "Bottom Left"},
+        {"value": "bottom-center", "label": "Bottom Centre"},
+        {"value": "bottom-right", "label": "Bottom Right"}
+      ],
+      "default": "middle-center"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+{%- liquid 
+  assign mf = product.metafields.accentuate
+  assign s = section.settings
+  assign video = mf.video | default: s.video
+  assign image = mf.videoDesktopImage | default: s.image
+  assign imageMobile = mf.videoMobileImage | default: s.imageMobile
+-%}
+<section class="c-product-video">
+  {%- render 'video-banner', video: video, image: image, imageMobile: imageMobile  -%}
+</section>
+
+{% schema %}
+  {
+    "name": "Product Video",
+    "class": "c-section c-section__product-video",
+    "settings": [
+      {
+        "id": "video",
+        "type": "url",
+        "label": "Video URL"
+      },
+      {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Video Image (desktop)"
+      },
+      {
+        "id": "imageMobile",
+        "type": "image_picker",
+        "label": "Video Image (mobile)",
+        "info": "Will fallback to desktop if not provided"
+      }
+    ]
+  }
+{% endschema %}

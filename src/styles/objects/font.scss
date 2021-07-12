@@ -1,0 +1,65 @@
+/*
+ *  Typography Objects
+ *    Use these to control the font styling of elements.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/09
+ */
+
+
+//=== Default Type Styles ===//
+
+.o-type--1 {
+  @extend %s-font--type-1;
+}
+
+.o-type--2 {
+  @extend %s-font--type-2;
+}
+
+.o-type--3 {
+  @extend %s-font--type-3;
+}
+
+.o-type--4 {
+  @extend %s-font--type-4;
+}
+
+
+//=== Heading Type Styles ===//
+
+.o-heading--1 {
+  @extend %s-font--heading-1;
+}
+
+.o-heading--2 {
+  @extend %s-font--heading-2;
+}
+
+.o-heading--3 {
+  @extend %s-font--heading-3;
+}
+
+.o-heading--4 {
+  @extend %s-font--heading-4;
+}
+
+.o-heading--4-alt {
+  @extend %s-font--heading-4--alternate;
+}
+
+.o-heading--5 {
+  @extend %s-font--heading-5;
+}
+
+.o-heading--5--alt {
+  @extend %s-font--heading-5--alternate;
+}
+
+.o-heading--6 {
+  @extend %s-font--heading-6;
+}
+
+.o-heading--7 {
+  @extend %s-font--heading-7;
+}

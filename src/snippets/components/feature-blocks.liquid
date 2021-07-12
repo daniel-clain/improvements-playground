@@ -1,0 +1,129 @@
+{%- comment -%}
+  Props
+    title
+    blocks
+    metafieldData
+{%- endcomment -%}
+
+{% assign matchingFeaturesCount = 0 %}
+
+
+{%- for title in metafieldData.feature_block_title -%}
+  {%- assign image = metafieldData.feature_block_image[forloop.index0] -%}
+  {%- assign text = metafieldData.feature_block_text[forloop.index0] -%}
+  {%- if title == blank or image == blank or text == blank %}{% continue %}{% endif -%}
+  {%- assign matchingFeaturesCount = matchingFeaturesCount | plus: 1 -%}
+  {%- capture featureBlockElems -%}
+    {{- featureBlockElems -}}
+    <div class="c-feature-blocks__block" data-feature-block-slide>
+      
+      <div class="c-feature-blocks__image-container o-responsive-image-container">
+        {%- render 'tool.picture' with {
+          image: image,
+          class: 'c-feature-blocks__image o-responsive-image',
+          alt: title,
+          width: 558, 
+          sizes: '375,750,1100,1350,1650',
+          imageSizes: '294,580,850,320,390'
+        } -%}
+      </div>
+      <h6 class="c-feature-blocks__block-title">
+        {{- title -}}
+      </h6>
+      <p class="c-feature-blocks__block-text">
+        {{- text -}}
+      </p>
+    </div>
+
+    {%- comment -%} Carousel Dots {%- endcomment -%}
+    {%- capture carouselDots -%}
+      {{- carouselDots -}}
+      <button
+        class="c-feature-blocks__dot"
+        data-carousel-dot
+        data-index="{{- forloop.index0 -}}"
+        type="button"
+      ></button>
+    {%- endcapture -%}
+
+
+  {%- endcapture -%}
+  {%- if matchingFeaturesCount == 3 %}{% break %}{% endif -%}
+{%- endfor -%}
+
+
+{%- for block in blocks -%}
+  {%- assign bs = block.settings -%}
+  {%- unless skipTags -%}
+    {%- unless product.tags contains bs.matchingTag -%}
+      {%- continue -%}
+    {%- endunless -%}
+  {%- endunless -%}
+  {%- assign matchingFeaturesCount = matchingFeaturesCount | plus: 1 -%}
+
+  {%- capture featureBlockElems -%}
+    {{- featureBlockElems -}}
+    <div class="c-feature-blocks__block
+      {% if bs.link != blank %} has-link{% endif %}"
+      data-feature-block-slide>
+      
+      <div class="c-feature-blocks__image-container o-responsive-image-container">
+        {%- render 'tool.picture' with {
+          image: bs.image,
+          class: 'c-feature-blocks__image o-responsive-image',
+          alt: bs.title,
+          width: 558, 
+          sizes: '375,750,1100,1350,1650',
+          imageSizes: '294,580,850,320,390'
+        } -%}
+      </div>
+      <h6 class="c-feature-blocks__block-title">
+        {{- bs.title -}}
+      </h6>
+      <p class="c-feature-blocks__block-text">
+        {{- bs.text -}}
+      </p>
+
+      {%- if bs.link != blank -%}
+        <a href="{{- bs.link -}}" class="c-feature-blocks__block-link">
+          {{- 'general.about.link' | t -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Carousel Dots {%- endcomment -%}
+    {%- capture carouselDots -%}
+      {{- carouselDots -}}
+      <button
+        class="c-feature-blocks__dot"
+        data-carousel-dot
+        data-index="{{- forloop.index0 -}}"
+        type="button"
+      ></button>
+    {%- endcapture -%}
+
+
+  {%- endcapture -%}
+  {%- if matchingFeaturesCount == 3 %}{% break %}{% endif -%}
+{%- endfor -%}
+
+
+{%- if matchingFeaturesCount > 0 -%}
+  <div class="c-feature-blocks" data-feature-blocks>
+    <div class="c-feature-blocks__inner">
+      {%- if title != blank -%}
+        <h4 class="c-feature-blocks__title">{{- title -}}</h4>
+      {%- endif -%}
+      <div class="c-feature-blocks__blocks-container" data-feature-block-slides>
+        {{- featureBlockElems -}}
+      </div>
+
+      {%- if blocks.size > 1 -%}
+        {%- comment -%} Carousel Dots {%- endcomment -%}
+        <div class="c-feature-blocks__dots" data-carousel-controls>
+          {{- carouselDots -}}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%} 

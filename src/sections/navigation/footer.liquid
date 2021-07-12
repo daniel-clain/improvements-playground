@@ -1,0 +1,148 @@
+{%- comment -%}
+  Footer Template
+
+  Version:
+    1.0.0 2021/05/19
+{%- endcomment -%}
+
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+  assign address = section.settings.store-address
+  assign storeMenu = linklists[settings.store-menu]
+  assign date = 'now' | date: "%Y" | escape
+  assign bottomLinks = section.blocks
+  assign newsletterTitle = section.settings.newsletter-title
+  assign logoAlt = 'general.header.logo_title' | t
+-%}
+
+<footer class="c-footer">
+  <div class="c-footer__inner">
+    <div class="c-footer__left">
+      {%- comment -%} Footer Logo/Tagline {%- endcomment -%}
+      <div class="c-footer__logo">
+        {%- render 'object.icon' with {
+          icon: 'logo-image',
+          class: 'c-footer__logo-icon',
+          alt: logoAlt
+        } -%}
+      </div>
+
+      <div class="c-footer__newsletter-form-container">
+        {%- comment -%} Newsletter Form {%- endcomment -%}
+        {%- if newsletterTitle != blank -%}
+          <h6 class="c-footer__newsletter-title">
+            {{- newsletterTitle | escape -}}
+          </h6>
+        {%- endif -%}
+        {%- render 'form.newsletter', class: 'c-footer__newsletter-form' -%}
+      </div>
+
+      {%- render 'object.social-row', class: 'c-footer__social is-desktop' -%}
+    </div>
+
+    {%- comment -%} Footer Menu {%- endcomment -%}
+    {%- if menu.links.size > 0 -%}
+      {%- render 'footer-menu', menu: menu -%}
+    {%- endif -%}
+
+    {%- comment -%} Store Selector Mobile {%- endcomment -%}
+    {%- if storeMenu.links.size > 0 -%}
+      <div class="c-footer__store-selector is-mobile">
+        {%- render 'object.store-selector', menu: storeMenu, class: 'c-footer__store-selector-select' -%}
+      </div>
+    {%- endif -%}
+
+    {%- render 'object.social-row', class: 'c-footer__social is-mobile' -%}
+  </div>
+  
+  <div class="c-footer__lower">
+    <div class="c-footer__lower-inner">
+      <div class="c-footer__lower-left">
+        <p class="c-footer__copyright">
+          {{- 'general.footer.store_name_html' | t: date: date -}}
+        </p>
+
+        {% comment %} Bottom Links {% endcomment %}
+        <div class="c-footer__lower-links">
+          <a href="https://processcreative.com.au" target="_blank" class="c-footer__lower-link">
+            Site by Process
+          </a>
+
+          {%- if bottomLinks.size > 0 -%}
+            {%- for link in bottomLinks -%}
+              {%- if link.settings.url == blank or link.settings.title == blank -%}{%- continue -%}{%- endif -%}
+              <a href="{{ link.settings.url }}" class="c-footer__lower-link">
+                {{- link.settings.title | escape -}}
+              </a>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Store Selector Desktop {%- endcomment -%}
+      {%- if storeMenu.links.size > 0 -%}
+        <div class="c-footer__store-selector is-desktop">
+          {%- render 'object.store-selector', menu: storeMenu, class: 'c-footer__store-selector-select' -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "class": "c-section c-section__footer",
+    "settings": [
+      {
+        "id": "logo",
+        "type": "textarea",
+        "label": "Footer Logo/Tagline SVG",
+        "info": "Please paste your SVG code here. The image has been styled with a 1:1 ratio in mind. Please export with inline styles selected."
+      },
+      {
+        "type": "header",
+        "content": "Footer Navigation"
+      },
+      {
+        "id": "menu",
+        "type": "link_list",
+        "label": "Footer Menu",
+        "info": "Please select the navigation menu for all devices."
+      },
+      {
+        "type": "header",
+        "content": "Newsletter Title"
+      },
+      {
+        "id": "newsletter-title",
+        "type": "text",
+        "label": "Newsletter Title",
+        "default": "Keep up to date with everything."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "bottom-link",
+        "name": "Bottom Link",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Links displayed at the very bottom of the page."
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Link Text"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Link URL"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

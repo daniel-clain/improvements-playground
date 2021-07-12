@@ -1,0 +1,73 @@
+/*
+ *  Topbar Styles
+ *    Styles for the topbar object.
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/08
+ */
+
+.c-topbar {
+  width: 100%;
+  height: 2rem;
+  overflow: hidden;
+  background-color: $s-color--background-secondary;
+  color: $s-color--font-invert;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $s-z--header;
+
+  //Messages Container
+  &__messages {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  //Indivdual Message
+  &__message {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 0 2.5rem;
+  }
+
+  //Slider trumps
+  .o-carousel__arrow {
+
+    &.is-previous {
+      left: 0.6875rem;
+    }
+
+    &.is-next {
+      right: 0.6875rem;
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+
+  @include t-media-query($s-medium-up) {
+    padding: 0 2.125rem;
+    height: 2.5rem;
+
+    &__messages {
+      margin: 0 auto;
+      max-width: 21.5rem;
+    }
+
+    &__message {
+      font-size: 0.875rem;
+    }
+
+    .o-carousel__controls {
+      max-width: 25.75rem;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+}

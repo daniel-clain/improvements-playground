@@ -1,0 +1,46 @@
+{%- comment -%}
+  Blog Listing Header
+  Props
+    Title
+    Description
+{%- endcomment -%}
+
+<header class="c-blog-header">
+  <div class="c-blog-header__headings">
+    {%- if description != blank -%}
+      <p class="c-blog-header__description o-paragraph">
+        {{- description -}}
+      </p>
+    {%- endif -%}
+
+    {%- if title != blank -%}
+      <h1 class="c-blog-header__title o-heading--4">
+        {{- title -}}
+      </h1>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Tags Navigation {%- endcomment -%}
+  {%- assign blogTags = blog.all_tags -%}
+  {%- if blogTags.size > 0 %}
+    <div class="c-blog-header__tags">
+      <a href="{{- blog.url -}}" class="c-blog-header__tag
+        {% unless current_tags != blank %} is-active{% endunless %}">
+        {{- 'blog.all_tags' | t -}}
+      </a>
+
+      {%- for tag in blogTags -%}
+        {%- assign is_active = false -%}
+        {%- if current_tags contains tag -%}
+          {%- assign is_active = true -%}
+        {%- endif -%}
+
+        <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handle }}" 
+          class="c-blog-header__tag
+          {% if is_active %} is-active{% endif %}">
+          {{- tag -}}
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</header>

@@ -1,0 +1,26 @@
+/*
+ *  Absolute Position Centering
+ *    Provides mixins to center using absolute positioning and transforms
+ *
+ *
+ *  Version:
+ *    1.3.0 - 2019/04/10
+ */
+@mixin t-absolute-center-x-y() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin t-absolute-center-x() {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin t-absolute-center-y() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

@@ -1,0 +1,239 @@
+{%- liquid
+  assign mf = product.metafields.accentuate
+  assign s = section.settings
+  assign klaviyoKey = settings.klaviyoKey
+  assign backInStockFallbackPage = settings.backInStockFallbackPage
+  assign globalMf = shop.metafields.globals
+  assign metafieldTitles = mf.title
+  assign metafieldBodies = mf.body
+  assign variant = product.selected_or_first_available_variant  
+  assign schemaBlocks = section.blocks | where: 'type', 'accordionBlock'
+  assign subheading = mf.sub_heading
+  assign descriptionTitle = 'products.product.description_title' | t
+
+  assign product_tags = product.tags | join: ' '
+  assign sizeGuideContent = blank
+  assign sizeGuideTitle = blank
+  if product_tags contains 'meta-size-chart-'
+    for tag in product.tags
+      if tag contains 'meta-size-chart-'
+        assign size_chart = tag | handle | remove: 'meta-size-chart-' 
+        assign sizeGuideContent = pages[size_chart].content
+        assign sizeGuideTitle = pages[size_chart].title
+      endif
+    endfor
+  elsif s.defaultSizeChart != blank
+    assign content = pages[s.defaultSizeChart].content
+    assign sizeGuideTitle = pages[s.defaultSizeChart].title
+  endif
+
+  if sizeGuideContent 
+    assign sizeGuideContent = sizeGuideContent | replace: '<h1', '<h2'
+    assign sizeGuideContent = sizeGuideContent | replace: '</h1>', '</h2>'
+  endif
+
+-%}
+
+
+{%- capture keys -%}
+  products.product.free;
+  products.product.add_to_cart;
+  products.product.all_in_cart;
+  products.product.cart_pending;
+  products.product.added_to_cart;
+  products.product.sold_out;
+  products.product.error;
+  products.product.upsell_prefix_add;
+  products.product.upsell_prefix_adding;
+  products.product.upsell_prefix_added;
+  products.product.notify_me;
+  general.postcode.availability_message;
+{%- endcapture -%}
+{%- render 'tool.language-strings' with { keys: keys } -%}
+
+
+
+<section class="c-product-details">
+
+  <div class="c-product-details__inner">
+    {%- render 'product-gallery', mf: mf, variant: variant -%}
+    <div class="c-product-details__right-container">
+      <h1 class="c-product-details__heading o-heading--4">{{product.title}}</h1>
+
+      {%- if subheading != blank -%}
+        <h2 class="c-product-details__sub-heading o-type--2">
+          {{- subheading | escape -}}
+        </h2>
+      {%- endif -%}
+
+      {%- if settings.enable-reviews -%}
+        <div class="c-product-details__rating">
+          <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" 
+            data-product-sku="{{ product.selected_or_first_available_variant.sku }}" 
+            style="display: inline-block;"
+          ></span>
+        </div>
+      {%- endif -%}
+
+      {%- render 'object.product-pricing' with {
+        price: variant.price,
+        comparePrice: variant.compare_at_price,
+        class: 'c-product-details__price'
+      } -%}
+
+      {%- if sizeGuideContent != blank -%}
+        {%- capture sizeGuideLink -%}
+          <button 
+            data-size-guide-link 
+            class="c-product-details__size-guide-link o-btn is-link"
+          >
+            {{ 'products.product.size_chart_link' | t }}
+          </button>
+        {%- endcapture -%}
+
+        <div 
+          class="c-product-details__size-guide c-size-guide"
+          data-modal-content="sizeChart"
+        >
+          <h4>{{- sizeGuideTitle -}}</h4>
+          {{- sizeGuideContent -}}
+          
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Variants {%- endcomment -%}
+      {%- render 'object.product-template-swatches' with {
+        class: 'c-product-swatches',
+        product: product,
+        variant: variant,
+        printJson: true,
+        sizeGuideLink: sizeGuideLink
+      } -%}
+
+
+
+      {%- comment -%} Add to Cart Button {%- endcomment -%}
+      <button
+        type="submit"
+        class="
+          c-product-details__add-btn o-btn is-secondary
+          {% if variant.available != true %}is-disabled{% endif %}
+        "
+        {% if variant.available != true %}disabled{% endif %}
+        data-add-to-cart-button
+      >
+        <span class="o-btn__inner" data-add-to-cart-button-inner>
+          {%- if variant.available -%}
+            {{- 'products.product.add_to_cart' | t -}}
+          {%- else -%}
+            {{- 'products.product.sold_out' | t -}}
+          {%- endif -%}
+        </span>
+      </button>
+
+      {%- if klaviyoKey != blank -%}
+        <div 
+          class="c-product-details__back-in-stock c-back-in-stock" 
+          data-klaviyo-key="{{ klaviyoKey }}"
+          data-bis-fallback-page="{{ backInStockFallbackPage }}"
+          data-modal-content="backInStock"
+        >
+          <h6 class="c-back-in-stock__heading">{{product.title}}</h6>
+          <p class="c-back-in-stock__text">{{- s.backInStockText -}}</p>
+          <form class="c-back-in-stock__form" data-bis-form>
+            <input class="o-input is-primary c-back-in-stock__email-input" placeholder="Email" type="email" data-bis-email required>
+            <button class="o-btn is-secondary c-back-in-stock__button is-full-width" data-bis-submit>
+              {{- s.backInStockButtonText | escape -}}
+            </button>
+          </form>
+          <div class="c-back-in-stock__success-message">
+            {{- 'products.back_in_stock.success_message' | t -}}
+          </div>
+          <div class="c-back-in-stock__failure-message">
+            {{- 'products.back_in_stock.failure_message' | t -}}
+          </div>
+        </div>
+      {%- endif -%}
+
+
+      {%- if mf.feature_icon.size > 0 -%}
+        
+        <div class="c-product-details__feature-icons">
+          {%- for ref in mf.feature_icon -%}
+            {%- for globalRef in globalMf.reference_name -%}
+              {%- if globalRef == ref -%}
+                {%- assign name = globalMf.display_name[forloop.index0] -%}
+                {%- assign iconUrl = globalMf.icon[forloop.index0] -%}
+                <div class="c-product-feature-icon">
+                  <img 
+                    class="c-product-feature-icon__image" 
+                    src="{{- iconUrl -}}" alt="{{- name | escape -}}"
+                  />
+                  <div class="c-product-feature-icon__title">
+                    {{- name -}}
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if schemaBlocks.size > 0 or metafieldTitles.size > 0 -%}
+        <div class="c-product-details__accordion">
+          {%- render 'accordion',
+            staticDescription: product.description,
+            staticTitle: descriptionTitle
+            schemaBlocks: schemaBlocks,
+            metafieldTitles: metafieldTitles,
+            metafieldBlodies: metafieldBodies,
+            firstOpened: true
+          -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Product Details",
+    "class": "c-section c-section__product-details",
+    "settings": [
+      {
+        "type": "text",
+        "id": "backInStockText",
+        "label": "Back in stock modal text"
+      },
+      {
+        "type": "text",
+        "id": "backInStockButtonText",
+        "label": "Back in stock modal button text"
+      },
+      {
+        "type": "page",
+        "id": "defaultSizeChart",
+        "label": "Default fallback size chart"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "accordionBlock",
+        "name": "Accordion Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "body",
+            "type": "richtext",
+            "label": "Body Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,82 @@
+{%- comment -%}
+  Props
+    blocks
+{%- endcomment -%}
+
+{%- capture keys -%}
+  faq.answer.show;
+  faq.answer.hide;
+{%- endcapture -%}
+{%- render 'tool.language-strings' with { keys: keys } -%}
+
+{%- comment -%} FAQ Categories {%- endcomment -%}
+{%- if blocks != blank -%}
+  <div class="c-faq-accordion {{ class }}" data-faq-accordion>
+    {%- comment -%} Iterate through the question categories {%- endcomment -%}
+    {%- assign categories = blocks | where: 'type', 'category' -%}
+
+    {%- comment -%} Page Subheading {%- endcomment -%}
+    {%- if description != blank -%}
+      <p class="c-faq-accordion__subheading o-paragraph">
+        {{- description -}}
+      </p>
+    {% endif %}
+
+    {%- comment -%} Page Heading {%- endcomment -%}
+    {%- if title != blank -%}
+      <h1 class="c-faq-accordion__heading o-heading--4">
+        {{- title -}}
+      </h1>
+    {%- endif -%}
+
+    {%- for category in categories -%}
+      {%- if category.settings.title != blank -%}
+        <details class="c-faq-accordion__slide" data-accordion-slide>
+          <summary class="c-faq-accordion__title o-heading--6" data-accordion-title>
+            <div class="c-faq-accordion__title-inner">
+              {{- category.settings.title -}}
+
+              {%- render 'object.icon' with {
+                icon: 'plus',
+                class: 'c-faq-accordion__title-icon is-plus',
+                attributes: 'data-icon-plus'
+              } -%}
+
+              {%- render 'object.icon' with {
+                icon: 'minus',
+                class: 'c-faq-accordion__title-icon is-minus',
+                attributes: 'data-icon-minus'
+              } -%}
+            </div>
+          </summary>
+
+          <ul class="c-faq-accordion__body" data-accordion-content>
+            {%- comment -%} Iterate through the questions {%- endcomment -%}
+            {%- assign questions = blocks | where: 'type', 'question' -%}
+
+            {%- for question in questions -%}
+              {%- unless question.settings.category == category.settings.title -%}
+                {%- continue -%}
+              {%- endunless -%}
+
+              {%- comment -%} Container for matching question and answer {%- endcomment -%}
+              <li class="c-faq-accordion__question-container" data-question-container>
+                <p class="c-faq-accordion__question o-type--2" data-question>
+                  {{- question.settings.title -}}
+                </p>
+
+                <div class="c-faq-accordion__answer is-hidden" data-answer>
+                  {{- question.settings.answer -}}
+                </div>
+
+                <a href="#" class="c-faq-accordion__answer-expand" data-answer-expand>
+                  {{- 'faq.answer.show' | t -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

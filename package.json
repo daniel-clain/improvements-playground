@@ -1,0 +1,30 @@
+{
+  "name": "@process-creative/pc-slate-2x",
+  "version": "2.0.0",
+  "scripts": {
+    "env": "slate-tools env",
+    "start": "slate-tools start",
+    "watch": "slate-tools start --skipFirstDeploy",
+    "build": "slate-tools build",
+    "deploy": "slate-tools deploy",
+    "zip": "slate-tools build && slate-tools zip",
+    "open": "slate-tools open"
+  },
+  "devDependencies": {
+    "@process-creative/slate-tools": "2.1.55",
+    "@types/jquery": "^3.5.4"
+  },
+  "dependencies": {
+    "@iconfu/svg-inject": "^1.2.1",
+    "@process-creative/slate-ajax-collection": "2.1.51",
+    "@process-creative/slate-theme-tools": "2.1.51",
+    "haunted": "^4.7.1",
+    "nouislider": "^13.1.5",
+    "jquery": "^3.2.1",
+    "lit-html": "^1.3.0",
+    "normalize.css": "^8.0.1",
+    "focus-visible": "^5.2.0",
+    "lity": "^2.3.1",
+    "keen-slider": "^5.2.3"
+  }
+}

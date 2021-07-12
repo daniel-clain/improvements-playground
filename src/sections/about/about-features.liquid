@@ -1,0 +1,84 @@
+{%- comment -%}
+  About Features
+
+  Version:
+    1.0.0 - 2021/04/20
+{%- endcomment -%}
+
+{%- assign ss = section.settings -%}
+
+<section class="c-about-features">
+
+  {%- render 'feature-blocks', with {
+    title: ss.title,
+    blocks: section.blocks,
+    skipTags: true
+   } -%}
+
+  {%- render 'image-highlight' with {
+    image: ss.materialImage,
+    title: ss.materialTitle,
+    description: ss.materialDescription
+  } -%}
+
+</section>
+{% schema %}
+{
+  "name": "About Features",
+  "class": "c-section c-section__about-features",
+  "settings": [
+    {
+      "type": "header",
+      "content": "About Features"
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Features Title"
+    },
+    {
+      "type": "header",
+      "content": "About Material"
+    },
+    {
+      "id": "materialImage",
+      "type": "image_picker",
+      "label": "Material Image",
+      "info": "Please upload a .jpg of at least 2000x400px."
+    },
+    {
+      "id": "materialTitle",
+      "type": "textarea",
+      "label": "Title"
+    },
+    {
+      "id": "materialDescription",
+      "type": "textarea",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "productFeature",
+      "name": "Product Feature",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "text",
+          "type": "textarea",
+          "label": "Text"
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

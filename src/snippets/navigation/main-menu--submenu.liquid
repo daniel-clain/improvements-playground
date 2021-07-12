@@ -1,0 +1,149 @@
+{%- comment -%}
+  Main Menu Link
+    Reusable snippet for the submenu of each 1st level link from the main
+    menu navigation. Use by both mobile and desktop
+
+  Version
+    1.0.0 - 2020/12/05
+{%- endcomment -%}
+
+{%- liquid
+  assign menu = link.links
+
+  assign tHandle = title | handleize
+
+  assign linkActive = false
+  assign linkLower = link.title | downcase
+  if linkLower == 'shop' and template contains 'product' or template contains 'collection'
+    assign linkActive = true
+  elsif linkLower contains 'explore' and template contains 'blog' or template contains 'article'
+    assign linkActive = true
+  elsif linkLower contains 'support' and template contains 'contact' or template contains 'faq'
+    assign linkActive = true
+  endif
+
+  assign featuredImagesHtml = ''
+  assign mf = link.object.metafields.accentuate
+  assign featuredImages = mf.featured_image
+  assign featuredTitles = mf.featured_title
+  assign featuredTitleColours = mf.featured_title_colour
+  assign featuredImageLinks = mf.featured_image_link
+-%}
+
+{%- comment -%} Featured images for this link {%- endcomment -%}
+{%- for i in (0..1) -%}
+  {%- liquid
+    assign isFirst = false
+    if forloop.first
+      assign isFirst = true
+    endif
+  -%}
+  {%- capture featuredImagesHtml -%}
+    {{- featuredImagesHtml -}}
+    {%- render 'main-menu--featured-image' with {
+      image: featuredImages[i],
+      title: featuredTitles[i],
+      color: featuredTitleColours[i],
+      btnLink: featuredImageLinks[i],
+      isFirst: isFirst
+    } -%}
+  {%- endcapture -%}
+{%- endfor -%}
+
+
+<ul
+  class="c-main-menu__list is-level-2"
+  data-menu-submenu="2"
+>
+  {%- comment -%} Back one level link {%- endcomment -%}
+  <li class="c-main-menu__item is-back">
+    <a
+      href="{{ link.url }}"
+      class="c-main-menu__link is-back has-submenu"
+      title="{{ link.title | escape }}"
+      data-submenu-back
+    >
+      {%- render 'object.icon' with {
+        icon: 'arrow--right--black',
+        class: 'c-main-menu__link-icon'
+      } -%}
+      {{- link.title | escape -}}
+    </a>
+  </li>
+
+  {%- for link in menu -%}
+    {%- liquid
+      assign submenu = link.links
+      assign hasSubmenu = false
+      if submenu.size > 0
+        assign hasSubmenu = true
+      endif
+    -%}
+    <li
+      class="c-main-menu__item is-level-2"
+    >
+      <a
+        href="{{ link.url }}"
+        class="c-main-menu__link
+          {% if hasSubmenu %}has-submenu{% endif %}
+          {% if forloop.last %}is-last-link{% endif %}"
+        {% if hasSubmenu %}data-submenu-toggle{% endif -%}
+      >
+        <span>{{ link.title | escape }}</span>
+        {%- if hasSubmenu -%}
+          {%- render 'object.icon' with {
+            icon: 'arrow--right--black',
+            class: 'c-main-menu__link-icon'
+          } -%}
+        {%- endif -%}
+      </a>
+
+      {%- if hasSubmenu -%}
+        <ul
+          class="c-main-menu__list is-level-3"
+          data-menu-submenu="3"
+        >
+          {%- comment -%} Back one level link {%- endcomment -%}
+          <li class="c-main-menu__item is-back">
+            <a
+              href="{{ link.url }}"
+              class="c-main-menu__link is-back has-submenu"
+              title="{{ link.title | escape }}"
+              data-submenu-back
+            >
+              {%- render 'object.icon' with {
+                icon: 'arrow--right--black',
+                class: 'c-main-menu__link-icon'
+              } -%}
+              {{- link.title | escape -}}
+            </a>
+          </li>
+          {%- for link in submenu -%}
+            {%- liquid
+              assign subsubmenu = link.links
+            -%}
+            <li
+              class="c-main-menu__item is-level-3"
+            >
+              <a
+                href="{{ link.url }}"
+                class="c-main-menu__link
+                  {% if hasSubsubmenu %}has-submenu{% endif %}
+                  {% if forloop.last %}is-last-link{% endif %}"
+              >
+                {{- link.title | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+    </li>
+  {%- endfor -%}
+
+  {%- comment -%} Featured images for this submenu {%- endcomment -%}
+  {%- if featuredImagesHtml != blank -%}
+    {{- featuredImagesHtml -}}
+  {%- endif -%}
+
+</ul>

@@ -1,0 +1,79 @@
+{%- comment -%}
+  Product JSON
+    Generates some product data in a nice JSON format.
+
+  Parameters:
+    product - Product to dump json for
+
+  Dependencies:
+    snippets/json.product.liquid
+
+  Version:
+    2.0.0 - 2019/06/15
+{%- endcomment -%}
+{%- liquid
+  assign mf = product.metafields.accentuate
+  assign globalMf = shop.metafields.globals
+  assign primaryFeatureIconRef = mf.feature_icon[0]
+  for globalRef in globalMf.reference_name
+    if globalRef == primaryFeatureIconRef
+      assign primaryFeatureIconName = globalMf.display_name[forloop.index0]
+      assign primaryFeatureIconUrl = globalMf.icon[forloop.index0]
+      break
+    endif
+  endfor
+-%}
+
+{
+  "id": {{- product.id | json -}},
+  "available": {{- product.available | json -}},
+  "handle": {{- product.handle | json -}},
+  "title": {{- product.title | json -}},
+  "type": {{- product.type | json -}},
+  "vendor": {{- product.vendor | json -}},
+  "tags": {{- product.tags | json -}},
+  "options": {{- product.options | json -}},
+  "collections": {{- product.collections | map: 'handle' | json -}},
+  "options_with_values": {
+    {%- for option in product.options_with_values -%}
+      "option{{ option.position }}": {
+        "name": {{ option.name | json }},
+        "position": {{ option.position | json }},
+        "selected": {{ option.selected_value | json }},
+        "values": [
+          {%- for value in option.values -%}
+            {{ value | json }}
+            {%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  },
+  {%- if primaryFeatureIconName -%}
+    "primaryFeatureIcon": {
+      "name": {{- primaryFeatureIconName | json -}},
+      "url": {{- primaryFeatureIconUrl | json -}}
+    },
+  {%- endif -%}
+  "subheading": {{- mf.sub_heading | json -}},
+  "image": {{- product.featured_image | json -}},
+  "url": {{- product.url | json -}},
+  "variants": [
+    {%- for variant in product.variants -%}
+      {%- render 'json.variant' with { variant: variant } -%}
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+  {%- if dumpImages -%}
+    , "images": [
+      {%- for image in product.images -%}
+        {
+          "id": {{ image.id | json }},
+          "src": {{ image.src | json }},
+          "alt": {{ image.alt | json }}
+        }
+        {%- unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  {%- endif -%}
+}

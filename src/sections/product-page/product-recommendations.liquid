@@ -1,0 +1,17 @@
+<section class="c-product__recommendations" data-product-recommendations>
+  {%- render 'products-carousel', productId: product.id, title: section.settings.title -%}
+</section>
+
+{% schema %} 
+  {
+    "name": "Product Recommendations",
+    "class": "c-section c-section__product-recommendations",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      }
+    ]
+  }
+{% endschema %}

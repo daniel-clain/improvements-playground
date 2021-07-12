@@ -1,0 +1,35 @@
+{%- comment -%}
+  Home Image Grid Block
+    Component used in the forloop on the home-image-grid section.
+
+  Version
+    1.0.0 - 2021/04/13
+{%- endcomment -%}
+
+{%- if url != blank -%}
+  <a href="{{ url }}" class="c-image-grid__block">
+{%- else -%}
+  <div class="c-image-grid__block">
+{%- endif -%}
+  {%- if image != blank -%}
+    <div class="c-image-grid__block-image-container o-responsive-image-container">
+      {%- render 'tool.picture' with {
+        image: image,
+        class: 'c-image-grid__block-image o-responsive-image',
+        alt: title,
+        width: 430, 
+        sizes: '374,750,1350',
+        imageSizes: '150,260,430'
+      } -%}
+    </div>
+  {%- endif -%}
+  {%- if title != blank -%}
+    <h3 class="c-image-grid__block-title o-heading--4-alt">
+      {{- title | escape -}}
+    </h3>
+  {%- endif -%}
+{%- if url != blank -%}
+  </a>
+{%- else -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,127 @@
+{% comment %}
+  Swatch Theme Editor
+    Simple theme editor section for color swatches, make this a static section.
+
+  Version:
+    1.0.0 - 2020/09/18
+{% endcomment %}
+
+{%- for block in section.blocks -%}
+  {%- capture styles -%}
+    {{- styles -}}
+    {%- assign selectors = '' -%}
+    {%- assign colorsSplit = block.settings.s-colors | replace: ', ', ',' | split: ',' -%}
+    {%- for color in colorsSplit -%}
+      {%- capture sel -%}
+        .s-swatch--{{ color | strip_newlines | handle -}}
+      {%- endcapture -%}
+      {%- assign selectors = selectors | append: sel -%}
+      {%- unless forloop.last -%}
+        {%- assign selectors = selectors | append: ',' -%}
+      {%- endunless -%}
+    {%- endfor -%}
+
+    {%- if selectors != blank -%}{%- assign selectors = selectors | append: ',' -%}{%- endif -%}
+    {%- capture sel -%}
+      {%- assign swatchClass = block.settings.title | strip_newlines | handle -%}
+      {%- if block.settings.title contains '/' -%}
+        {%- assign swatchClass = block.settings.title | replace: '/', '--' -%}
+        {%- assign swatchClass = swatchClass | replace: ' ', '-' | downcase -%}
+      {%- endif -%}
+
+        .s-swatch--{{ swatchClass }}
+    {%- endcapture -%}
+    {%- assign selectors = selectors | append: sel -%}
+
+    {{- selectors }} {
+      background-color: {{ block.settings.s-color }};
+      color: {{ block.settings.s-color }};
+
+      {%- if block.settings.image -%}
+        background-image: url('{{ block.settings.image | img_url: '256x', scale: '2x' }}');
+        background-size: 150%;
+        background-position: center;
+        background-repeat: no-repeat;
+      {%- endif -%}
+
+      {%- if block.settings.s-enable-shadow -%}
+        border: 1px solid #d0d0d0;
+      {%- endif -%}
+    }
+  {%- endcapture -%}
+{%- endfor -%}
+  
+<style type="text/css">
+  {{- styles -}}
+</style>
+
+<script type="text/javascript">
+  window.Swatches = window.Swatches || [
+    {%- for block in section.blocks -%}
+      {%- assign colorsSplit = block.settings.s-colors | replace: ', ', ',' | split: ',' -%}
+      {
+        "name": {{ block.settings.title | json }},
+        "color": {{ block.settings.s-color | json }},
+        "handles": [
+          {%- for color in colorsSplit -%}
+            {{- color | strip_newlines | handle | json -}}
+            {%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+</script>
+
+
+
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Color Swatches",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "color",
+        "name": "Color",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Name"
+          },
+          {
+            "type": "color",
+            "id": "s-color",
+            "label": "Swatch Color"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Swatch Image"
+          },
+          {
+            "type": "textarea",
+            "id": "s-colors",
+            "label": "Colors",
+            "info": "Must match the name of the variant this color applies to, sepearated by a comma."
+          },
+          {
+            "type": "checkbox",
+            "id": "s-enable-shadow",
+            "label": "Enable Shadow",
+            "default": false,
+            "info": "Enable this for light colors (such as white)"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

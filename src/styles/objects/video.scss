@@ -1,0 +1,19 @@
+.o-html5-video {
+  position: relative;
+  overflow: hidden;
+
+  // To be overridden by component class - calculate ratio of video
+  padding-bottom: 100%;
+
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    @supports(object-fit: cover) {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

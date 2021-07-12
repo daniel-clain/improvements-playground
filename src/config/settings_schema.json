@@ -1,0 +1,135 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Process Creative",
+    "theme_version": "2.0.0",
+    "theme_author": "Process Creative",
+    "theme_documentation_url": "https://processcreative.com.au",
+    "theme_support_url": "https://processcreative.com.au"
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+
+  {
+    "name": "Cart & Cart Drawer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cart Promo Message"
+      },
+      {
+        "id": "freeShippingThreshold",
+        "type": "text",
+        "label": "Free Shipping Threshold Amount (in cents)",
+        "info": "The amount in cents before free shipping is allowed."
+      },
+      {
+        "id": "cartUpsellCollection",
+        "type": "collection",
+        "label": "Cart Upsell Collection",
+        "info": "Link this to the collection of products that you wish to offer as an upsell in the cart drawer and on the cart page."
+      }
+    ]
+  },
+  {
+    "name": "Reviews",
+    "settings": [
+      {
+        "id": "enable-reviews",
+        "type": "checkbox",
+        "label": "Enable Reviews",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Klaviyo",
+    "settings": [
+      {
+        "type": "text",
+        "id": "klaviyoKey",
+        "label": "Klaviyo Key"
+      },
+      {
+        "type": "page",
+        "id": "backInStockFallbackPage",
+        "label": "Back in stock fallback to contact page",
+        "info": "Please select the contact page as a fallback if klaviyo isnt working"
+      }
+    ]
+  },
+  {
+    "name": "Article Settings",
+    "settings": [
+      {
+        "id": "article-wpm",
+        "type": "number",
+        "label": "Article Words Per Minute",
+        "default": 130,
+        "info": "Featured article thumbnails will use this value to calculate how many minutes required to read each article."
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      }
+    ]
+  },
+  {
+    "name": "Navigation Settings",
+    "settings": [
+      {
+        "id": "flag",
+        "type": "textarea",
+        "label": "Store country flag SVG",
+        "info": "Please paste your SVG code here. The image has been styled with a 1:1 ratio in mind. Please export with inline styles selected."
+      },
+      {
+        "id": "countryCode",
+        "type": "text",
+        "label": "Current Store Code",
+        "info": "3 digit country code for this store",
+        "default": "AUD"
+      },
+      {
+        "id": "store-menu",
+        "type": "link_list",
+        "label": "Store Selector Menu",
+        "info": "Please select the navigation menu used for links to your external stores."
+      }
+    ]
+  }
+]

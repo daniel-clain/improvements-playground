@@ -1,0 +1,27 @@
+/*
+ *  Select Styles
+ *    Base styles for select elements.
+ *
+ *  Version:
+ *    1.0.0 - 2019/01/18
+ */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  &::-ms-expand {display: none;}
+
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+
+  border: none;
+  margin: 0;
+  background: none;
+
+  display: inline-block;
+
+  &:focus {
+    outline: $s-color--border solid 0.0625rem;
+  }
+}

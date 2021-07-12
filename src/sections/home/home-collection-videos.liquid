@@ -1,0 +1,234 @@
+{%- comment -%}
+  Home Collection Videos
+    Section to display an autoplaying video from collections set as blocks.
+
+  Version
+    1.0.0 - 2021/04/13
+{%- endcomment -%}
+
+{%- liquid
+  assign sectionTitle = section.settings.title
+  assign groupBlocks = section.blocks | where: "type", "collection-group"
+  assign collectionBlocks = section.blocks | where: "type", "collection"
+-%}
+
+{%- comment -%} Iterate first through groups then by blocks {%- endcomment -%}
+{%- for group in groupBlocks -%}
+  {%- assign collectionContent = '' -%}
+  {%- assign groupName = group.settings.title | handleize -%}
+  {%- for block in collectionBlocks -%}
+
+    {%- comment -%} Skip those that don't match this group {%- endcomment -%}
+    {%- liquid
+      assign blockGroup = block.settings.group | handleize
+      unless blockGroup == groupName
+        continue
+      endunless
+      assign title = block.settings.title
+      assign url = block.settings.url
+      assign video = block.settings.videoUrl
+      assign icon = block.settings.icon
+      assign link = block.settings.url
+      assign linkLabel = block.settings.linkLabel
+      if title == blank or video == blank
+        continue
+      endif
+      if firstVideo == blank
+        assign firstVideo = video
+      endif
+    -%}
+
+    {%- capture collectionContent -%}
+      {{- collectionContent -}}
+      <button
+        class="c-collection-videos__collection
+          {% unless activeSet %}is-collection-active{% endunless %}"
+        data-collection-button
+        data-video-source="{{ video }}"
+      >
+        <div class="c-collection-videos__collection-inner">
+          {{- icon -}}
+          <h4 class="c-collection-videos__collection-title o-type--2">
+            {{- title | escape -}}
+          </h4>
+        </div>
+      </button>
+
+      {%- if link != blank and linkLabel != blank -%}
+        <a
+          href="{{ link }}"
+          class="c-collection-videos__collection-link o-btn is-quaternary
+          {% unless activeSet %}is-collection-active{% endunless %}"
+        >
+          {{- linkLabel | escape }}
+          {%- render 'object.icon' with {
+            icon: 'arrow--right--orange',
+            class: 'c-collection-videos__collection-link-icon o-btn__icon'
+          } -%}
+        </a>
+      {%- endif -%}
+
+      {%- comment -%} Used to set the active state for the first to print {%- endcomment -%}
+      {%- assign activeSet = true -%}
+
+    {%- endcapture -%}
+  {%- endfor -%}
+
+  {%- comment -%} Was any content found for this group? {%- endcomment -%}
+  {%- if collectionContent == blank %}{% continue %}{% endif -%}
+
+  {%- comment -%} Add container for this group's content {%- endcomment -%}
+  {%- capture collectionGroupContent -%}
+    {{- collectionGroupContent -}}
+    <div
+      class="c-collection-videos__collection-group
+        {% unless hasContent %}is-active{% endunless %}"
+      data-collection-group
+      data-group-handle="{{ groupName }}"
+    >
+      {{- collectionContent -}}
+    </div>
+  {%- endcapture -%}
+
+  {%- comment -%} Capture controls content {%- endcomment -%}
+  {%- capture collectionGroupControls -%}
+    {{- collectionGroupControls -}}
+    <button
+      class="c-collection-videos__collection-group-btn o-type--2
+        {% unless hasContent %}is-active{% endunless %}"
+      data-group-button
+      data-group-handle="{{ groupName }}"
+    >
+      {{- group.settings.title | escape }}
+    </button>
+  {%- endcapture -%}
+
+  {%- comment -%} Used to set the active state {%- endcomment -%}
+  {%- assign hasContent = true -%}
+{%- endfor -%}
+
+
+{%- if collectionGroupContent != blank -%}
+  <section class="c-collection-videos" data-home-collection-videos>
+    <div class="c-collection-videos__inner">
+
+      {%- comment -%}
+        Only render the first video. Other videos will load here on click.
+      {%- endcomment -%}
+      <div class="c-collection-videos__video-container">
+        <div data-video-container>
+          {%- render 'object.html5-video' with {
+            videoUrlMp4: firstVideo,
+            autoplay: true,
+            class: 'c-collection-videos__video'
+          } -%}
+        </div>
+        {%- render 'object.icon' with {
+          icon: 'play',
+          class: 'c-collection-videos__video-icon'
+        } -%}
+        <div class="c-collection-videos__video-loader">
+          {%- render 'object.icon' with {
+            icon: 'logo-mark',
+            class: 'c-collection-videos__video-loader-icon'
+          } -%}
+        </div>
+      </div>
+
+      {%- comment -%} Title and the collection group content {%- endcomment -%}
+      <div class="c-collection-videos__content">
+        {%- if sectionTitle != blank -%}
+          <h2 class="c-collection-videos__title o-heading--4">
+            {{- sectionTitle | newline_to_br -}}
+          </h2>
+        {%- endif -%}
+
+        {%- comment -%} Collection Group Controls {%- endcomment -%}
+        <div class="c-collection-videos__collection-group-controls">
+          {{- collectionGroupControls -}}
+        </div>
+
+        <div class="c-collection-videos__collections" data-carousel>
+          {{- collectionGroupContent -}}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Collection Videos",
+    "class": "c-section c-section__home-collection-videos",
+    "settings": [
+      {
+        "id": "title",
+        "type": "textarea",
+        "label": "Section Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection-group",
+        "name": "Collection Group",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Collection groups are added as controls above the collections. Default Women's and Men's."
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Group Name"
+          }
+        ]
+      },
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Collection Title"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Collection URL"
+          },
+          {
+            "id": "linkLabel",
+            "type": "text",
+            "label": "Link Label Text",
+            "info": "Shows in the bottom right of the section when this collection is active."
+          },
+          {
+            "id": "icon",
+            "type": "textarea",
+            "label": "Icon SVG Code",
+            "info": "Please copy your SVG's code by opening in a plain text editor and pasting into this field."
+          },
+          {
+            "id": "videoUrl",
+            "type": "url",
+            "label": "Video Source URL",
+            "info": "Source must be for the video file and not a Youtube or Vimeo link. Videos can be uploaded in Shopify Admin > Settings > Files. Keep video file sizes under 2mb and with no sound."
+          },
+          {
+            "id": "group",
+            "type": "text",
+            "label": "Group Name",
+            "info": "Must be an exact match for the Group Name from the Collection Group block."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Videos",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

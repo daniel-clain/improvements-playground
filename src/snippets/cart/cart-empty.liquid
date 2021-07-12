@@ -1,0 +1,32 @@
+{%- comment -%}
+  Cart Empty
+    Snippet for the empty cart state
+    - Replicates the empty html in the cart-drawer-component.ts file
+
+    Params:
+      - buttons: Block of buttons
+
+  Version:
+    1.0.0 - 2021/03/04
+{%- endcomment -%}
+
+{%- liquid
+  assign btnCols = shop.metafields.globals.button_collection 
+  assign btnNames = shop.metafields.globals.button_name 
+-%}
+
+<div class="c-cart-empty">
+  {%- unless hideTitle -%}
+    <h1 class="c-cart-empty__heading o-heading--6">
+      {{- 'cart.empty_heading' | t -}}
+    </h1>
+  {%- endunless -%}
+
+  {%- for col in btnCols -%}
+    {%- assign colLink = collections[col].url -%}
+
+    <a href="{{ colLink }}" class="c-cart-empty__btn o-btn is-primary">
+      {{- btnNames[forloop.index0] -}}
+    </a>
+  {%- endfor -%}
+</div>

@@ -1,0 +1,102 @@
+{%- comment -%}
+  Home Icon Blocks
+    Section to display up to 4 SVG icons with optional link, title and copy.
+
+  Version
+    1.0.0 - 2021/05/12
+{%- endcomment -%}
+
+{%- liquid
+  assign blocksSize = section.blocks.size
+  if blocksSize == 4
+    assign justify = 'space-between'
+  else 
+    assign justify = 'center'
+  endif
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="c-icon-blocks is-{{ justify }}">
+    <div class="c-icon-blocks__inner">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign icon = block.settings.svg
+          if icon == blank
+            continue
+          endif
+          assign title = block.settings.title
+          assign description = block.settings.description
+          assign url = block.settings.url
+        -%}
+
+        {%- if url != blank -%}
+          <a href="{{ url }}" class="c-icon-blocks__icon">
+        {%- else -%}
+          <div class="c-icon-blocks__icon">
+        {%- endif -%}
+            {{- icon -}}
+
+            {%- if title != blank -%}
+              <h6 class="c-icon-blocks__icon-title">
+                {{- title | escape -}}
+              </h6>
+            {%- endif -%}
+
+            {%- if description != blank -%}
+              <p class="c-icon-blocks__icon-description">
+                {{- description | escape | newline_to_br -}}
+              </p>
+            {%- endif -%}
+        {%- if url != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Home Icon Blocks",
+    "class": "c-section c-section__home-icon-blocks",
+    "max_blocks": 4,
+    "blocks": [
+      {
+        "type": "iconblock",
+        "name": "Icon Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "description",
+            "type": "textarea",
+            "label": "Description"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Link"
+          },
+          {
+            "id": "svg",
+            "type": "textarea",
+            "label": "SVG Icon",
+            "info": "Please paste your icon's SVG code into this box."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Icon Blocks",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

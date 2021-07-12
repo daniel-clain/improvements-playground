@@ -1,0 +1,50 @@
+{%- comment -%}
+  Newsletter Signup
+    Simple snippet for the signup form used for newsletter subscription.
+
+  Version:
+    1.0.0 2021/05/11
+{%- endcomment -%}
+
+<div class="o-newsletter-form o-form {{ class }}">
+
+  {%- assign formClass = class | append: '-form' -%}
+
+  {%- form 'customer', class: formClass, data-newsletter-signup:'' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="o-form__success o-newsletter-form__success o-type--3">
+        {{- 'general.newsletter.success_message' | t -}}
+      </p>
+    {%- else -%}
+      {%- if form.errors != blank -%}
+        <div clas="o-form__errors o-newsletter-form__errors">
+          {{- form.errors | default_errors -}}
+        </div>
+      {%- endif -%}
+      <div class="o-newsletter-form__input-container o-form__input-group is-inline">
+        <input
+          type="email"
+          required
+          placeholder="{{ 'general.newsletter.placeholder' | t }}"
+          class="o-input o-newsletter-form__input
+            {% if class != blank %}{{ class }}-input{% endif %}
+            {% if form.errors %}has-error{% endif %}"
+          name="contact[email]"
+        />
+
+        <input type="hidden" name="contact[tags]" value="newsletter" />
+        <input type="hidden" name="customer[accepts_marketing]" value="true" />
+
+        <button
+          type="submit" data-newsletter-signup-submit
+          class="o-btn o-newsletter-form__submit"
+        >
+          {{- 'general.newsletter.button_text' | t -}}
+        </button>
+      </div>
+
+    {%- endif -%}
+
+  {%- endform -%}
+
+</div>

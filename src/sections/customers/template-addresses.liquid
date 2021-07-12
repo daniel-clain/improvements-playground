@@ -1,0 +1,117 @@
+{%- comment -%}
+  Addresses
+    Section template for the addresses page.
+
+  Version
+    1.0.0 - 2020/03/25
+{%- endcomment -%}
+
+
+<div class="p-customer c-account" data-account-page>
+  <div class="c-account__container">
+
+    {%- comment -%} Title {%- endcomment -%}
+    <h1 class="c-account__details-title">
+      <span class="o-heading--3">{{- 'customer.account.title' | t -}}</span>
+    </h1>
+
+    <div class="c-account__content">
+
+      {%- comment -%} Navigation {%- endcomment -%}
+      <aside class="p-customer__sidebar c-account__sidebar">
+        {%- render 'account-navigation' -%}
+      </aside>
+
+      {%- comment -%} Content {%- endcomment -%}
+      <div class="p-customer__main c-account__main">
+
+        {%- comment -%} Account Details {%- endcomment -%}
+        <section class="c-account__details" data-detail-section>
+
+          {%- comment -%} Title {%- endcomment -%}
+          <h5 class="c-account__details-title">
+            {{- 'customer.addresses.title' | t -}}
+          </h5>
+
+          {%- comment -%} Add a new address {%- endcomment -%}
+          <section class="c-addresses__add">
+
+            {%- comment -%} Button {%- endcomment -%}
+            <button type="button" class="o-btn c-addresses__btn is-secondary" data-address-create-toggle>
+              {{- 'customer.addresses.add_new' | t -}}
+            </button>
+
+            <div class="c-addresses__form is-add" data-address-create-template>
+              {%- form 'customer_address', customer.new_address, data-address-form: '' -%}
+                {%- render 'form.address' with { address: '', isEdit: false, form: form } -%}
+              {%- endform -%}
+            </div>
+
+          </section>
+
+          {%- comment -%} List of addresses {%- endcomment -%}
+          <section class="c-addresses__addresses">
+            {%- paginate customer.addresses by 10 -%}
+              {%- for address in customer.addresses -%}
+                <div class="c-addresses__address" data-index="{{ forloop.index0 }}">
+                  <h3 class="c-addresses__address-title o-heading--6">
+                    {%- if address == customer.default_address -%}
+                      {{- 'customer.addresses.default' | t -}}
+                    {%- else -%}
+                      {%- assign addressCount = addressCount | plus: 1 -%}
+                      {{- 'customer.addresses.address' | t }} {{ addressCount -}}
+                    {%- endif -%}
+                  </h3>
+                  {{- address | format_address -}}
+
+                  <div class="c-addresses__btn-row">
+
+                    {%- comment -%} Edit Button {%- endcomment -%}
+                    <a
+                      class="o-btn c-addresses__btn is-secondary"
+                      data-index="{{ forloop.index0 }}"
+                      data-address-edit-toggle
+                    >
+                      <span class="o-btn__inner">
+                        {{- 'customer.addresses.edit' | t -}}
+                      </span>
+                    </a>
+
+                    {%- comment -%} Delete Button {%- endcomment -%}
+                    <a
+                      class="o-btn c-addresses__btn is-secondary"
+                      data-id="{{ address.id }}"
+                      data-address-delete
+                    >
+                      {{- 'customer.addresses.delete' | t -}}
+                    </a>
+
+                  </div>
+
+                  {%- comment -%} Edit this address form {%- endcomment -%}
+                  <div
+                    class="c-addresses__form is-edit"
+                    data-address-template-edit
+                    data-index="{{forloop.index0}}"
+                  >
+                    {%- form 'customer_address', address, data-address-form: '' -%}
+                      {%- render 'form.address' with { address: address, form: form } -%}
+                    {% endform %}
+                  </div>
+                </div>
+              {%- endfor -%}
+
+              {%- if paginate.pages > 1 -%}
+                {%- render 'object.pagination' -%}
+              {%- endif -%}
+            {%- endpaginate -%}
+          </section>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

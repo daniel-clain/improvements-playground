@@ -1,0 +1,25 @@
+/*
+ *  Register Form
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/30
+ */
+
+.c-register-form {
+  .o-form__input-group {
+    margin-bottom: 1rem;
+  }
+
+  &__error {
+    display: none;
+    color: $s-color--error;
+
+    &.is-visible {
+      display: block;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    margin-bottom: 2.5rem;
+  }
+}

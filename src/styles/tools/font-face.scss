@@ -1,0 +1,12 @@
+@mixin t-font--face($name, $fileName, $weight: 500, $style: normal, $display: swap) {
+  @font-face {
+    font-family: $name;
+    src:  url('./../../assets/fonts/#{$fileName}.woff2') format('woff2'),
+          url('./../../assets/fonts/#{$fileName}.woff') format('woff'),
+          url('./../../assets/fonts/#{$fileName}.ttf') format('truetype')
+    ;
+    font-weight: $weight;
+    font-style: $style;
+    font-display: $display;
+  }
+}

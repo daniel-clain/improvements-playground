@@ -1,0 +1,137 @@
+
+
+{%- comment -%} Thumbnail Variables {%- endcomment -%}
+{%- liquid
+  if variant == blank
+    assign variant = product.selected_or_first_available_variant
+  endif
+  assign url = product.url
+  if collection != blank
+    assign url = product.url | within: collection
+  endif
+  assign img = variant.featured_image.src | default: product.featured_image
+  assign badge = ''
+  assign mf = product.metafields.accentuate
+  assign subheading = mf.sub_heading
+
+  if class contains 'carousel'
+    assign isCarousel = true
+  endif
+
+
+  assign globalMf = shop.metafields.globals
+  assign primaryFeatureIconRef = mf.feature_icon[0]
+  for globalRef in globalMf.reference_name
+    if globalRef == primaryFeatureIconRef
+      assign primaryFeatureIconName = globalMf.display_name[forloop.index0]
+      assign primaryFeatureIconUrl = globalMf.icon[forloop.index0]
+      break
+    endif
+  endfor
+
+-%}
+
+
+<div
+  class="o-product-thumbnail {{ class }}
+    {% if isCarousel %}is-carousel-style{% endif %}"
+  data-product-thumbnail
+  data-product-id="{{ product.id }}"
+  data-variant-id="{{ variant.id }}"
+>
+  <a
+    href="{{ url }}"
+    title="{{ product.title }}"
+    class="o-product-thumbnail__inner"
+  >
+
+    {%- comment -%} Feature icon {%- endcomment -%}
+    
+    {%- if primaryFeatureIconUrl and primaryFeatureIconName and isCarousel == blank  -%}
+      <div class="o-product-thumbnail__primary-feature o-primary-feature-icon">
+        <img 
+          class="o-primary-feature-icon__image" 
+          src="{{- primaryFeatureIconUrl -}}" 
+          alt="{{- primaryFeatureIconName | escape -}}"
+        />
+        <div class="o-primary-feature-icon__title">
+          {{- primaryFeatureIconName -}}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Product Image {%- endcomment -%}
+    <div class="o-product-thumbnail__image-container-outer">
+      <div
+        class="o-product-thumbnail__image-container o-responsive-image-container"
+        data-product-thumbnail-link
+      >
+          {%- render 'tool.picture' with {
+            image: img,
+            class: 'o-product-thumbnail__image o-responsive-image',
+            alt: product.title,
+            width: 490,
+            height: 610,
+            sizes: '374,750,1000,1650',
+            imageSizes: '280,450,420,1650'
+          } -%}
+      </div>
+    </div>
+
+    {%- comment -%} Product details, title & base price {%- endcomment -%}
+    <div class="o-product-thumbnail__details">
+
+      <div class="o-product-thumbnail__titles">
+        <h3
+          title="{{ product.title }}"
+          class="o-product-thumbnail__title o-type--2"
+        > 
+          {{- product.title | escape }} 
+        </h3>
+
+        {%- comment -%} Product Subtitle from MF {%- endcomment -%}
+        {%- if subheading != blank -%}
+          <p class="o-product-thumbnail__subtitle o-type--2">
+            {{- subheading | escape -}}
+          </p>
+        {%- endif -%}
+      </div>
+
+
+      {%- render 'object.product-pricing' with {
+        price: variant.price,
+        comparePrice: variant.compare_at_price,
+        class: 'o-product-thumbnail__price'
+      } -%}
+
+    </div>
+
+    {%- unless class contains 'carousel' -%}
+      <div class="o-product-thumbnail__colour-options">
+        
+        {%- liquid 
+          assign colorOptions = product.options_with_values | where: "name", "Color" 
+          assign colorOptions = colorOptions[0].values
+        -%}
+        
+        <div class="o-swatches__swatch is-color" data-colour-container>
+          <div class="o-swatches__swatch-options">
+            {%- for value in colorOptions -%}
+              <button
+                data-colour-swatch-button
+                class="o-swatches__swatch-button"
+                title="{{ value | escape }}"
+              >
+                <div class="o-swatches__swatch-button-inner s-swatch--{{ value | handle }}">
+                </div>
+              </button>
+            {%- endfor -%}
+            
+          </div>
+          
+          <button class="o-btn is-reset o-colour-expand-toggle" data-colour-expand-toggle title="Show more colours"></button>
+        </div>
+      </div>
+      {%- endunless -%}
+  </a>
+</div>

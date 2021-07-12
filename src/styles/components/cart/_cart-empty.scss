@@ -1,0 +1,64 @@
+/*
+ *  Cart Empty
+ *    Styles for the cart empty component
+ *
+ *  Version:
+ *    1.0.0 - 2021/05/05
+ */
+
+.c-cart-empty {
+  padding: 2.5rem 0 7.2rem;
+  border-bottom: 1px solid $s-color--border-light;
+
+  .c-cart-template & {
+    padding: 1.5rem 0 7.2rem;
+  }
+
+  &__heading {
+    font-size: 0.875rem;
+    font-family: $s-font--root-family;
+    text-align: center;
+    margin: 0 0 0.6875rem;
+  }
+
+  &__btn {
+    border: 1px solid $s-color--border-light;
+    font-size: 0.75rem;
+    width: 11rem;
+    margin: 0 auto;
+    margin-bottom: 0.5rem;
+    display: block;
+    text-align: center;
+  }
+
+  /*** Media Queries ***/
+
+  @include t-media-query($s-medium-up) {
+    border-bottom: none;
+
+    &__heading {
+      font-size: 1.125rem;
+
+      .c-cart-template & {
+        margin: 0 0 2.5rem;
+        font-size: 1.5rem;
+        font-family: $s-font--heading-family;
+      }
+    }
+
+    &__btn {
+      width: 13rem;
+      font-size: 0.875rem;
+
+      &:hover {
+        background-color: $s-color--background;
+        color: $s-color--font;
+        opacity: 0.7;
+      }
+
+      .c-cart-template & {
+        background-color: $s-color--background-tertiary;
+      }
+    }
+  }
+}

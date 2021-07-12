@@ -1,0 +1,8 @@
+@mixin t-content-headings {
+  h1{ @extend %s-font--heading-4; }
+  h2{ @extend %s-font--heading-4; }
+  h3{ @extend %s-font--heading-5; }
+  h4{ @extend %s-font--heading-6; }
+  h5{ @extend %s-font--heading-7; }
+  h6{ @extend %s-font--heading-7; }
+}

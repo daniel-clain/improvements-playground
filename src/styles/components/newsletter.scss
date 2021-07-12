@@ -1,0 +1,71 @@
+/*
+ *  Newsletter
+ *    Simple section to display the newsletter form
+ *
+ *  Version
+ *    1.0.0 - 2021/05/12
+ */
+
+.c-newsletter {
+  background: $s-color--background-secondary;
+  color: $s-color--font-invert;
+  text-align: center;
+
+  &__image-container {
+    padding-bottom: 44.8%;
+  }
+
+  &__form {
+    max-width: 35rem;
+    margin: 0 auto;
+
+    &-container {
+      padding: 2.25rem 1.5rem 2.5rem;
+    }
+  }
+
+  &__title {
+    margin-bottom: 1.25rem;
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-medium-up) {
+    display: flex;
+
+    &__image-container {
+      width: 50%;
+      padding-bottom: #{'min(32%, 20rem)'};
+      order: 2;
+    }
+
+    &__title {
+      margin-bottom: 1.875rem;
+    }
+
+    &__form {
+      margin-bottom: 0.75rem;
+      margin-left: 0;
+      width: 70%;
+
+      &-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: left;
+        padding: 2.5rem $s-gutter--edge-medium-alt;
+      }
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__title {
+      margin-bottom: 2.25rem;
+    }
+  }
+}

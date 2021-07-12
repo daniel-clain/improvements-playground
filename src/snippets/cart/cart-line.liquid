@@ -1,0 +1,97 @@
+{%- comment -%}
+  Cart Line
+    Snippet for the cart line component.
+    - Replicates the cart-line.ts files html.
+
+    Params:
+    - item: The cart line object
+    - lineIndex: The number of the line item index
+
+  Version:
+    1.0.0 - 2021/03/04
+{%- endcomment -%}
+
+{%- liquid
+  assign max = item.variant.inventory_quantity
+-%}
+
+<div class="c-cart-line" 
+  data-cart-product="{{ item.variant_id }}"
+  data-index="{{ lineIndex }}"
+  data-cart-line
+>
+  <div class="c-cart-line__row">
+    <a href="{{- item.url -}}" class="c-cart-line__image-wrapper">
+      <div class="c-cart-line__image-container o-responsive-image-container">
+        {%- render 'tool.picture' with {
+          class: 'c-cart-line__image o-responsive-image',
+          image: item.image,
+          width: 200,
+          sizes: '375',
+          imageSizes: '150'
+        } -%}
+      </div>
+    </a>
+
+    <div class="c-cart-line__container">
+      <div class="c-cart-line__content">
+        <a href="{{- item.url -}}" class="c-cart-line__title o-type--2">
+          {{- item.product.title -}}
+        </a>
+
+        {%- for option in item.options_with_values -%}
+          <p class="c-cart-line__color o-tags">
+            {{- option.name | downcase | append: ': ' -}}{{ option.value | downcase -}}
+          </p>
+        {%- endfor -%}
+
+      </div>
+
+      <div class="c-cart-line__details">
+        <div class="c-cart-line__remove">
+          <a
+            href="/cart/change?line={{ lineIndex }}&amp;quantity=0"
+            class="c-cart-line__remove-inner"
+            data-cart-remove
+          >
+            {%- render 'object.icon' with {
+              icon: 'cross',
+              class: 'c-cart-line__remove-icon'
+            } -%}
+          </a>
+        </div>
+
+        {%- comment -%} Quantity Selector {%- endcomment -%}
+        <div class="c-cart-line__quantity-wrapper">
+          <div class="c-cart-line__quantity">
+
+            {%- comment -%} Display Quantity Selector {%- endcomment -%}
+            {%- render 'object.quantity-selector' with {
+              quantity: item.quantity,
+              name: 'updates[]',
+              min: 1,
+              max: max,
+              lineIndex: lineIndex,
+              item: item
+            } -%}
+          </div>
+        </div>
+
+        {%- comment -%} Money {%- endcomment -%}
+        <div class="c-cart-line__pricing o-type--4">
+          <span class="is-money is-compare
+            {% unless item.original_line_price > item.final_line_price %}
+              is-hidden
+            {% endunless %}"
+          >
+            {{- item.original_line_price | money | remove: '.00' -}}
+          </span>
+
+          <span class="is-money">
+            {{- item.final_line_price | money_with_currency | remove: '.00' -}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

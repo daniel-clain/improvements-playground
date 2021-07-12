@@ -1,0 +1,49 @@
+/*
+ *  Products List
+ */
+
+.o-products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  &__product {
+    width: 48%;
+
+    .o-product-thumbnail{
+      &__inner{
+        margin-bottom: t-to-rem(32);
+      }
+      &__image-container {
+        padding-bottom: 124.4%;
+      }
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-medium-up) {
+    &__product {
+      width: 30.24%;
+    }
+
+    &::after{
+      content: '';
+      width: 30.24%;
+    }
+  }
+
+  
+  @include t-media-query($s-xlarge-up) {
+    &__product {
+      .o-product-thumbnail{
+        &__inner{
+          margin-bottom: t-to-rem(42);
+        }
+      }
+    }
+    
+  }
+}

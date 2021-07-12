@@ -1,0 +1,212 @@
+{%- comment -%}
+  Header Template
+
+  Version:
+    1.0.0 2021/04/08
+{%- endcomment -%}
+
+{%- liquid
+  assign mainMenu = linklists[section.settings.mainMenu]
+  assign additionalDesktop = linklists[section.settings.additionalDesktop]
+  assign autoplay = section.settings.autoplayEnabled
+  assign speed = section.settings.autoplaySpeed
+  assign topBarMessages = section.blocks | where: 'type', 'promo-message'
+  assign logoAlt = 'general.header.logo_title' | t
+-%}
+
+<header
+  class="c-header {% if topBarMessages.size > 0 %}has-topbar{%- endif -%}"
+  data-header
+>
+
+  {%- comment -%} Top Promo Bar {%- endcomment -%}
+  {%- render 'topbar' with {
+    blocks: topBarMessages,
+    speed: speed,
+    autoplay: autoplay,
+    infinite: infinite
+  } -%}
+
+  <div class="c-header__inner" data-header-inner>
+
+    {%- comment -%} Mobile Nav Trigger {%- endcomment -%}
+    <button class="c-header__link is-mobile-menu" data-menu-toggle>
+      {%- render 'object.icon' with {
+        icon: 'hamburger',
+        class: 'c-header__icon is-mobile-menu'
+      } -%}
+    </button>
+
+    {%- comment -%} Main site navigation, mobile & desktop {%- endcomment -%}
+    {%- render 'main-menu', menu: mainMenu -%}
+
+    {%- comment -%} Site Logo {%- endcomment -%}
+    <a
+      href="{{ routes.root_url }}"
+      class="c-header__logo"
+      title="{{ 'general.header.logo_title' | t }}"
+    >
+      {%- render 'object.icon' with {
+        icon: 'logo',
+        class: 'c-header__logo-icon',
+        alt: logoAlt
+      } -%}
+    </a>
+
+    {%- comment -%} Right Icons {%- endcomment -%}
+    <div class="c-header__right">
+
+      {%- comment -%} Additional Desktop Menu {%- endcomment -%}
+      {%- render 'main-menu--additional', menu: additionalDesktop -%}
+
+      {%- comment -%} Desktop Search Bar {%- endcomment -%}
+      {%- render 'search-bar', class: 'c-header__search-bar' -%}
+
+      {%- comment -%} Region and currency selector {%- endcomment -%}
+      {%- if section.settings.showRegion -%}
+        <button class="c-header__region-toggle" data-region-toggle>
+          <span class="c-header__region-toggle-currency">
+            {%- if cart.currency -%}
+              {{- cart.currency.iso_code -}}
+            {%- else -%}
+              {{- settings.countryCode -}}
+            {%- endif -%}
+          </span>
+          {{- settings.flag -}}
+        </button>
+
+        {%- render 'modal.region-selector' -%}
+      {%- endif -%}
+
+      <a
+        href="{{ routes.account_url }}"
+        title="{{ 'general.header.account_title' | t }}"
+        class="c-header__link is-account is-desktop"
+      >
+        {%- render 'object.icon' with {
+          icon: 'account',
+          class: 'c-header__icon'
+        } -%}
+      </a>
+
+      <a
+        href="{{ routes.cart_url }}"
+        title="{{ 'general.header.cart_title' | t }}"
+        class="c-header__link is-cart"
+        data-cart-drawer-toggle
+      >
+        {%- render 'object.icon' with {
+          icon: 'cart',
+          class: 'c-header__icon'
+        } -%}
+        <div
+          class="c-header__cart-count {% if cart.item_count > 0 %}has-items{% endif %}"
+          data-header-cart-counter
+        >
+          {{- cart.item_count | escape -}}
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+
+</header>
+
+{% schema %}
+  {
+    "name": "Header",
+    "class": "c-section c-section__header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Menu Settings"
+      },
+      {
+        "id": "mainMenu",
+        "type": "link_list",
+        "label": "Main Navigation Menu",
+        "info": "Please select the navigation menu / linklist for all devices."
+      },
+      {
+        "id": "additionalDesktop",
+        "type": "link_list",
+        "label": "Additional Desktop Menu",
+        "info": "Additional link/s to show on desktop devices. Check that elements don't overlap on smaller screens if you're adding more than one link."
+      },
+      {
+        "id": "showRegion",
+        "type": "checkbox",
+        "label": "Show Region & Currency Modal",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Promobar Settings"
+      },
+      {
+        "id": "autoplayEnabled",
+        "type": "checkbox",
+        "label": "Autoplay",
+        "default": false
+      },
+      {
+        "id": "autoplaySpeed",
+        "type": "range",
+        "min": 1,
+        "max": 20,
+        "label": "Autoplay Speed",
+        "default": 3
+      }
+    ],
+    "blocks": [
+      {
+        "type": "promo-message",
+        "name": "Promo Message",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Promo Messages are optional."
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Promo Bar Text"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Promo Bar Link",
+            "info": "Leave blank for no link."
+          }
+        ]
+      },
+      {
+        "type": "additionalLink",
+        "name": "Additional Mobile Links",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Additional mobile links, added to the bottom of the first level of the mobile menu."
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Link Title"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Link"
+          },
+          {
+            "id": "icon",
+            "type": "textarea",
+            "label": "Link Icon",
+            "info": "Please paste SVG code here. Icon displays on the left hand side of the link."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

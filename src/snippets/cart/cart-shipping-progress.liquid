@@ -1,0 +1,54 @@
+{%- comment -%}
+  Cart Shipping Progress
+    Snippet for the cart shipping progress
+    - Replicates the cart-shipping-progress.ts files html
+
+    Params:
+    - minSpend: Number of the minimum spend required for a customer to receive free shipping
+    - subtotaL: Number of the cart subtotal
+
+  Version:
+    1.0.0 - 2021/03/04
+{%- endcomment -%}
+
+{%- comment -%}
+  Plus 0.0 so that liquid knows the variable is a number.
+{%- endcomment -%}
+{% assign minSpend = minSpend | plus: 0.0 %}
+{%- if minSpend != blank and minSpend > 0 -%}
+  {%- liquid
+    assign subtotal = subtotal | plus: 0.0
+
+    assign spendProgress = 100
+    assign remaining = 0
+
+    if subtotal < minSpend
+      assign spendProgress = subtotal | divided_by: minSpend | times: 100
+      assign remaining = minSpend | minus: subtotal
+    endif
+
+    assign shippingLabel = 'cart.free_shipping_unlocked' | t
+    if remaining > 0
+      assign formattedMoney = remaining | money_without_trailing_zeros
+      assign shippingLabel = 'cart.free_shipping_remaining' | t: remaining: formattedMoney
+    endif
+  -%}
+
+  <div class="c-shipping-progress" 
+    data-shipping-progress-container
+    data-shipping-min="{{ minSpend }}">
+    <p class="c-shipping-progress__label" data-shipping-label>
+      {{- shippingLabel -}}
+    </p>
+
+    <div class="c-shipping-progress__progress">
+      <span class="c-shipping-progress__progress-bar"
+      ></span>
+      <span
+        class="c-shipping-progress__progress-fill {% if spendProgress >= 100 %}is-full{% endif %}"
+        style="width: {{ spendProgress -}}%"
+        data-shipping-progress-bar
+      ><span>
+    </div>
+  </div>
+{%- endif -%}

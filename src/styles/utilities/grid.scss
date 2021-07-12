@@ -1,0 +1,65 @@
+@mixin u-grid--column($prefix: '') {
+  @for $i from 1 through $s-grid--column-count {
+    $limit: $s-grid--column-count - $i;
+
+    @if str-length($string: $prefix) > 0 {
+      &__#{$prefix}-#{$i} { @include t-grid--column($i); }
+
+      @for $o from 1 through $limit {
+        &__#{$prefix}-#{$i}-#{$o} { @include t-grid--column($i, $o); }
+      }
+    } @else {
+      &__#{$i} { @include t-grid--column($i); }
+
+      @for $o from 1 through $limit {
+        &__#{$i}-#{$o} { @include t-grid--column($i, $o); }
+      }
+    }
+  }
+}
+
+@mixin u-grid--edge($screen) {
+  &.has-left { @include t-grid--left-edge($screen); }
+  &.has-right { @include t-grid--right-edge($screen); }
+  &.has-#{$screen}-left { @include t-grid--right-edge($screen); }
+  &.has-#{$screen}-right { @include t-grid--right-edge($screen); }
+}
+
+.u-grid {
+  @include t-grid('xsmall', $ledge: false, $redge: false);
+  @include u-grid--column();
+  @include u-grid--edge('xsmall');
+  @include t-grid--col-gap('xsmall');
+
+  @include t-media-query($s-small-up) {
+    @include u-grid--column('small');
+    @include u-grid--edge('small');
+    @include t-grid--col-gap('small');
+  }
+
+  @include t-media-query($s-medium-up) {
+    @include u-grid--column('medium');
+    @include u-grid--edge('medium');
+    @include t-grid--col-gap('medium');
+  }
+
+  @include t-media-query($s-large-up) {
+    @include u-grid--column('large');
+    @include u-grid--edge('large');
+    @include t-grid--col-gap('large');
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    @include u-grid--column('xlarge');
+    @include u-grid--edge('xlarge');
+    @include t-grid--col-gap('xlarge');
+  }
+
+  &__stretch {
+    @include t-grid--stretch();
+  }
+
+  &__center {
+    @include t-grid--center();
+  }
+}

@@ -1,0 +1,8 @@
+{%- for prod in recommendations.products -%}
+  {%- render 'object.product-thumbnail' with {
+    product: prod,
+    variant: prod.selected_or_first_available_variant,
+    class: 'c-products-carousel__tile'
+  } -%}
+{%- endfor -%}
+

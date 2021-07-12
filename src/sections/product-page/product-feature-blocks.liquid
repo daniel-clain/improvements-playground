@@ -1,0 +1,54 @@
+<section class="c-product-feature-blocks">
+  {%- render 'feature-blocks', with {
+    title: section.settings.title
+    blocks: section.blocks,
+    metafieldData: product.metafields.accentuate
+   } -%}
+</section>
+
+
+{% schema %}
+  {
+    "name": "Product Feature Blocks",
+    "class": "c-section c-section__product-feature-blocks",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "type": "paragraph",
+        "content": "Note: feature block will only show if the product has a matching tag. Product specific blocks can be created in the product's metafields"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "productFeature",
+        "name": "Product Feature",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "text",
+            "type": "textarea",
+            "label": "Text"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "id": "matchingTag",
+            "type": "text",
+            "label": "Matching Tag"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

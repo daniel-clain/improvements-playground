@@ -1,0 +1,89 @@
+{% comment %}
+  Social Share Icon Row
+    Row of social media icons with links to their relative pages.
+    Links defined in Settings Schema
+
+  Version:
+    1.0.0 - 2021/05/02
+{% endcomment %}
+
+{%- capture url_to_share -%}
+  {%- if product.url != blank -%}
+    {{- shop.url | append: product.url -}}
+  {%- elsif article.url != blank -%}
+    {{- shop.url | append: article.url -}}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture share_title -%}
+  {%- if product.title != blank -%}
+    {{- product.title -}}
+  {%- elsif article.title != blank -%}
+    {{- article.title -}}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- comment -%} Email Share Text{%- endcomment -%}
+{%- capture email_check_out -%}{{- 'social.social_share.by_email' | t: title: share_title, url: url_to_share -}}{%- endcapture -%}
+{%- assign email_check_out_urlescaped = email_check_out | url_param_escape | replace: ";", "%3B" -%}
+
+<div class="c-social-share {{class}}" {{attr}}>
+  <div class="c-social-share-wrapper">
+
+    {%- comment -%} Facebook {%- endcomment -%}
+    <div class="c-social-share__icon-container {{class-}}__icon-container">
+      <a
+        target="_blank"
+        href="//www.facebook.com/sharer.php?u={{ url_to_share }}"
+      >
+        {%- render 'object.icon' with {
+          icon: 'facebook',
+          class: 'o-article-share__icon'
+        } -%}
+      </a>
+    </div>
+
+    {% comment %} Twitter {% endcomment %}
+    <div class="c-social-share__icon-container {{class-}}__icon-container">
+      <a
+        class="o-article-share__link"
+        target="_blank"
+        href="//twitter.com/share?text={{- share_title | url_param_escape -}}&amp;url={{- url_to_share -}}"
+      >
+        {%- render 'object.icon' with {
+          icon: 'twitter',
+          class: 'o-article-share__icon'
+        } -%}
+      </a>
+    </div>
+
+    {% comment %} Email {% endcomment %}
+    <div class="c-social-share__icon-container {{class-}}__icon-container">
+      <a
+        class="o-article-share__link"
+        target="_blank"
+        href="mailto:?body={{ email_check_out_urlescaped }}"
+      >
+        {%- render 'object.icon' with {
+          icon: 'email',
+          class: 'o-article-share__icon'
+        } -%}
+      </a>
+    </div>
+
+    {% comment %} Share {% endcomment %}
+    <div class="c-social-share__icon-container {{class-}}__icon-container">
+      <a
+        class="o-article-share__link"
+        target="_blank"
+        href=""
+        data-article-share-selector
+      >
+        {%- render 'object.icon' with {
+          icon: 'share',
+          class: 'o-article-share__icon'
+        } -%}
+      </a>
+    </div>
+  </div>
+</div>

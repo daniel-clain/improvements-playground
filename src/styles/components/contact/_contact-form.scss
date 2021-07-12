@@ -1,0 +1,112 @@
+/*
+ *  Contact
+ *    Styles for the contact form 
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/20
+ */
+
+.c-contact {
+  .o-form__input-group {
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+
+  &__button {
+    margin-top: 1rem;
+  }
+
+  &__text-area {
+    height: 12.5rem;
+  }
+
+  &__optional-tag {
+    display: none;
+    @extend %s-font--type-1;
+  }
+
+  &__success-icon {
+    height: 1.25rem;
+    width: auto;
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-right: 0.5rem;
+  }
+
+  &__input {
+    position: relative;
+
+    &.has-error {
+      border: 1px solid $s-color--error;
+      color: $s-color--error;
+
+      &+.c-contact__error-icon {
+        display: inline-block;
+      }
+    }
+
+    &:focus {
+      border: 1px solid $s-color--input-border;
+    }
+  }
+
+  &__text-area {
+    &:focus {
+      border: 1px solid $s-color--input-border;
+    }
+  }
+
+  &__error-icon {
+    display: none;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__input-wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid $s-color--border-light;
+      margin-bottom: 1.5rem;
+
+      &__optional-tag {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        opacity: 0.4;
+
+        &.is-visible {
+          display: block;
+        }
+      }
+    }
+
+    &__button {
+      margin-top: 1.5rem;
+    }
+
+    .o-form__input-group {
+      width: #{'calc((100% - 1rem) / 2)'};
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .o-form__input-group:nth-child(2n+1) {
+      margin-right: 1rem;
+    }
+
+    .o-form__input-group:nth-last-child(-n+2) {
+      margin-bottom: 0;
+    }
+
+    &__error-icon {
+      top: 0.6rem;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+/*
+ *  Activate Account
+ */
+
+
+.c-activate-account {
+  position: relative;
+  overflow: visible;
+  margin: 0 1.5625rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+
+  .errors {
+    text-align: left;
+    color: $s-color--error;
+    & > ul {
+      margin-top: 0;
+    }
+  }
+  
+  .o-input {
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    border-radius: 1.5625rem;
+    padding-right: 5.625rem;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  &__btn {
+    &.is-left {
+      margin-bottom: .5rem;
+    }
+  }
+
+  @include t-media-query($s-small-up) {
+    margin: $s-gutter--section-v-medium 1.5625rem;
+
+    &__row {
+      flex-direction: row;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+
+    &__btn {
+      &.is-left {
+        margin-right: .5rem;
+      }
+      &.is-right {
+        margin-left: .5rem;
+      }
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 30rem;
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+
+    &__input {
+      padding: 0.5rem 4.375rem 0.5rem 1.25rem;
+      font-size: 0.625rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+    max-width: 30rem;
+    margin-bottom: 10rem;
+
+    &__input {
+      font-size: 0.875rem;
+      line-height: 1.45;
+      letter-spacing: 0.04357em;
+      padding: 0.9rem 1.25rem;
+    }
+
+    &__row {
+      margin-top: 2rem;
+    }
+  }
+}

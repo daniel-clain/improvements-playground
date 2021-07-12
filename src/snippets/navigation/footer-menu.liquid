@@ -1,0 +1,49 @@
+{% comment %}
+  Footer Menu
+    Footer menu links. Menu will only print level two links.
+    Links at level one or three will be ignored.
+
+  Version:
+    1.0.0 - 2021/05/19
+{% endcomment %}
+
+<nav class="c-footer-menu" data-footer-accordion>
+  {%- for link in menu.links -%}
+    {%- unless link.links.size > 0 -%}{%- continue -%}{%- endunless -%}
+
+    <details class="c-footer-menu__column" data-accordion-slide>
+      <summary class="c-footer-menu__title" data-accordion-title>
+        <div class="c-footer-menu__title-inner">
+          {{- link.title | escape -}}
+
+          {%- render 'object.icon' with {
+            icon: 'plus',
+            class: 'c-footer-menu__title-icon is-plus',
+            attributes: 'data-icon-plus'
+          } -%}
+
+          {%- render 'object.icon' with {
+            icon: 'minus',
+            class: 'c-footer-menu__title-icon is-minus',
+            attributes: 'data-icon-minus'
+          } -%}
+        </div>
+      </summary>
+      
+      <ul class="c-footer-menu__link-items" data-accordion-content>
+        {%- for subLink in link.links -%}
+          <li class="c-footer-menu__link-item">
+            <a
+              href="{{ subLink.url }}"
+              class="c-footer-menu__link"
+              title="{{ subLink.title | escape }}"
+            >
+              {{- subLink.title | escape -}}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+    </details>
+  {%- endfor -%}
+</nav>

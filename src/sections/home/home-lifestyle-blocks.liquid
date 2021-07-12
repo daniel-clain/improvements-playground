@@ -1,0 +1,116 @@
+{%- comment -%}
+  Home Lifestyle Blocks
+    Dynamic section used for Instagram _style_ lifestyle blocks
+
+  Version:
+    1.0.0 - 2021/05/18
+{%- endcomment -%}
+
+{%- assign title = section.settings.title -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="c-lifestyle-blocks">
+    {%- if title != blank -%}
+      <h2 class="c-lifestyle-blocks__title o-heading--4">
+        {{- title | escape | newline_to_br -}}
+      </h2>
+    {%- endif -%}
+
+    <div class="c-lifestyle-blocks__blocks">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign image = block.settings.image
+          if image == blank
+            continue
+          endif
+          assign title = block.settings.title
+          assign url = block.settings.url
+          assign userHandle = block.settings.userHandle
+        -%}
+        {%- if url != blank -%}
+          <a href="{{ url }}" class="c-lifestyle-blocks__block">
+        {%- else -%}
+          <div class="c-lifestyle-blocks__block">
+        {%- endif -%}
+            <div class="c-lifestyle-blocks__block-image-container o-responsive-image-container">
+              {%- render 'tool.picture' with {
+                image: image,
+                class: 'c-lifestyle-blocks__block-image o-responsive-image',
+                alt: title,
+                sizes: '374,750,1350,1650',
+                imageSizes: '300,750,300,430'
+              } -%}
+            </div>
+            {%- if title != blank or userHandle != blank -%}
+              <div class="c-lifestyle-blocks__block-details">
+                {%- if title != blank -%}
+                  <p class="c-lifestyle-blocks__block-title">
+                    {{- title | escape -}}
+                  </p>
+                {%- endif -%}
+                {%- if userHandle != blank -%}
+                  <p class="c-lifestyle-blocks__block-handle">
+                    {{- userHandle | escape -}}
+                  </p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+        {%- if url != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Home Lifestyle Blocks",
+    "class": "c-section c-section__home-lifestyle",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Section Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "lifestyleblock",
+        "name": "Lifestyle Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Username or Title"
+          },
+          {
+            "id": "userHandle",
+            "type": "text",
+            "label": "Handle or Subtitle"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "Social Media Link"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image",
+            "info": "Please upload a JPG of 900x1100px."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Lifestyle Blocks",
+        "category": "Media"
+      }
+    ]
+  }
+{% endschema %}

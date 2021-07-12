@@ -1,0 +1,19 @@
+.o-responsive-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  @supports(object-fit: cover) {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.o-responsive-image-container {
+  position: relative;
+  overflow: hidden;
+
+  // To be overridden by component class
+  padding-bottom: 100%;
+}

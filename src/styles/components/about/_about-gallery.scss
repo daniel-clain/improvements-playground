@@ -1,0 +1,18 @@
+.c-about-gallery {
+  @include t-media-query($s-small-up) {
+    .c-image-and-text {
+      &__inner {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    .c-image-and-text {
+      &__inner {
+        padding: 0 4%;
+        margin: #{'min(8%, 10rem)'} auto;
+      }
+    }
+  }
+}

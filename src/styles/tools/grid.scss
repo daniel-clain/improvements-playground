@@ -1,0 +1,157 @@
+/*
+ *  Grid Padding Functions
+ */
+@function t-grid--edge($screen) {
+  @if map-has-key($map: $s-grid--edges, $key: $screen) {
+    @return map-get($map: $s-grid--edges, $key: $screen);
+  }
+  @return null;
+}
+
+@function t-grid--gutter($screen) {
+  @if map-has-key($map: $s-grid--gutters, $key: $screen) {
+    @return map-get($map: $s-grid--gutters, $key: $screen);
+  }
+  @return null;
+}
+
+@function t-grid--column-width($columns, $gutters: true, $screen: 'xsmall') {
+  @if $gutters {
+    $gutter: t-grid--gutter($screen);
+
+    @if $gutter == true  {
+      $gutterSize: $gutter * ($s-grid--column-count - ($columns - 1) );
+      $widths: (100vw / $s-grid--column-count) * $columns;
+      @return #{calc(#{$widths} - #{$gutterSize})};
+    }
+  }
+
+  @return 100% * ($columns / $s-grid--column-count);
+}
+
+/*
+ *  Grid Mixins
+ */
+@mixin t-grid--left-edge($screen) {
+  padding-left: t-grid--edge($screen);
+}
+
+@mixin t-grid--right-edge($screen) {
+  padding-right: t-grid--edge($screen);
+}
+
+@mixin t-grid--left-right-edges($screen, $ledge: true, $redge: true) {
+  @if $ledge {
+    @include t-grid--left-edge($screen);
+  }
+
+  @if $redge {
+    @include t-grid--right-edge($screen);
+  }
+}
+
+@mixin t-grid--base() {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns:
+    1fr 1fr 1fr 1fr 1fr 1fr
+    1fr 1fr 1fr 1fr 1fr 1fr
+  ;
+  grid-template-columns:
+    1fr 1fr 1fr 1fr 1fr 1fr
+    1fr 1fr 1fr 1fr 1fr 1fr
+  ;
+  grid-auto-rows: auto;
+  align-items: flex-start;
+}
+
+@mixin t-grid--col-gap($screen) {
+  column-gap: t-grid--gutter($screen);
+}
+
+@mixin t-grid--row-gap($screen) {
+  row-gap: t-grid--gutter($screen); 
+}
+
+@mixin t-grid--column($columns, $offset: 0) {
+  @if $offset == 0 {
+    grid-column: span $columns;
+  } @else {
+    grid-column-start: ($offset + 1);
+    grid-column-end: ($offset + $columns + 1);
+  }
+}
+
+@mixin t-grid($screen: '',
+  $ledge: false, $redge: false,
+  $colGap: true, $rowGap: false,
+  $base: true,
+) {
+  @if $screen == "" {
+    //No screen was provided, what we do is a " do this
+    $sizeMap: (
+      'small': $s-small-up,
+      'medium': $s-medium-up,
+      'large': $s-large-up,
+      'xlarge': $s-xlarge-up
+    );
+
+    
+    @include t-grid('xsmall', $base: $base,
+      $ledge: $ledge, $redge: $redge,
+      $colGap: $colGap, $rowGap: $rowGap
+    );
+    
+    @each $screen, $query in $sizeMap {
+      @include t-media-query($query) {
+        @include t-grid($screen, $base: false,
+          $ledge: $ledge, $redge: $redge,
+          $colGap: $colGap, $rowGap: $rowGap
+        );
+      }
+    }
+  } @else {
+    @if $colGap { @include t-grid--col-gap($screen); }
+    @if $rowGap { @include t-grid--row-gap($screen); }
+    @if $base { @include t-grid--base(); }
+    @include t-grid--left-right-edges($screen, $ledge, $redge);
+  }
+}
+
+@mixin t-grid--areas($areas, $columns: auto) {
+  grid-template-areas: $areas;
+  @if $columns != "" {
+    grid-template-columns: $columns;
+  }
+}
+
+@mixin t-grid--area($area) {
+  grid-area: #{$area};
+}
+
+@mixin t-grid--stretch() { align-items: stretch; }
+@mixin t-grid--center() { align-items: center; }
+
+/*
+ *  Grid Flex Style Mixins
+ *    Essentially functionally similar to a lot of the above but using flex
+ *    over grid.
+ */
+@mixin t-grid--width-column($columns, $screen: 'xsmall') {
+  //Fallback uses no calc.
+  width: t-grid--column-width($columns, $gutters: false, $screen: $screen);
+  width: t-grid--column-width($columns, $gutters: true, $screen: $screen);
+}
+
+@mixin t-grid--gutter-margin($screen: 'xsmall') {
+  margin-left: t-grid--gutter($screen);
+}
+
+@mixin t-grid--gutter-padding($screen: 'xsmall') {
+  padding-right: t-grid--gutter($screen);
+}
+
+@mixin t-grid--max-width {
+  max-width: $s-grid--max-width;
+  margin: auto;
+}

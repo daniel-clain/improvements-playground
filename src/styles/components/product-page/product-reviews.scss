@@ -1,0 +1,26 @@
+.c-product-reviews {
+  background-color: $s-color--background-tertiary;
+  padding: 3.5rem $s-gutter--edge-mobile 4rem;
+
+  .stamped-summary, .stamped-review, .stamped-summary-actions-newreview, .stamped-summary-actions-newquestion {
+    background-color: white;
+  }
+
+  div.stamped-container[data-widget-style] {
+    margin-top: 0 !important;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: $s-gutter--section-v-medium 0;
+
+    &__title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+  }
+}

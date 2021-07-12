@@ -1,0 +1,77 @@
+{%- comment -%}
+  props:
+    - schemaBlocks
+    - metafieldTitles
+    - metafieldBodies
+    - firstOpened: boolean
+{%- endcomment -%}
+
+{%- assign firstIsSet = false -%}
+
+<div class="o-accordion o-type--2" data-accordion-container>
+
+  {%- if metafieldTitles != blank -%}
+    {%- for title in metafieldTitles -%}
+      <details class="o-accordion__slide" data-accordion-slide 
+        {% if firstOpened == true and forloop.first %} 
+          open
+          {%- assign firstIsSet = true -%}
+        {% endif %}
+      >
+        <summary class="o-accordion__slide-title" data-accordion-title>
+          {{- title -}}
+          {%- render 'object.icon' with {
+            icon: 'arrow--right--black',
+            class: 'o-accordion__slide-title-icon'
+          } -%}
+        </summary>
+        <div class="o-accordion__slide-body" data-accordion-content>
+          {{- metafieldBlodies[forloop.index0] -}}
+        </div>
+      </details>
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- comment -%} Static Content - Used for PDP {%- endcomment -%} 
+  {%- if staticDescription != blank and staticTitle != blank -%}
+    <details
+      class="o-accordion__slide"
+      data-accordion-slide
+      {% if firstOpened == true and firstIsSet != true -%}
+        open
+        {%- assign firstIsSet = true -%}
+      {%- endif -%}
+    >
+      <summary class="o-accordion__slide-title" data-accordion-title>
+        {{- staticTitle -}}
+        {%- render 'object.icon' with {
+          icon: 'arrow--right--black',
+          class: 'o-accordion__slide-title-icon'
+        } -%}
+      </summary>
+      <div class="o-accordion__slide-body" data-accordion-content>
+        {{- staticDescription -}}
+      </div>
+    </details>
+  {%- endif -%}
+
+  {%- if schemaBlocks != blank -%}
+    {%- for item in schemaBlocks -%}
+      <details class="o-accordion__slide" data-accordion-slide
+        {% if firstOpened == true and firstIsSet != true and forloop.first %} open{% endif -%}
+      >
+        <summary class="o-accordion__slide-title" data-accordion-title>
+          {{- item.settings.title -}}
+          {%- render 'object.icon' with {
+            icon: 'arrow--right--black',
+            class: 'o-accordion__slide-title-icon'
+          } -%}
+        </summary>
+        <div class="o-accordion__slide-body" data-accordion-content>
+          {{- item.settings.body -}}
+        </div>
+      </details>
+    {%- endfor -%}
+  {%- endif -%}
+  
+</div>

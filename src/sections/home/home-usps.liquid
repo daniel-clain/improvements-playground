@@ -1,0 +1,92 @@
+{%- comment -%}
+  Home USPs
+    Section to display up to 3 USPs for the brand with images, title and copy.
+
+  Version
+    1.0.0 - 2021/04/09
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="c-home-usps" data-home-usps>
+
+    <div class="c-home-usps__carousel" data-carousel>
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign title = block.settings.title
+          assign image = block.settings.image
+          assign description = block.settings.description
+          if image == blank and title == blank
+            continue
+          endif
+        -%}
+        <div class="c-home-usps__usp">
+          {%- if image != blank -%}
+            <div class="c-home-usps__usp-image-container o-responsive-image-container">
+              {%- render 'tool.picture' with {
+                image: image,
+                class: 'c-about-gallery__image o-responsive-image',
+                alt: title,
+                width: 380,
+                sizes: '374,750,1350',
+                imageSizes: '200,260,380'
+              } -%}
+            </div>
+          {%- endif -%}
+          {%- if title != blank -%}
+            <h3 class="c-home-usps__usp-title o-heading--7">
+              {{- title | newline_to_br -}}
+            </h3>
+          {%- endif -%}
+          {%- if description != blank -%}
+            <p class="c-home-usps__usp-description">
+              {{- description | escape -}}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+
+    </div>
+
+    {%- comment -%} Carousel Dots {%- endcomment -%}
+    {%- render 'object.carousel-controls' with { dots: true, blocks: section.blocks } -%}
+
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Home USPs",
+    "class": "c-section c-section__home-usps",
+    "max_blocks": 3,
+    "blocks": [
+      {
+        "type": "usp",
+        "name": "USP",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image",
+            "info": "Please upload in .jpg format and with a ratio of 380 x 260px"
+          },
+          {
+            "id": "title",
+            "type": "textarea",
+            "label": "Title"
+          },
+          {
+            "id": "description",
+            "type": "textarea",
+            "label": "Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home USPs",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

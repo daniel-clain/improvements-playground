@@ -1,0 +1,198 @@
+
+
+.c-facets-and-filter {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  padding: t-to-rem(8) $s-gutter--edge-mobile;
+
+
+  //Facet Group
+  &__group {
+    display: none;
+
+    ul{padding: 0; margin:0}
+    li{list-style: none}
+
+
+    
+    &.has-options, &.is-sort{ display: block; }
+
+    
+  }
+
+  
+  &__clear-filters.is-reset{
+    text-decoration: underline;
+    color: rgba($s-color--primary, .4);
+    &:hover{
+      text-decoration: unset;
+      color: rgba($s-color--primary, .4);
+    }
+  }
+
+  /*==== Media Queries ====*/
+  
+  @include t-media-query($s-small-up) {
+    padding: t-to-rem(8) $s-gutter--edge-small;
+  }
+
+  @include t-media-query($s-medium-down) {
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      background: rgba($s-color--border, 0.1);
+      width: 1px;
+      top: 0;
+      bottom: 0;
+      margin: t-to-rem(8) 0;
+      left: 50%;
+  }
+    
+    &__open-drawer-button,
+    &__group.is-sort{
+      position: relative;
+      padding: t-to-rem(12) 0 t-to-rem(10);
+      flex: 1;
+    }
+    &__group.is-sort{
+      text-align: right;
+    }
+
+
+    &__open-drawer-button{
+      display: inline-flex;
+      align-items: center;
+      font-size: t-to-rem(14);
+      cursor: pointer;
+      &:after{
+        content: '';
+        transform: translateY(-1px) rotate(90deg);
+        width: t-to-rem(10);
+        height: t-to-rem(10);
+        background: url('./../../assets/svg/icon-arrow--right--black.svg') center no-repeat;
+        background-size: 100%;
+        margin-left: t-to-rem(5);
+      }
+    }
+    &__drawer{
+      &-overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;;
+        bottom: 0;
+        background-color: rgba(black, 0);
+        transition: background-color $s-anim--time-short;
+        z-index: $s-z--modal;
+        .is-filters-visible &{
+          background-color: rgba(black, 0.6);
+          width: 100%;
+
+        }
+
+      }
+      &-wrapper{
+        max-width: t-to-rem(375);
+        position: fixed;
+        z-index: $s-z--modal;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transition: left $s-anim--time-med;
+        background: $s-color--background;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .is-filters-visible &{
+          left: 0;
+        }
+      }
+      &-header {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        background: $s-color--background-tertiary;
+        color: $s-color--primary;
+        border: none;
+        height: t-to-rem(72);
+        text-transform: none;
+        border-bottom: 1px solid rgba($s-color--background-quinary, 0.1);
+      }
+      &-title{
+        font-family: $s-font--root-family;
+        font-weight: $s-font--root-weight;
+        padding-top: t-to-rem(4);
+        margin: 0;
+      }
+      &-close {
+        position: absolute;
+        width: t-to-rem(12);
+        height: t-to-rem(12);
+        background: url('./../../assets/svg/icon-close.svg') center no-repeat;
+        left: t-to-rem(28);
+      }
+      &-apply {
+        margin: t-to-rem(20);
+      }
+    }
+    &__facets{
+      padding: 0 t-to-rem(24);
+      flex: 1;
+      overflow: auto;
+    }
+
+    &__group:not(.c-facets-and-filter__group.is-sort){
+      width: 100%;
+      border-bottom: 1px solid rgba($s-color--background-quinary, 0.1);
+      
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+
+    padding: t-to-rem(8) $s-gutter--edge-medium;
+    &__open-drawer-button{display: none;}
+    &__drawer{
+      &-overlay,&-header,&-apply{
+        display: none;
+      }
+    }
+
+    &__drawer-wrapper{
+      display: flex;
+      align-items: center;
+    }
+
+    &__clear-filters{
+      font-size: t-to-rem(16);
+      margin-left: t-to-rem(42);
+    }
+
+    &__facets {
+      display: flex;
+      padding: t-to-rem(24) 0 t-to-rem(20);
+    }
+
+    &__group {
+      margin-right: t-to-rem(42);
+      position: relative;
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+
+  
+  @include t-media-query($s-xlarge-up) {
+    padding: t-to-rem(8) $s-gutter--edge-xlarge;
+  }
+
+}

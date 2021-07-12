@@ -1,0 +1,160 @@
+/*
+ *  Home Lifestyle Blocks
+ *    Instagram style blocks for the home page. 
+ *
+ *  Version
+ *    1.0.0 - 2021/05/18
+ */
+
+.c-lifestyle-blocks {
+  padding: 3.5rem 0 0;
+  background: $s-color--background-primary-light;
+
+  &__title {
+    text-align: center;
+    padding-right: $s-gutter--edge-mobile;
+    max-width: 16rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  &__blocks {
+    display: flex;
+    padding: 0 0 4.5rem $s-gutter--edge-mobile;
+    overflow-y: hidden;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 0 0 $s-gutter--edge-mobile;
+    -webkit-scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-points-x: repeat(100%);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__block {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 84.45%;
+    padding-right: 0.4375rem;
+
+    //Scorll behaviour
+    scroll-snap-align: start;
+    -webkit-scroll-snap-align: start;
+    -webkit-scroll-snap-coordinate: 0% 0%;
+
+    &-image-container {
+      border-top-left-radius: $s-image--border-radius-default;
+      border-top-right-radius: $s-image--border-radius-default;
+    }
+
+    &-details {
+      overflow: hidden;
+      background: $s-color--background;
+      padding: 1.375rem 1.5rem;
+      border-bottom-left-radius: $s-image--border-radius-default;
+      border-bottom-right-radius: $s-image--border-radius-default;
+    }
+
+    &-title, &-handle {
+      margin: 0;
+    }
+
+    &-handle {
+      opacity: 0.7;
+    }
+
+    //Pseudo element used for background shadow
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      bottom: -0.5rem;
+      transform: translateX(-50%);
+      left: 50%;
+      width: calc(100% + 1.25rem);
+      height: 32%;
+      background: #05386B;
+      opacity: 0.08;
+      filter: blur(2.5rem);
+    }
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-up) {
+
+    &__block {
+      width: 42.25%;
+    }
+
+    &__blocks {
+      padding-left: $s-gutter--edge-small;
+      scroll-padding: 0 0 0 $s-gutter--edge-small;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: $s-gutter--section-v-medium 0 0 0;
+
+    &__title {
+      max-width: none;
+      margin-bottom: 2.5rem;
+    }
+
+    &__blocks {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: $s-page-wrap--xlarge;
+      margin: 0 auto;
+      padding: 0 $s-gutter--edge-medium-alt #{'min(10%, 10rem)'};
+
+      &:after, &:before {
+        content: '';
+        width: 23.37%;
+        order: 2;
+      }
+    }
+
+    &__block {
+      width: 23.37%;
+      flex-shrink: 1;
+      padding: 0;
+
+      &-image-container {
+        border-top-left-radius: $s-image--border-radius-medium;
+        border-top-right-radius: $s-image--border-radius-medium;
+      }
+
+      &-details {
+        padding: 2rem;
+        border-bottom-left-radius: $s-image--border-radius-medium;
+        border-bottom-right-radius: $s-image--border-radius-medium;
+      }
+
+      &:after {
+        width: calc(100% + 1rem);
+        height: 36%;
+      }
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+    &__title {
+      margin-bottom: 4rem;
+    }
+
+    &__block {
+
+      &-details {
+        padding: 2.5rem;
+      }
+    }
+  }
+}

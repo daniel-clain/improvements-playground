@@ -1,0 +1,83 @@
+/*
+ *  Base Colors
+ *  - For base color naming conventions use: https://chir.ag/projects/name-that-color
+ *  - These base colors should only ever be used inside this color file to assign to
+ *    other color variables
+ */
+
+$s-color--black: #22211F;
+$s-color--white: #FFF;
+$s-color--gallery: #F0F0F0;
+$s-color--blue: #05386B;
+// $s-color--blue: #084F6F;
+$s-color--dark-blue: #05386B;
+$s-color--midnight: #011328;
+$s-color--light-blue: #F3F6F8;
+$s-color--beige: #F4EEE2;
+$s-color--lemon: #F5EBC1;
+$s-color--orange: #F99D1C;
+$s-color--red: red;
+$s-color--sand: #F4EEE2;
+$s-color--clear: transparent;
+$s-color--midnight: #011328;
+$s-color--light-grey: #FBFCFD;
+$s-color--grey: #A7A6A5;
+
+/*
+ *  Color Definitions
+ */
+
+// Main Colour Sets
+$s-color--primary: $s-color--black;
+$s-color--primary-compliment: $s-color--white;
+$s-color--primary-hover: $s-color--light-grey;
+
+$s-color--secondary: $s-color--dark-blue;
+$s-color--secondary-hover: rgba($s-color--secondary, 0.85);
+$s-color--secondary-compliment: $s-color--white;
+
+$s-color--tertiary: $s-color--black;
+$s-color--tertiary-compliment: $s-color--white;
+
+$s-color--quartenary: $s-color--orange;
+$s-color--quartenary-compliment: $s-color--white;
+
+$s-color--quinary: $s-color--beige;
+$s-color--quinary-compliment: $s-color--black;
+
+$s-color--sectary: $s-color--midnight;
+
+
+// Backgrounds
+$s-color--background: $s-color--white;
+$s-color--background-primary-light: $s-color--gallery;
+$s-color--background-secondary: $s-color--blue;
+$s-color--background-tertiary: $s-color--light-blue;
+$s-color--background-quartenary: $s-color--orange;
+$s-color--background-quinary: $s-color--dark-blue;
+$s-color--background-senary: $s-color--sand;
+
+// Borders
+$s-color--border: $s-color--black;
+$s-color--border-light: rgba($s-color--blue, 0.1);
+$s-color--border-dark: rgba($s-color--dark-blue, 0.2);
+
+// Fonts
+$s-color--font: $s-color--black;
+$s-color--font-invert: $s-color--white;
+$s-color--font-disabled: $s-color--grey;
+
+// Input
+$s-color--error: $s-color--orange;
+$s-color--input-border: $s-color--blue;
+
+//Shadows
+$s-color--shadow: rgba($s-color--dark-blue, 0.1);
+$s-color--shadow-light: rgba($s-color--blue, 0.08);
+
+// Overlay
+$s-color--nav-backdrop: rgba($s-color--midnight, 0.6);
+
+//Scrollbars
+$s-color--scrollbar-thumb: $s-color--blue;
+$s-color--scrollbar-track: rgba($s-color--blue, 0.1);

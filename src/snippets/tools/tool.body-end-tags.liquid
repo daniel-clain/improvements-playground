@@ -1,0 +1,34 @@
+{%- comment -%} Theme End Tags {%- endcomment -%}
+<script type="text/javascript">
+  window.Asset = {{ 'layout.theme.js' | asset_url | json }};
+  
+  window.Customer = {%- render 'json.customer' -%};
+
+  window.Language = window.Language || {};
+  window.Language.strings = window.Language.strings || {};
+  
+  window.Cart = window.Cart || {};
+  window.Cart.data = window.Cart.data || {%- render 'json.cart' -%};
+
+  window.Currency = window.Currency || {};
+  window.Currency.currency = {{ cart.currency.iso_code | json }};
+  window.Currency.format = {{ shop[settings.native_format] | default: shop.money_format | json }};
+  window.Currency.convertedFormat = {{ settings.currency_conversion_format | json }};
+</script>
+
+{%- comment -%} Language Strings {%- endcomment -%}
+{%- capture keys -%}
+
+{%- endcapture -%}
+{%- render 'tool.language-strings' with { keys: keys } -%}
+
+{%- comment -%}
+  Temporarily move jQuery on cart to work with existing
+    legging shortening logic
+{%- endcomment -%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{%- comment -%} Scripts {%- endcomment -%}
+{% render 'tool.script-tags' layout: 'theme' %}
+
+{%- render 'tool.tracking-scripts' -%}

@@ -1,0 +1,18 @@
+/*
+ *  Address Form
+ *
+ *  Version:
+ *    1.0.0 - 2021/04/30
+ */
+
+.c-addresses__form {
+  margin-top: 1rem;
+
+  .o-form__input-group {
+    margin-bottom: 1rem;
+  }
+
+  @include t-media-query($s-medium-up) {
+    width: 75%;
+  }
+}

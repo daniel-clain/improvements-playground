@@ -1,0 +1,92 @@
+{%- comment -%}
+  Login Form
+    Simple Login Form
+
+  Version:
+    1.0.0 - 2020/03/25
+{%- endcomment -%}
+
+<div class="c-login-form {{ class }} is-visible" data-login-form>
+
+  <h2>
+    <span class="p-customer__title c-login-form__title o-title o-heading__inner o-heading--4">
+      {{- 'customer.login.title' | t -}}
+    </span>
+  </h2>
+
+  {%- form 'customer_login'-%}
+    <div class="o-form__input-group">
+      <input
+        type="email"
+        placeholder="{{'customer.login.email' | t}}"
+        name="customer[email]"
+        class="
+          o-input
+          o-form__text
+          c-login-register__input
+          c-login-form__input
+          is-primary
+        "
+        value="{%if form.email%}{{form.email}}{%endif%}"
+        required
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+      />
+    </div>
+
+    {%- if form.password_needed -%}
+      <div class="o-form__input-group">
+        <input
+          type="password"
+          placeholder="{{'customer.login.password' | t}}"
+          name="customer[password]"
+          class="
+            o-input
+            o-form__text
+            c-login-register__input
+            c-login-form__input
+            is-primary
+          "
+          value="{%if form.password%}{{form.password}}{%endif%}"
+          required
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="off"
+        />
+      </div>
+    {%- endif -%}
+
+    <a
+      href="#"
+      class="o-form__input-subtext c-login-form__forgot"
+      data-reset-password-toggle
+    >
+      {{'customer.login.forgot_password' | t}}
+    </a>
+
+    <div class="c-login-form__btn-container">
+      <button type="submit" class="o-btn c-login-form__btn p-customer__btn is-palette-1 is-secondary">
+        {{-'customer.login.sign_in' | t -}}
+      </button>
+    </div>
+
+  {%- endform -%}
+
+  {%- comment %} Guest Login Form (If Allowed) {%- endcomment -%}
+  {%- if shop.checkout.guest_login -%}
+    <h2 class="p-customer__title c-login-form__title is-guest o-heading--4">
+      {{- 'customer.login.guest_title' | t -}}
+    </h2>
+
+    {%- form 'guest_login' -%}
+      <div class="c-login-form__btn-container">
+        <button type="submit" class="o-btn c-login-form__btn p-customer__btn is-guest is-palette-1 is-secondary">
+          {{- 'customer.login.guest_continue' | t -}}
+        </button>
+      </div>
+
+    {%- endform -%}
+  {%- endif -%}
+
+</div>

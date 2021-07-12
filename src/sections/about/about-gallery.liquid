@@ -1,0 +1,71 @@
+{%- comment -%}
+  About Gallery
+
+  Version:
+    1.0.0 - 2021/04/19
+{%- endcomment -%}
+
+
+{%- assign ss = section.settings -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="c-about-gallery">
+    {%- for block in section.blocks -%}
+      {%- assign bs = block.settings -%}
+        {%- render 'image-and-text' with {
+          image: bs.image,
+          video: bs.video,
+          title: bs.title,
+          text: bs.description,
+          imageClass: bs.imagePosition
+        } -%}
+    {%- endfor -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "About Gallery",
+  "class": "c-section c-section__about-gallery",
+  "blocks": [
+    {
+      "type": "media-text",
+      "name": "Media and Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video",
+          "info": "Videos can be uploaded via 'Settings'>'Files'>'Upload files'. Maximum file size is 20MB. Please try to keep the file size under 2MB. Leave blank to display hero image instead. Videos will be muted. Aim for dimensions of 1200x680px.",
+          "label": "Video SRC/URL"
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image",
+          "info": "Please upload a .jpg of at least 1200x680px. If a video SRC is set above the image will be used as the 'Poster' (initial loading frame) for the video."
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "description",
+          "type": "textarea",
+          "label": "Description"
+        },
+        {
+          "id": "imagePosition",
+          "type": "select",
+          "label": "Image Position - Desktop",
+          "options": [
+            {"value": "is-image-left", "label": "Left"},
+            {"value": "is-image-right", "label": "Right"}
+          ],
+          "default": "is-image-left"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,22 @@
+.o-main__wrapper .os-page-container .section {
+  margin: $s-gutter--edge-mobile;
+
+  h1 {
+    text-align: center;
+    @extend %s-font--heading-3;
+  }
+
+  @include t-media-query($s-small-up) {
+    margin: 1rem $s-gutter--edge-small;
+  }
+
+  @include t-media-query($s-medium-up) {
+    margin: 3rem $s-gutter--edge-medium;
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    max-width: 125rem;
+    padding: 0 $s-gutter--edge-xlarge;
+    margin: 3rem auto;
+  }
+}

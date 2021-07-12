@@ -1,0 +1,82 @@
+{%- comment -%} Copyright Snippet {%- endcomment -%}
+{%- render 'tool.copyright' -%}
+
+{%- comment -%} Customer Scripts{%- endcomment -%}
+{%- if template.directory == 'customers' -%}
+  <script src="{{- 'shopify_common.js' | shopify_asset_url -}}" defer="defer"></script>
+{%- endif -%}
+
+{%- comment -%} Browser detailed Meta Information {%- endcomment -%}
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes" />
+<link rel="canonical" href="{{ canonical_url }}" />
+
+{%- comment -%} DNS Prefetching {%- endcomment -%}
+{%- render 'tool.dns-prefetching' -%}
+
+{%- comment -%} External Fonts {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/say0ymy.css">
+
+
+{%- comment -%}SEO Friendly page title{%- endcomment -%}
+{%- capture seo_title -%}
+  {{ page_title }}
+  {% if current_tags %}
+    {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+  {% endif %}
+  {% if current_page != 1 %}
+    &ndash; {{ 'general.meta.page' | t: page: current_page }}
+  {% endif %}
+  {% unless page_title contains shop.name %}
+    &ndash; {{ shop.name }}
+  {% endunless %}
+{%- endcapture -%}
+{%- if template contains 'password' -%}
+  {%- assign seo_title = shop.name -%}
+{%- endif -%}
+<title>{{ seo_title | strip }}</title>
+
+
+{%- comment -%}Conditionally based meta tags{%- endcomment -%}
+{%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}" />
+{%- endif -%}
+
+{%- comment -%} Customer Scripts{%- endcomment -%}
+{%- if template.directory == 'customers' -%}
+  <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+
+
+{%- comment -%} Favicon {%- endcomment -%}
+{%- if settings.favicon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+{%- endif -%}
+
+{%- comment -%} Stylesheets {%- endcomment -%}
+{%- render 'tool.style-tags' with layout: 'theme' -%}
+
+{%- comment -%}
+  Allow language keys to be accessible to js
+{%- endcomment -%}
+{%- capture keys -%}
+  cart.title;
+  cart.count_postfix;
+  cart.count_postfix_plural;
+  cart.empty_heading;
+  cart.subtotal;
+  cart.go_to_checkout;
+  cart.color_prefix;
+  cart.size_prefix;
+  cart.free_shipping_remaining;
+  cart.free_shipping_unlocked;
+  cart.view_cart;
+  cart.add;
+  cart.upsell_title;
+  products.product.free;
+{%- endcapture -%}
+{%- render 'tool.language-strings' with { keys: keys } -%}

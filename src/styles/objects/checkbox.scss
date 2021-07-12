@@ -1,0 +1,55 @@
+/*
+ *  Checkbox Widget, clickable checkbox
+ *
+ *  Version:
+ *    1.0.0 - 2019/01/19
+ */
+
+
+.o-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 1.75rem;
+
+  &__checkbox {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    z-index: 2;
+  }
+  
+  &__label {
+    padding: t-to-rem(4) t-to-rem(6) 0 0;
+
+    &::before {
+      display: flex;
+      content: "";
+      align-items: center;
+      justify-content: center;
+
+      position: absolute;
+      top: 52%;
+      left: 0;
+      transform: translateY(-50%);
+      width: t-to-rem(12);
+      height: t-to-rem(12);
+      color: $s-color--primary;
+      border: 1px solid $s-color--secondary;
+      border-radius: t-to-rem(2);
+
+      
+      [checked] ~ & {
+        background: url('../../assets/svg/icon-tick.svg') center no-repeat $s-color--background-quinary;
+        background-size: 80%;
+      }
+    }
+
+  }
+
+}

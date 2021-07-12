@@ -1,0 +1,59 @@
+{% comment %}
+  Article Header Snippet
+
+  Version:
+    1.0.0 - 2021/04/28
+{% endcomment %}
+
+<section class="c-article-header 
+  {% if article.image != blank %} has-image{% endif %}
+">
+
+  {%- if article.image != blank -%}
+    <div class="c-article-header__image-container o-responsive-image__container">
+      {%- render 'tool.picture' with {
+        image: article.image,
+        class: 'c-article-header__image o-responsive-image',
+        alt: article.title,
+        width: 2000,
+        sizes: '375,500,1100,1650,2000',
+        imageSizes: '375,500,1100,1650,2000'
+      } -%}
+    </div>
+  {%- endif -%}
+
+  <div
+    class="c-article-header__content
+      {% unless section.settings.showOverlay %}is-static{% endunless %}"
+  >
+    <div class="c-article-header__content-inner">
+      {%- if article.title != blank -%}
+        <h1 class="c-article-header__title o-heading--3">
+          {{- article.title | escape -}}
+        </h1>
+      {%- endif -%}
+  
+      {%- if article.author != blank -%}
+        <div class="c-article-header__subtitle-container">
+          {%- if section.blocks.size > 0 -%}
+            <span class="c-article-header__subtitle o-type--2">
+              {{- 'articles.written_by' | t | append: ' ' -}}
+              {{- article.author | escape | newline_to_br -}}
+            </span>
+            <span class="c-article-header__seperator o-type--2">·</span>
+          {%- endif -%}
+          <span class="c-article-header__read-time o-type--2">
+            {{- readTime -}}
+          </span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="c-article-header__arrow" data-article-scroll-selector>
+    {%- render 'object.icon' with {
+      icon: 'arrow--down',
+      class: 'o-icon c-article-header__icon'
+    } -%}
+  </div>
+</section>

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Cart Payment Row
+    Snippet to display cart payment images
+
+    Params:
+      - payments: Array of blocks
+
+  Version:
+    1.0.0 - 2021/05/03
+{%- endcomment -%}
+
+{%- if payments.size > 0 -%}
+  <div class="c-cart-template__payment-row">
+    {%- for payment in payments -%}
+      {%- if payment.settings.image != blank -%}
+        <div class="c-cart-template__payment">
+          {{- payment.settings.image -}}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

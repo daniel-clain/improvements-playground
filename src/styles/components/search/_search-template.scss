@@ -1,0 +1,142 @@
+.c-search-template {
+  .c-cart-empty {
+    margin-top: 1.5rem;
+    padding: 0;
+    border-bottom: none;
+  
+    &__btn {
+      display: block;
+      width: 13rem;
+      margin: 0.5rem auto;
+    }
+  }
+
+  &__header {
+    padding: 3.25rem 0;
+    text-align: center;
+    background-color: $s-color--background-tertiary;
+  }
+
+  &__title {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    position: relative;
+    max-width: 32rem;
+    margin: auto;
+  }
+
+  &__btn.o-btn.is-secondary {
+    @include t-absolute-center-y;
+    right: 0;
+  }
+
+  &__results {
+    max-width: 125rem;
+    margin: 1.25rem auto 2rem;
+
+    &-text {
+      margin: 0;
+      text-align: center;
+    }
+
+    .no-results & {
+      margin: 0;
+    }
+  }
+
+  &__products {
+    padding: 0 $s-gutter--edge-mobile;
+
+    &-item {
+      height: 100%;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  &__product {
+    position: relative;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+  }
+
+  .o-pagination {
+    padding-bottom: 4rem;
+  }
+
+  @include t-media-query($s-small-up) {
+    &__products {
+      padding: 0 $s-gutter--edge-small;
+    }
+
+    .o-pagination {
+      margin: 3rem auto 4rem;
+      padding: 0;
+    }
+  }
+
+  @include t-media-query($s-medium-up) {
+    &__header {
+      padding: 5rem 0;
+
+      .no-results & {
+        min-height: 36.25rem;
+      }
+    }
+
+    &__input {
+      max-width: 42rem;
+    }
+
+    &__results {
+      margin: 5rem auto 4rem;
+    }
+
+    &__products {
+      padding: 0 $s-gutter--edge-medium;
+
+      &-item {
+        padding-bottom: 2.5rem;
+      }
+    }
+
+    .c-cart-empty {
+      &__btn {
+        display: inline-block;
+        margin: 0;
+        margin-right: 1rem;
+    
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .o-pagination {
+      margin: 4rem auto 5rem;
+      padding: 0;
+    }
+  }
+
+  @include t-media-query($s-large-up) {
+    &__results {
+      margin: 7rem auto 4.5rem;
+    }
+
+    .o-pagination {
+      margin: 4.5rem auto 7rem;
+      padding: 0;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    &__products {
+      padding: 0 9.9375rem;
+    }
+  }
+}

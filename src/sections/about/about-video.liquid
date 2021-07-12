@@ -1,0 +1,32 @@
+{%- assign ss = section.settings -%}
+
+{%- if ss.image != blank -%}
+  <section class="c-about-video">
+    {%- render 'video-banner', video: ss.video, image: ss.image -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "About Video",
+    "class": "c-section c-section__about-video",
+    "settings": [
+      {
+        "id": "video",
+        "type": "url",
+        "label": "Video URL"
+      },
+      {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Video Image (desktop)"
+      },
+      {
+        "id": "imageMobile",
+        "type": "image_picker",
+        "label": "Video Image (mobile)",
+        "info": "Will fallback to desktop if not provided"
+      }
+    ]
+  }
+{% endschema %}

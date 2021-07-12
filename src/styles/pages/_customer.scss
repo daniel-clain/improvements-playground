@@ -1,0 +1,68 @@
+/*
+ *  Customer Page
+ *    Shared styling for all customer pages. Includes standard widths
+ *    gutters, titles and buttons.
+ *
+ *  Version
+ *    1.0.0 - 2020/03/25
+ */
+
+//Page width should be setup in a setting/_page-wrap.scss if it exists
+$p-customer--max-width: 100rem;
+
+.p-customer {
+  padding: 0 $s-gutter--xsmall;
+  margin: $s-gutter--xsmall auto;
+
+  &__btn {
+    margin-top: 1rem;
+  }
+
+  &__form {
+    margin: 1rem 0;
+  }
+
+
+  /*==== Media Queries ====*/
+
+
+  @include t-media-query($s-small-up) {
+    padding: 0 $s-gutter--small;
+    margin: $s-gutter--small auto;
+
+  }
+
+  @include t-media-query($s-medium-up) {
+    padding: 0 $s-gutter--medium;
+    max-width: $p-customer--max-width;
+    display: flex;
+
+    &__btn {
+
+      &-row {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    &__sidebar {
+      width: 28%;
+    }
+
+    &__main {
+      width: 72%;
+    }
+
+    &__form {
+      margin: 2rem 0;
+    }
+  }
+
+  @include t-media-query($s-xlarge-up) {
+    padding: 0 $s-gutter--xlarge;
+  }
+
+  @include t-media-query($s-xxlarge-up) {
+    padding: 0 $s-gutter--xxlarge;
+  }
+}

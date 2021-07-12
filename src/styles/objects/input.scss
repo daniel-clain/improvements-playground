@@ -1,0 +1,90 @@
+.o-input {
+  // Fix iOS Shadows
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  // Fix webkit autofill
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: 0 0 0 100vw $s-color--background inset !important;
+  }
+
+  // Display Related
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  // Typography
+
+  &::-webkit-input-placeholder { 
+    color: $s-color--font;
+    opacity: 0.55;
+  }
+  &:-ms-input-placeholder {
+    color: $s-color--font;
+    opacity: 0.55;
+  }
+  &::placeholder {
+    color: $s-color--font;
+    opacity: 0.55;
+  }
+
+
+  resize: none;
+
+  &:focus-visible {
+    outline: none;
+    // border-color: darken($s-color--background, 8%);
+  }
+
+  // Primary style
+  &.is-primary {
+    @extend %s-font--type-1;
+    margin: 0;
+    padding: 0.85rem 1rem 0.75rem 1rem;
+    background-color: $s-color--background;
+    border: 1px solid $s-color--border-light;
+    border-radius: .125rem;
+  }
+
+  &.is-secondary {
+    @extend %s-font--type-1;
+    margin: 0;
+    padding: 0.5rem 0.75rem 0.3rem 0.75rem;
+    border: 1px solid $s-color--border-dark;
+    border-radius: .25rem;
+  }
+
+  &.is-select {
+    color: inherit;
+    // background-image: url(../../assets/icons/icon-select.svg);
+    background-repeat: no-repeat;
+    background-size: 0.75rem 0.75rem;
+    background-position: right 1.25rem center;
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+
+  &.has-error {
+    border-color: $s-color--error;
+
+    &:focus {
+      // border-color: $s-color--input-border;
+    }
+  }
+
+  /*** Media Queries ***/
+
+  @include t-media-query($s-medium-up) {
+
+  }
+
+  @include t-media-query($s-xlarge-up) {
+
+  }
+}
